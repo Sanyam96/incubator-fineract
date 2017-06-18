@@ -98,4 +98,15 @@
 	<bean id="apiListingResource" class="io.swagger.jaxrs.listing.ApiListingResource"/>
 	<bean id="swaggerSerializers" class="io.swagger.jaxrs.listing.SwaggerSerializers" scope="singleton"/>
 
+	<bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
+		<property name="title" value="Swagger Sample App"/>
+		<property name="version" value="1.0.0" />
+		<property name="schemes" value="https" />
+		<property name="host" value="localhost:8443" />
+		<property name="basePath" value="fineract-provider/api"/>
+		<!--<property name="resourcePackage" value="io.swagger.resources"/>-->
+		<property name="resourcePackage" value="org.apache.fineract.portfolio.client"/>
+		<property name="scan" value="true"/>
+	</bean>
+
 </beans>
