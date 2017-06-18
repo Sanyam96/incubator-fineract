@@ -46,6 +46,7 @@
 	<logger name="org.springframework.beans" level="info" />
 	<logger name="net.sf.ehcache" level="error" />
 	<logger name="org.hibernate.cache" level="error" />
+	<logger name="io.swagger" level="DEBUG"/>
 
 	<root level="info">
 		<appender-ref ref="STDOUT" />
