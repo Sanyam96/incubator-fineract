@@ -35,6 +35,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -52,6 +56,7 @@ import org.springframework.stereotype.Component;
 @Path("/client")
 @Component
 @Scope("singleton")
+@Api(value = "clientsAddress")
 public class ClientAddressApiResources {
 	private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("addressId", "street",
 			"addressLine1", "addressLine2", "addressLine3", "townVillage", "city", "countyDistrict", "stateProvinceId",
@@ -97,6 +102,7 @@ public class ClientAddressApiResources {
 	@Path("/{clientid}/addresses")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
+//	@ApiImplicitParams({@ApiImplicitParam(name = "List all addresses for a Client", paramType = "query" )})
 	public String getAddresses(@QueryParam("status") final String status, @QueryParam("type") final long addressTypeId,
 			@PathParam("clientid") final long clientid, @Context final UriInfo uriInfo) {
 		Collection<AddressData> address;

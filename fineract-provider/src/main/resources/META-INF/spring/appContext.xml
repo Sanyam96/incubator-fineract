@@ -95,6 +95,8 @@
 
 	<import resource="spmContext.xml"/>
 
+
+
 	<bean id="apiListingResource" class="io.swagger.jaxrs.listing.ApiListingResource"/>
 	<bean id="swaggerSerializers" class="io.swagger.jaxrs.listing.SwaggerSerializers" scope="singleton"/>
 

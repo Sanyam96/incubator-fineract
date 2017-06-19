@@ -35,6 +35,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
@@ -60,6 +61,7 @@ import org.springframework.util.CollectionUtils;
 
 @Path("/clients/{clientId}/charges")
 @Component
+@Api(value = "ClientSanyam")
 public class ClientChargesApiResource {
 
     private final PlatformSecurityContext context;
