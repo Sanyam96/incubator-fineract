@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+    <bean id="apiListingResource" class="io.swagger.jaxrs.listing.ApiListingResource"/>
+    <bean id="swaggerSerializers" class="io.swagger.jaxrs.listing.SwaggerSerializers" scope="singleton"/>
+
+    <bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
+        <property name="title" value="Apache Fineract API Documentation"/>
+        <property name="version" value="1.0.0" />
+        <property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform.
+
+        The goal of the Apache Fineract API is to empower developers to build apps on top of the Apache Fineract Platform.
+        The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
+
+        The API is organized around REST.
+
+        The API is designed to have:
+        - predictable, resource-oriented URLs
+        - to use HTTP response codes to indicate API errors
+        - to use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients.
+        JSON is returned in all responses from the API, including errors.\n\n
+		Much of the API presentation and design ideas are owed to the excellent Apigee Web API Design eBook/PDF and the very good Stripe API reference. "/>
+        <property name="schemes" value="https" />
+        <property name="host" value="localhost:8443" />
+        <property name="basePath" value="fineract-provider/api/v1"/>
+        <!--<property name="resourcePackage" value="io.swagger.resources"/>-->
+        <property name="resourcePackage" value="org.apache.fineract"/>
+        <property name="scan" value="true"/>
+    </bean>
+
+</beans>
