@@ -101,13 +101,22 @@
 	<bean id="swaggerSerializers" class="io.swagger.jaxrs.listing.SwaggerSerializers" scope="singleton"/>
 
 	<bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
-		<property name="title" value="Swagger Sample App"/>
+		<property name="title" value="Apache Fineract API Documentation"/>
 		<property name="version" value="1.0.0" />
+		<property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform.\n
+		The goal of the Apache Fineract API is to empower developers to build apps on top of the Apache Fineract Platform.
+		The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.\nThe API is organized around REST.\n
+		The API is designed to have:\n
+		- predictable, resource-oriented URLs\n
+		- to use HTTP response codes to indicate API errors\n
+		- to use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients.\n\n
+		JSON is returned in all responses from the API, including errors.\n\n
+		Much of the API presentation and design ideas are owed to the excellent Apigee Web API Design eBook/PDF and the very good Stripe API reference. "/>
 		<property name="schemes" value="https" />
 		<property name="host" value="localhost:8443" />
-		<property name="basePath" value="fineract-provider/api"/>
+		<property name="basePath" value="fineract-provider/api/"/>
 		<!--<property name="resourcePackage" value="io.swagger.resources"/>-->
-		<property name="resourcePackage" value="org.apache.fineract.portfolio.client"/>
+		<property name="resourcePackage" value="org.apache.fineract"/>
 		<property name="scan" value="true"/>
 	</bean>
 
