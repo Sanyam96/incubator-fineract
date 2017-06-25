@@ -197,42 +197,6 @@ public class ClientsApiResource {
         return this.toApiJsonSerializer.serialize(result);
     }
 
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:" + "\n" +
-            "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name)." + "\n" +
-            "2.If address is enable(enable-address=true), then additional field called address has to be passed.", response = CommandProcessingResult.class
-    )
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(value = "OfficeId", required = true, paramType = "body", dataType = "long", name = "OfficeId", allowMultiple = true),
-            @ApiImplicitParam(value = "firstname", required = true, paramType = "body", dataType = "string", name = "firstname", allowMultiple = true),
-            @ApiImplicitParam(value = "lastname", required = true, paramType = "body", dataType = "string", name = "lastname", allowMultiple = true),
-            @ApiImplicitParam(value = "externalId", paramType = "body", dataType = "long", name = "externalId", allowMultiple = true),
-            @ApiImplicitParam(value = "dateFormat", required = true, paramType = "body", dataType = "string", name = "dateFormat", allowMultiple = true),
-            @ApiImplicitParam(value = "locale=en", required = true, paramType = "body", dataType = "string", name = "locale", allowMultiple = true),
-            @ApiImplicitParam(value = "active", required = true, paramType = "body", dataType = "boolean", name = "active", allowMultiple = true),
-            @ApiImplicitParam(value = "activationDate", required = true, paramType = "body", dataType = "string", name = "activationDate", allowMultiple = true),
-            @ApiImplicitParam(value = "submittedOnDate", paramType = "body", dataType = "string", name = "submittedOnDate", allowMultiple = true),
-            @ApiImplicitParam(value = "savingsProductId", paramType = "body", dataType = "long", name = "savingsProductId", allowMultiple = true)
-    })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = CommandProcessingResult.class),
-            @ApiResponse(code = 404, message = "Error!  Invalid body passed")
-    })
-    public String create(@ApiParam(hidden = true ) final String apiRequestBodyAsJson) {  // we are submitting a json!!! Should be resolved!!
-
-
-        final CommandWrapper commandRequest = new CommandWrapperBuilder() //
-                .createClient() //
-                .withJson(apiRequestBodyAsJson) //
-                .build(); //
-
-        final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
-
-        return this.toApiJsonSerializer.serialize(result);
-    }
-
     @DELETE
     @Path("{clientId}")
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -333,5 +297,54 @@ public class ClientsApiResource {
 
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
         return this.clientAccountSummaryToApiJsonSerializer.serialize(settings, clientAccount, CLIENT_ACCOUNTS_DATA_PARAMETERS);
+    }
+
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:" + "\n" +
+            "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name)." + "\n" +
+            "2.If address is enable(enable-address=true), then additional field called address has to be passed.", response = CommandProcessingResult.class, consumes="application/json"
+    )
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(value = "OfficeId", required = true, paramType = "body", dataType = "long", name = "OfficeId", example = "1"),
+            @ApiImplicitParam(value = "firstname", required = true, paramType = "body", dataType = "string", name = "firstname", example = "Petra"),
+            @ApiImplicitParam(value = "lastname", required = true, paramType = "body", dataType = "string", name = "lastname", example = "Yton"),
+            @ApiImplicitParam(value = "dateFormat", required = true, paramType = "body", dataType = "string", name = "dateFormat", example = "dd MMMM yyyy"),
+            @ApiImplicitParam(value = "locale=en", required = true, paramType = "body", dataType = "string", name = "locale", example = "en"),
+            @ApiImplicitParam(value = "active", required = true, paramType = "body", dataType = "boolean", name = "active", example = "true"),
+            @ApiImplicitParam(value = "activationDate", required = true, paramType = "body", dataType = "string", name = "activationDate", example = "04 March 2009"),
+            @ApiImplicitParam(value = "externalId", paramType = "body", dataType = "long", name = "externalId", example = "786YYH7"),
+            @ApiImplicitParam(value = "submittedOnDate", paramType = "body", dataType = "string", name = "submittedOnDate", example = "04 March 2009"),
+            @ApiImplicitParam(value = "savingsProductId", paramType = "body", dataType = "long", name = "savingsProductId", example = "4"),
+            @ApiImplicitParam(value = "groupId", paramType = "body", dataType = "long", name = "groupId"),
+            @ApiImplicitParam(value = "accountNo", paramType = "body", dataType = "long", name = "accountNo"),
+            @ApiImplicitParam(value = "staffId", paramType = "body", dataType = "long", name = "staffId"),
+            @ApiImplicitParam(value = "mobileNo", paramType = "body", dataType = "long", name = "mobileNo"),
+            @ApiImplicitParam(value = "genderId", paramType = "body", dataType = "long", name = "genderId"),
+            @ApiImplicitParam(value = "clientTypeId", paramType = "body", dataType = "long", name = "clientTypeId"),
+            @ApiImplicitParam(value = "clientClassificationId", paramType = "body", dataType = "long", name = "clientClassificationId")
+
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success {\n" +
+                    "    \"officeId\": 1,\n" +
+                    "    \"clientId\": 1,\n" +
+                    "    \"resourceId\": 1,\n" +
+                    "    \"savingsId\": 10\n" +
+                    "}", response = CommandProcessingResult.class),
+            @ApiResponse(code = 404, message = "Error!  Invalid body passed or please pass mandatory fields!!")
+    })
+    public String create(@ApiParam(hidden = true ) final String apiRequestBodyAsJson) {  // we are submitting a json!!! Should be resolved!!
+
+
+        final CommandWrapper commandRequest = new CommandWrapperBuilder() //
+                .createClient() //
+                .withJson(apiRequestBodyAsJson) //
+                .build(); //
+
+        final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
+
+        return this.toApiJsonSerializer.serialize(result);
     }
 }
