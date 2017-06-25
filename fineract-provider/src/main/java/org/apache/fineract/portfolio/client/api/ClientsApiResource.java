@@ -181,24 +181,6 @@ public class ClientsApiResource {
         return this.toApiJsonSerializer.serialize(settings, clientData, ClientApiConstants.CLIENT_RESPONSE_DATA_PARAMETERS);
     }
 
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "create Client sanyam", httpMethod = "POST")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Done Successfully", response = CommandProcessingResult.class)})
-    public String create(final String apiRequestBodyAsJson) {  // we are submitting a json!!! Should be resolved!!
-
-
-        final CommandWrapper commandRequest = new CommandWrapperBuilder() //
-                .createClient() //
-                .withJson(apiRequestBodyAsJson) //
-                .build(); //
-
-        final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
-
-        return this.toApiJsonSerializer.serialize(result);
-    }
-
     @PUT
     @Path("{clientId}")
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -207,6 +189,42 @@ public class ClientsApiResource {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateClient(clientId) //
+                .withJson(apiRequestBodyAsJson) //
+                .build(); //
+
+        final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
+
+        return this.toApiJsonSerializer.serialize(result);
+    }
+
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:" + "\n" +
+            "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name)." + "\n" +
+            "2.If address is enable(enable-address=true), then additional field called address has to be passed.", response = CommandProcessingResult.class
+    )
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(value = "OfficeId", required = true, paramType = "body", dataType = "long", name = "OfficeId", allowMultiple = true),
+            @ApiImplicitParam(value = "firstname", required = true, paramType = "body", dataType = "string", name = "firstname", allowMultiple = true),
+            @ApiImplicitParam(value = "lastname", required = true, paramType = "body", dataType = "string", name = "lastname", allowMultiple = true),
+            @ApiImplicitParam(value = "externalId", paramType = "body", dataType = "long", name = "externalId", allowMultiple = true),
+            @ApiImplicitParam(value = "dateFormat", required = true, paramType = "body", dataType = "string", name = "dateFormat", allowMultiple = true),
+            @ApiImplicitParam(value = "locale=en", required = true, paramType = "body", dataType = "string", name = "locale", allowMultiple = true),
+            @ApiImplicitParam(value = "active", required = true, paramType = "body", dataType = "boolean", name = "active", allowMultiple = true),
+            @ApiImplicitParam(value = "activationDate", required = true, paramType = "body", dataType = "string", name = "activationDate", allowMultiple = true),
+            @ApiImplicitParam(value = "submittedOnDate", paramType = "body", dataType = "string", name = "submittedOnDate", allowMultiple = true),
+            @ApiImplicitParam(value = "savingsProductId", paramType = "body", dataType = "long", name = "savingsProductId", allowMultiple = true)
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = CommandProcessingResult.class),
+            @ApiResponse(code = 404, message = "Error!  Invalid body passed")
+    })
+    public String create(@ApiParam(hidden = true ) final String apiRequestBodyAsJson) {  // we are submitting a json!!! Should be resolved!!
+
+
+        final CommandWrapper commandRequest = new CommandWrapperBuilder() //
+                .createClient() //
                 .withJson(apiRequestBodyAsJson) //
                 .build(); //
 
