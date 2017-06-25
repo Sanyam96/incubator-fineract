@@ -35,10 +35,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -49,6 +46,8 @@ import org.apache.fineract.infrastructure.core.serialization.DefaultToApiJsonSer
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.portfolio.address.data.AddressData;
 import org.apache.fineract.portfolio.address.service.AddressReadPlatformServiceImpl;
+import org.apache.fineract.portfolio.client.data.ClientApiCollectionConstants;
+import org.apache.fineract.portfolio.client.data.ClientData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -56,7 +55,7 @@ import org.springframework.stereotype.Component;
 @Path("/client")
 @Component
 @Scope("singleton")
-@Api(value = "clientsAddress")
+//@Api(value = "clients Address", description = "Address module is an optional module and can be configured into the system by using GlobalConfiguration setting: enable-address. In order to activate Address module, we need to enable the configuration, enable-address by setting its value to true.")
 public class ClientAddressApiResources {
 	private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("addressId", "street",
 			"addressLine1", "addressLine2", "addressLine3", "townVillage", "city", "countyDistrict", "stateProvinceId",
@@ -85,6 +84,7 @@ public class ClientAddressApiResources {
 
 	@GET
 	@Path("addresses/template")
+	@ApiOperation(value = "List all addresses for a Client", notes = "clients/1/addresses", response = ClientData.class)
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public String getAddressesTemplate(@Context final UriInfo uriInfo) {
@@ -98,13 +98,31 @@ public class ClientAddressApiResources {
 
 	}
 
-	@GET
+	@POST
 	@Path("/{clientid}/addresses")
+	@ApiOperation(value = "Create an address for a Client",notes = "POST https://DomainName/api/v1/client/{clientId}/addresses?type={addressTypeId}")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-//	@ApiImplicitParams({@ApiImplicitParam(name = "List all addresses for a Client", paramType = "query" )})
+	public String AddClientAddress(@QueryParam("type") final long addressTypeId,
+			@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
+
+		final CommandWrapper commandRequest = new CommandWrapperBuilder().addClientAddress(clientid, addressTypeId)
+				.withJson(apiRequestBodyAsJson).build();
+
+		final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
+
+		return this.toApiJsonSerializer.serialize(result);
+	}
+
+	@GET
+	@Path("/{clientid}/addresses")
+	@ApiOperation(value = "List all addresses for a Client", notes = "clients/1/addresses?status=false,true&&type=1,2,3", response = ClientData.class)
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	@ApiImplicitParams({@ApiImplicitParam(name = "List all addresses for a Client")})
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully shown data", response = ClientApiCollectionConstants.class)})
 	public String getAddresses(@QueryParam("status") final String status, @QueryParam("type") final long addressTypeId,
-			@PathParam("clientid") final long clientid, @Context final UriInfo uriInfo) {
+							   @PathParam("clientid") final long clientid, @Context final UriInfo uriInfo) {
 		Collection<AddressData> address;
 
 		this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -123,21 +141,6 @@ public class ClientAddressApiResources {
 				.process(uriInfo.getQueryParameters());
 		return this.toApiJsonSerializer.serialize(settings, address, this.RESPONSE_DATA_PARAMETERS);
 
-	}
-
-	@POST
-	@Path("/{clientid}/addresses")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces({ MediaType.APPLICATION_JSON })
-	public String AddClientAddress(@QueryParam("type") final long addressTypeId,
-			@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
-
-		final CommandWrapper commandRequest = new CommandWrapperBuilder().addClientAddress(clientid, addressTypeId)
-				.withJson(apiRequestBodyAsJson).build();
-
-		final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
-
-		return this.toApiJsonSerializer.serialize(result);
 	}
 
 	@PUT

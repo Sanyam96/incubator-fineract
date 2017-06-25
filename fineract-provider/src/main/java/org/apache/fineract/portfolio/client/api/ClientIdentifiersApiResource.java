@@ -35,6 +35,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -57,6 +58,7 @@ import org.springframework.stereotype.Component;
 @Path("/clients/{clientId}/identifiers")
 @Component
 @Scope("singleton")
+//@Api(value = "Client Identifier Api Resources")
 public class ClientIdentifiersApiResource {
 
     private static final Set<String> CLIENT_IDENTIFIER_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "clientId",

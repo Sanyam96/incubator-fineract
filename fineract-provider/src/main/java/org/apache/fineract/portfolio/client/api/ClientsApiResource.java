@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.portfolio.client.api;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -37,6 +38,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
@@ -62,6 +64,7 @@ import org.springframework.stereotype.Component;
 @Path("/clients")
 @Component
 @Scope("singleton")
+@Api(value = "Client Api Resource")
 public class ClientsApiResource {
 
     private final PlatformSecurityContext context;
@@ -181,7 +184,10 @@ public class ClientsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String create(final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "create Client sanyam", httpMethod = "POST")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Done Successfully", response = CommandProcessingResult.class)})
+    public String create(final String apiRequestBodyAsJson) {  // we are submitting a json!!! Should be resolved!!
+
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .createClient() //

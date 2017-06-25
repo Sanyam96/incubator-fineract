@@ -29,6 +29,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
@@ -48,6 +49,7 @@ import org.springframework.stereotype.Component;
 
 @Path("/clients/{clientId}/transactions")
 @Component
+//@Api(value = "Client Transaction Api Resources")
 public class ClientTransactionsApiResource {
 
     private final PlatformSecurityContext context;
