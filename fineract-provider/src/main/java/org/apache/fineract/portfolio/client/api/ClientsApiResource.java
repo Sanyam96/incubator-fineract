@@ -64,7 +64,7 @@ import org.springframework.stereotype.Component;
 @Path("/clients")
 @Component
 @Scope("singleton")
-@Api(value = "Client Api Resource")
+@Api(value = "Client Api Resource", description = "Clients are people and businesses that have applied (or may apply) to an MFI for loans.\n" + "\n" + "Clients can be created in Pending or straight into Active state.")
 public class ClientsApiResource {
 
     private final PlatformSecurityContext context;
@@ -98,6 +98,7 @@ public class ClientsApiResource {
     @Path("template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve Client Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists")
     public String retrieveTemplate(@Context final UriInfo uriInfo, @QueryParam("officeId") final Long officeId,
             @QueryParam("commandParam") final String commandParam,
             @DefaultValue("false") @QueryParam("staffInSelectedOfficeOnly") final boolean staffInSelectedOfficeOnly) {
@@ -125,6 +126,13 @@ public class ClientsApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List Clients",
+            notes = "Example Requests:\n" + "\n" +
+                    "clients\n" + "\n" +
+                    "clients?fields=displayName,officeName,timeline\n" + "\n" +
+                    "clients?offset=10&limit=50\n" + "\n" +
+                    "clients?orderBy=displayName&sortOrder=DESC"
+    )
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") final String sqlSearch,
             @QueryParam("officeId") final Long officeId, @QueryParam("externalId") final String externalId,
             @QueryParam("displayName") final String displayName, @QueryParam("firstName") final String firstname,
@@ -160,6 +168,12 @@ public class ClientsApiResource {
     @Path("{clientId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a Client",
+            notes = "Example Requests:\n" + "\n" +
+            "clients/1\n" +"\n" + "\n" +
+            "clients/1?template=true\n" + "\n" + "\n" +
+            "clients/1?fields=id,displayName,officeName"
+    )
     public String retrieveOne(@PathParam("clientId") final Long clientId, @Context final UriInfo uriInfo,
             @DefaultValue("false") @QueryParam("staffInSelectedOfficeOnly") final boolean staffInSelectedOfficeOnly) {
 
@@ -181,10 +195,62 @@ public class ClientsApiResource {
         return this.toApiJsonSerializer.serialize(settings, clientData, ClientApiConstants.CLIENT_RESPONSE_DATA_PARAMETERS);
     }
 
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:" + "\n" + "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name)." + "\n" + "2.If address is enable(enable-address=true), then additional field called address has to be passed.", response = CommandProcessingResult.class, consumes="application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(value = "OfficeId", required = true, paramType = "body", dataType = "long", name = "OfficeId", example = "1"),
+            @ApiImplicitParam(value = "firstname", required = true, paramType = "body", dataType = "string", name = "firstname", example = "Petra"),
+            @ApiImplicitParam(value = "lastname", required = true, paramType = "body", dataType = "string", name = "lastname", example = "Yton"),
+            @ApiImplicitParam(value = "dateFormat", required = true, paramType = "body", dataType = "string", name = "dateFormat", example = "dd MMMM yyyy"),
+            @ApiImplicitParam(value = "locale=en", required = true, paramType = "body", dataType = "string", name = "locale", example = "en"),
+            @ApiImplicitParam(value = "active", required = true, paramType = "body", dataType = "boolean", name = "active", example = "true"),
+            @ApiImplicitParam(value = "activationDate", required = true, paramType = "body", dataType = "string", name = "activationDate", example = "04 March 2009"),
+            @ApiImplicitParam(value = "externalId", paramType = "body", dataType = "long", name = "externalId", example = "786YYH7"),
+            @ApiImplicitParam(value = "submittedOnDate", paramType = "body", dataType = "string", name = "submittedOnDate", example = "04 March 2009"),
+            @ApiImplicitParam(value = "savingsProductId", paramType = "body", dataType = "long", name = "savingsProductId", example = "4"),
+            @ApiImplicitParam(value = "groupId", paramType = "body", dataType = "long", name = "groupId"),
+            @ApiImplicitParam(value = "accountNo", paramType = "body", dataType = "long", name = "accountNo"),
+            @ApiImplicitParam(value = "staffId", paramType = "body", dataType = "long", name = "staffId"),
+            @ApiImplicitParam(value = "mobileNo", paramType = "body", dataType = "long", name = "mobileNo"),
+            @ApiImplicitParam(value = "genderId", paramType = "body", dataType = "long", name = "genderId"),
+            @ApiImplicitParam(value = "clientTypeId", paramType = "body", dataType = "long", name = "clientTypeId"),
+            @ApiImplicitParam(value = "clientClassificationId", paramType = "body", dataType = "long", name = "clientClassificationId")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "\n" +
+                    "Success \n" +
+                    "{\n" +
+                    "    \"officeId\": 1,\n" +
+                    "    \"clientId\": 1,\n" +
+                    "    \"resourceId\": 1,\n" +
+                    "    \"savingsId\": 10\n" +
+                    "}",
+                    response = CommandProcessingResult.class),
+            @ApiResponse(code = 404, message = "Error!  Invalid body passed or please pass mandatory fields!!")
+    })
+    public String create(@ApiParam(hidden = true ) final String apiRequestBodyAsJson) {
+
+
+        final CommandWrapper commandRequest = new CommandWrapperBuilder() //
+                .createClient() //
+                .withJson(apiRequestBodyAsJson) //
+                .build(); //
+
+        final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
+
+        return this.toApiJsonSerializer.serialize(result);
+    }
+
     @PUT
     @Path("{clientId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Update a Client", notes = "You can update any of the basic attributes of a client (but not its associations) using this API.\n" + "\n" +
+            "Changing the relationship between a client and its office is not supported through this API. An API specific to handling transfers of clients between offices is available for the same.\n" + "\n" +
+            "The relationship between a client and a group must be removed through the Groups API."
+    )
     public String update(@PathParam("clientId") final Long clientId, final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
@@ -201,6 +267,7 @@ public class ClientsApiResource {
     @Path("{clientId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Delete a Client", notes = "If a client is in Pending state, you are allowed to Delete it. The delete is a 'hard delete' and cannot be recovered from. Once clients become active or have loans or savings associated with them, you cannot delete the client but you may Close the client if they have left the program.")
     public String delete(@PathParam("clientId") final Long clientId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
@@ -216,6 +283,13 @@ public class ClientsApiResource {
     @Path("{clientId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Activate a Client | Close a Client | Reject a Client | Withdraw a Client | Reactivate a Client | UndoReject a Client | UndoWithdraw a Client | Assign a Staff | Unassign a Staff | Update Default Savings Account | Propose a Client Transfer | Withdraw a Client Transfer | Reject a Client Transfer | Accept a Client Transfer | Propose and Accept a Client Transfer | ",
+            notes = "\n[Reject a Client] Mandatory Fields : rejectionDate, rejectionReasonId\n" +
+                    "\n[Withdraw a Client] Mandatory Fields : withdrawalDate, withdrawalReasonId\n" +
+                    "\n[Reactivate a Client] Mandatory Fields : reactivationDate\n" +
+                    "\n[UndoReject a Client] Mandatory Fields : reopenedDate\n" +
+                    "\n[UndoWithdraw a Client]Mandatory Fields :  reopenedDate\n"
+    )
     public String activate(@PathParam("clientId") final Long clientId, @QueryParam("command") final String commandParam,
             final String apiRequestBodyAsJson) {
 
@@ -287,6 +361,13 @@ public class ClientsApiResource {
     @Path("{clientId}/accounts")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve client accounts overview",
+            notes = "An example of how a loan portfolio summary can be provided. This is requested in a specific use case of the community application.\n" +
+                    "It is quite reasonable to add resources like this to simplify User Interface development.\n" + "\n" +
+                    "Example Requests:\n " + "\n" +
+                    "clients/1/accounts\n"+ "\n" +
+                    "clients/1/accounts?fields=loanAccounts,savingsAccounts"
+    )
     public String retrieveAssociatedAccounts(@PathParam("clientId") final Long clientId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(ClientApiConstants.CLIENT_RESOURCE_NAME);
@@ -297,54 +378,5 @@ public class ClientsApiResource {
 
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
         return this.clientAccountSummaryToApiJsonSerializer.serialize(settings, clientAccount, CLIENT_ACCOUNTS_DATA_PARAMETERS);
-    }
-
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:" + "\n" +
-            "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name)." + "\n" +
-            "2.If address is enable(enable-address=true), then additional field called address has to be passed.", response = CommandProcessingResult.class, consumes="application/json"
-    )
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(value = "OfficeId", required = true, paramType = "body", dataType = "long", name = "OfficeId", example = "1"),
-            @ApiImplicitParam(value = "firstname", required = true, paramType = "body", dataType = "string", name = "firstname", example = "Petra"),
-            @ApiImplicitParam(value = "lastname", required = true, paramType = "body", dataType = "string", name = "lastname", example = "Yton"),
-            @ApiImplicitParam(value = "dateFormat", required = true, paramType = "body", dataType = "string", name = "dateFormat", example = "dd MMMM yyyy"),
-            @ApiImplicitParam(value = "locale=en", required = true, paramType = "body", dataType = "string", name = "locale", example = "en"),
-            @ApiImplicitParam(value = "active", required = true, paramType = "body", dataType = "boolean", name = "active", example = "true"),
-            @ApiImplicitParam(value = "activationDate", required = true, paramType = "body", dataType = "string", name = "activationDate", example = "04 March 2009"),
-            @ApiImplicitParam(value = "externalId", paramType = "body", dataType = "long", name = "externalId", example = "786YYH7"),
-            @ApiImplicitParam(value = "submittedOnDate", paramType = "body", dataType = "string", name = "submittedOnDate", example = "04 March 2009"),
-            @ApiImplicitParam(value = "savingsProductId", paramType = "body", dataType = "long", name = "savingsProductId", example = "4"),
-            @ApiImplicitParam(value = "groupId", paramType = "body", dataType = "long", name = "groupId"),
-            @ApiImplicitParam(value = "accountNo", paramType = "body", dataType = "long", name = "accountNo"),
-            @ApiImplicitParam(value = "staffId", paramType = "body", dataType = "long", name = "staffId"),
-            @ApiImplicitParam(value = "mobileNo", paramType = "body", dataType = "long", name = "mobileNo"),
-            @ApiImplicitParam(value = "genderId", paramType = "body", dataType = "long", name = "genderId"),
-            @ApiImplicitParam(value = "clientTypeId", paramType = "body", dataType = "long", name = "clientTypeId"),
-            @ApiImplicitParam(value = "clientClassificationId", paramType = "body", dataType = "long", name = "clientClassificationId")
-
-    })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success {\n" +
-                    "    \"officeId\": 1,\n" +
-                    "    \"clientId\": 1,\n" +
-                    "    \"resourceId\": 1,\n" +
-                    "    \"savingsId\": 10\n" +
-                    "}", response = CommandProcessingResult.class),
-            @ApiResponse(code = 404, message = "Error!  Invalid body passed or please pass mandatory fields!!")
-    })
-    public String create(@ApiParam(hidden = true ) final String apiRequestBodyAsJson) {  // we are submitting a json!!! Should be resolved!!
-
-
-        final CommandWrapper commandRequest = new CommandWrapperBuilder() //
-                .createClient() //
-                .withJson(apiRequestBodyAsJson) //
-                .build(); //
-
-        final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
-
-        return this.toApiJsonSerializer.serialize(result);
     }
 }

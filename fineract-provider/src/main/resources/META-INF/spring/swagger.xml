@@ -35,17 +35,85 @@
         <property name="version" value="1.0.0" />
         <property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform.
 
-        \nThe goal of the Apache Fineract API is to empower developers to build apps on top of the Apache Fineract Platform.
-        \nThe reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
+
+        \nThe goal of the Apache Fineract API is to empower developers to build apps on top of the Apache Fineract Platform. The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
+
 
         \n\nThe API is organized around REST.
 
         \nThe API is designed to have:
-        - predictable, resource-oriented URLs
-        - to use HTTP response codes to indicate API errors
-        - to use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients.
+        \n- predictable, resource-oriented URLs
+        \n- to use HTTP response codes to indicate API errors
+        \n- to use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients.
+
         \nJSON is returned in all responses from the API, including errors.
-        \nMuch of the API presentation and design ideas are owed to the excellent Apigee Web API Design eBook/PDF and the very good Stripe API reference. "/>
+
+        \nMuch of the API presentation and design ideas are owed to the excellent Apigee Web API Design eBook/PDF and the very good Stripe API reference.
+
+
+
+        \nTry The API From Your Browser
+        \nGET (read) examples can be run directly from this documentation. It is just a matter of clicking a link. Most browsers display the output on the same page (or another tab if you right click and select that option). Internet Explorer will probably treat the output as if you wanted to download a file. In that case just elect to open the output in a text editor.
+
+        \nIf you want to check out the POST, PUT and DELETE (update) examples a good approach is to take a moment to install a REST plugin for your browser e.g. RESTClient for FireFox
+
+        \nThe REST plugins will allow you to
+        -Select the Verb (e.g. POST)
+        -Enter the resource name (e.g. offices)
+        -Add a header to indicate you are sending JSON data as part of the request body (Content-Type: application/json)
+        -Add a header to indicate your 'tenant' (X-Mifos-Platform-TenantId: default)
+        -Paste the example JSON into a Request Body
+        -Send the Request (and receive a Response)
+
+
+        \n'Generic Options'
+        \n'Convenience Templates'
+
+        \nThere are a list of convenience resources (see Template menu option). These resources end with '/template' and can be useful when building maintenance user interface screens for client applications. The template data returned may consist of any or all of:
+
+        -Field Defaults
+        -Allowed Value Lists
+
+        \nAlso, many Retrieve a type resources (Retrieve a Client for example) allow the parameter option template=true. This appends any Allowed Value Lists which can be useful when building update functionality.
+
+
+        \n'Restrict Returned Fields'
+
+        \nParameter fields={fieldlist} can be used on GET requests to restrict the fields returned.
+
+        Normal Request:
+
+        'offices/1'
+        Request (restricting fields returned):
+
+        'offices/1?fields=id,name'
+
+
+        \nPretty JSON Formatting
+
+        Parameter 'pretty=true' can be used to display JSON from GET requests in an easy-to-read format. This parameter is used in this documentation.
+
+        Easy-to-read JSON output for POSTs, PUTs and DELETEs will available in the REST plugin you use e.g. RESTClient for FireFox
+
+        Normal Request (with pretty printing/formatting):
+
+        'offices/1?pretty=true'
+
+
+        \n'Creating and Updating'
+        When you want to 'Create a ...' you have to at least supply the mandatory fields. The mandatory fields are listed in this documentation under the relevant 'Create a ...' heading.
+
+        When you want to 'Update a ...' you can update individual fields or a combination of fields (subject to data integrity rules).
+
+
+        \n'Updating Dates and Numbers'
+        'Dates'
+
+        Dates are returned in GET requests as an array e.g. [ 2007, 4, 11]. However, the API accepts them as strings in POST and PUT requests. If there are any dates in your POST or PUT requests, you need to provide the 'locale' and 'dateFormat'. This can be any date pattern supported by Joda-Time. This capability can help you when saving data in your client application as you shouldn't need to do any date format conversion prior to issuing your POST or PUT request.
+
+        "/>
+
+        <property name="license" value="Apache 2.0" />
         <property name="schemes" value="https" />
         <property name="host" value="localhost:8443" />
         <property name="basePath" value="fineract-provider/api/v1"/>
