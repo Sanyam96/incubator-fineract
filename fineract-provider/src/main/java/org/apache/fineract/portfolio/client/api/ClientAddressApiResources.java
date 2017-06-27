@@ -84,7 +84,6 @@ public class ClientAddressApiResources {
 
 	@GET
 	@Path("addresses/template")
-	@ApiOperation(value = "List all addresses for a Client", notes = "clients/1/addresses")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public String getAddressesTemplate(@Context final UriInfo uriInfo) {
@@ -104,6 +103,9 @@ public class ClientAddressApiResources {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@ApiOperation(value = "Create an address for a Client",
 			notes = "Mandatory Fields : \n" + "type and clientId")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+	})
 	public String AddClientAddress(@QueryParam("type") final long addressTypeId,
 			@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
 
@@ -122,7 +124,8 @@ public class ClientAddressApiResources {
 	@ApiOperation(value = "List all addresses for a Client",
 			notes = "Example Requests:\n" + "\n" +
 					"client/1/addresses\n" + "\n" +	"\n" +
-					"clients/1/addresses?status=false,true&&type=1,2,3"	)
+					"clients/1/addresses?status=false,true&&type=1,2,3"
+	)
 	public String getAddresses(@QueryParam("status") final String status, @QueryParam("type") final long addressTypeId,
 							   @PathParam("clientid") final long clientid, @Context final UriInfo uriInfo) {
 		Collection<AddressData> address;
@@ -151,6 +154,9 @@ public class ClientAddressApiResources {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@ApiOperation(value = "update an address for a Client", notes = "All the address fields can be updated by using update client address API" +
 			"Mandatory Fields\n" + "type and addressId")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+	})
 	public String UpdateClientAddress(@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
 
 		final CommandWrapper commandRequest = new CommandWrapperBuilder().updateClientAddress(clientid)

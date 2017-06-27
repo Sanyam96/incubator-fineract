@@ -98,7 +98,9 @@ public class ClientsApiResource {
     @Path("template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Retrieve Client Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists")
+    @ApiOperation(value = "Retrieve Client Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists" +
+            "Example Request:\n" + "\n" +
+            "clients/template")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "", response = ClientData.class)
     })
@@ -224,16 +226,8 @@ public class ClientsApiResource {
             @ApiImplicitParam(value = "clientClassificationId", paramType = "body", dataType = "long", name = "clientClassificationId")
     })
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "\n" +
-                    "Success \n" +
-                    "{\n" +
-                    "    \"officeId\": 1,\n" +
-                    "    \"clientId\": 1,\n" +
-                    "    \"resourceId\": 1,\n" +
-                    "    \"savingsId\": 10\n" +
-                    "}",
-                    response = CommandProcessingResult.class),
-            @ApiResponse(code = 404, message = "Error!  Invalid body passed or please pass mandatory fields!!")
+            @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class),
+            @ApiResponse(code = 400, message = "Bad Request")
     })
     public String create(@ApiParam(hidden = true ) final String apiRequestBodyAsJson) {
 
@@ -252,12 +246,13 @@ public class ClientsApiResource {
     @Path("{clientId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Update a Client", notes = "You can update any of the basic attributes of a client (but not its associations) using this API.\n" + "\n" +
-            "Changing the relationship between a client and its office is not supported through this API. An API specific to handling transfers of clients between offices is available for the same.\n" + "\n" +
-            "The relationship between a client and a group must be removed through the Groups API."
-    )
+    @ApiOperation(value = "Update a Client", notes = "You can update any of the basic attributes of a client (but not its associations) using this API.\n" + "\n" + "Changing the relationship between a client and its office is not supported through this API. An API specific to handling transfers of clients between offices is available for the same.\n" + "\n" + "The relationship between a client and a group must be removed through the Groups API." )
     @ApiImplicitParams(value = {
             @ApiImplicitParam(value = "externalId", required = true, paramType = "body", dataType = "string", name = "externalId", example = "786444UUUYYH7")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class),
+            @ApiResponse(code = 400, message = "Bad Request")
     })
     public String update(@ApiParam(value = "ClientId") @PathParam("clientId") final Long clientId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
@@ -276,6 +271,10 @@ public class ClientsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Client", notes = "If a client is in Pending state, you are allowed to Delete it. The delete is a 'hard delete' and cannot be recovered from. Once clients become active or have loans or savings associated with them, you cannot delete the client but you may Close the client if they have left the program.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
     public String delete(@PathParam("clientId") final Long clientId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
@@ -376,6 +375,10 @@ public class ClientsApiResource {
                     "clients/1/accounts\n"+ "\n" +
                     "clients/1/accounts?fields=loanAccounts,savingsAccounts"
     )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "", response = AccountSummaryCollectionData.class),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
     public String retrieveAssociatedAccounts(@PathParam("clientId") final Long clientId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(ClientApiConstants.CLIENT_RESOURCE_NAME);
