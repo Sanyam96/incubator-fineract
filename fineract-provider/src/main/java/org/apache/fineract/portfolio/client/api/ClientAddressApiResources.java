@@ -55,7 +55,7 @@ import org.springframework.stereotype.Component;
 @Path("/client")
 @Component
 @Scope("singleton")
-//@Api(value = "clients Address", description = "Address module is an optional module and can be configured into the system by using GlobalConfiguration setting: enable-address. In order to activate Address module, we need to enable the configuration, enable-address by setting its value to true.")
+@Api(value = "clients Address", description = "Address module is an optional module and can be configured into the system by using GlobalConfiguration setting: enable-address. In order to activate Address module, we need to enable the configuration, enable-address by setting its value to true.")
 public class ClientAddressApiResources {
 	private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("addressId", "street",
 			"addressLine1", "addressLine2", "addressLine3", "townVillage", "city", "countyDistrict", "stateProvinceId",
@@ -84,7 +84,7 @@ public class ClientAddressApiResources {
 
 	@GET
 	@Path("addresses/template")
-	@ApiOperation(value = "List all addresses for a Client", notes = "clients/1/addresses", response = ClientData.class)
+	@ApiOperation(value = "List all addresses for a Client", notes = "clients/1/addresses")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public String getAddressesTemplate(@Context final UriInfo uriInfo) {
@@ -100,9 +100,10 @@ public class ClientAddressApiResources {
 
 	@POST
 	@Path("/{clientid}/addresses")
-	@ApiOperation(value = "Create an address for a Client",notes = "POST https://DomainName/api/v1/client/{clientId}/addresses?type={addressTypeId}")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Create an address for a Client",
+			notes = "Mandatory Fields : \n" + "type and clientId")
 	public String AddClientAddress(@QueryParam("type") final long addressTypeId,
 			@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
 
@@ -116,11 +117,12 @@ public class ClientAddressApiResources {
 
 	@GET
 	@Path("/{clientid}/addresses")
-	@ApiOperation(value = "List all addresses for a Client", notes = "clients/1/addresses?status=false,true&&type=1,2,3", response = ClientData.class)
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	@ApiImplicitParams({@ApiImplicitParam(name = "List all addresses for a Client")})
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully shown data", response = ClientApiCollectionConstants.class)})
+	@ApiOperation(value = "List all addresses for a Client",
+			notes = "Example Requests:\n" + "\n" +
+					"client/1/addresses\n" + "\n" +	"\n" +
+					"clients/1/addresses?status=false,true&&type=1,2,3"	)
 	public String getAddresses(@QueryParam("status") final String status, @QueryParam("type") final long addressTypeId,
 							   @PathParam("clientid") final long clientid, @Context final UriInfo uriInfo) {
 		Collection<AddressData> address;
@@ -147,6 +149,8 @@ public class ClientAddressApiResources {
 	@Path("/{clientid}/addresses")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "update an address for a Client", notes = "All the address fields can be updated by using update client address API" +
+			"Mandatory Fields\n" + "type and addressId")
 	public String UpdateClientAddress(@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
 
 		final CommandWrapper commandRequest = new CommandWrapperBuilder().updateClientAddress(clientid)

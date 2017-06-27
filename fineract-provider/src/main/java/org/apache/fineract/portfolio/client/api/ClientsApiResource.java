@@ -99,9 +99,12 @@ public class ClientsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Client Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists")
-    public String retrieveTemplate(@Context final UriInfo uriInfo, @QueryParam("officeId") final Long officeId,
-            @QueryParam("commandParam") final String commandParam,
-            @DefaultValue("false") @QueryParam("staffInSelectedOfficeOnly") final boolean staffInSelectedOfficeOnly) {
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "", response = ClientData.class)
+    })
+    public String retrieveTemplate(@Context final UriInfo uriInfo, @ApiParam(value = "optional") @QueryParam("officeId") final Long officeId,
+            @ApiParam(value = "optional If commandParam=close retrieves all closureReasons which are associated with \"ClientClosureReason\" value.", defaultValue = "false") @QueryParam("commandParam") final String commandParam,
+            @DefaultValue("false") @ApiParam(value = "optional Defaults to false if not provided. If staffInSelectedOfficeOnly=true only staff who are associated with the selected branch are returned.") @QueryParam("staffInSelectedOfficeOnly") final boolean staffInSelectedOfficeOnly) {
 
         this.context.authenticatedUser().validateHasReadPermission(ClientApiConstants.CLIENT_RESOURCE_NAME);
 
@@ -133,6 +136,7 @@ public class ClientsApiResource {
                     "clients?offset=10&limit=50\n" + "\n" +
                     "clients?orderBy=displayName&sortOrder=DESC"
     )
+    @ApiResponse(code = 200, message = "", response = ClientData.class)
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") final String sqlSearch,
             @QueryParam("officeId") final Long officeId, @QueryParam("externalId") final String externalId,
             @QueryParam("displayName") final String displayName, @QueryParam("firstName") final String firstname,
@@ -174,6 +178,7 @@ public class ClientsApiResource {
             "clients/1?template=true\n" + "\n" + "\n" +
             "clients/1?fields=id,displayName,officeName"
     )
+    @ApiResponse(code = 200, message = "", response = ClientData.class)
     public String retrieveOne(@PathParam("clientId") final Long clientId, @Context final UriInfo uriInfo,
             @DefaultValue("false") @QueryParam("staffInSelectedOfficeOnly") final boolean staffInSelectedOfficeOnly) {
 
@@ -207,7 +212,7 @@ public class ClientsApiResource {
             @ApiImplicitParam(value = "locale=en", required = true, paramType = "body", dataType = "string", name = "locale", example = "en"),
             @ApiImplicitParam(value = "active", required = true, paramType = "body", dataType = "boolean", name = "active", example = "true"),
             @ApiImplicitParam(value = "activationDate", required = true, paramType = "body", dataType = "string", name = "activationDate", example = "04 March 2009"),
-            @ApiImplicitParam(value = "externalId", paramType = "body", dataType = "long", name = "externalId", example = "786YYH7"),
+            @ApiImplicitParam(value = "externalId", paramType = "body", dataType = "string", name = "externalId", example = "786YYH7"),
             @ApiImplicitParam(value = "submittedOnDate", paramType = "body", dataType = "string", name = "submittedOnDate", example = "04 March 2009"),
             @ApiImplicitParam(value = "savingsProductId", paramType = "body", dataType = "long", name = "savingsProductId", example = "4"),
             @ApiImplicitParam(value = "groupId", paramType = "body", dataType = "long", name = "groupId"),
@@ -251,7 +256,10 @@ public class ClientsApiResource {
             "Changing the relationship between a client and its office is not supported through this API. An API specific to handling transfers of clients between offices is available for the same.\n" + "\n" +
             "The relationship between a client and a group must be removed through the Groups API."
     )
-    public String update(@PathParam("clientId") final Long clientId, final String apiRequestBodyAsJson) {
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(value = "externalId", required = true, paramType = "body", dataType = "string", name = "externalId", example = "786444UUUYYH7")
+    })
+    public String update(@ApiParam(value = "ClientId") @PathParam("clientId") final Long clientId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateClient(clientId) //
