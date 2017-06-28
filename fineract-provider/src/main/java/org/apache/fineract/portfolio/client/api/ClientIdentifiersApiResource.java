@@ -36,6 +36,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -48,6 +50,7 @@ import org.apache.fineract.infrastructure.core.serialization.DefaultToApiJsonSer
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.portfolio.client.data.ClientData;
 import org.apache.fineract.portfolio.client.data.ClientIdentifierData;
+import org.apache.fineract.portfolio.client.domain.ClientIdentifier;
 import org.apache.fineract.portfolio.client.exception.DuplicateClientIdentifierException;
 import org.apache.fineract.portfolio.client.service.ClientIdentifierReadPlatformService;
 import org.apache.fineract.portfolio.client.service.ClientReadPlatformService;
@@ -58,7 +61,7 @@ import org.springframework.stereotype.Component;
 @Path("/clients/{clientId}/identifiers")
 @Component
 @Scope("singleton")
-//@Api(value = "Client Identifier Api Resources")
+@Api(value = "Client Identifier Api", description = "Client Identifiers refer to documents that are used to uniquely identify a customer\n" + "Ex: Drivers License, Passport, Ration card etc ")
 public class ClientIdentifiersApiResource {
 
     private static final Set<String> CLIENT_IDENTIFIER_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "clientId",
@@ -93,6 +96,10 @@ public class ClientIdentifiersApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List all Identifiers for a Client", notes = "Example Requests:\n" +
+            "clients/1/identifiers\n" + "\n" + "\n" +
+            "clients/1/identifiers?fields=documentKey,documentType,description")
+    @ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)
     public String retrieveAllClientIdentifiers(@Context final UriInfo uriInfo, @PathParam("clientId") final Long clientId) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -108,6 +115,12 @@ public class ClientIdentifiersApiResource {
     @Path("template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve Client Identifier Details Template", notes = "This is a convenience resource useful for building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" +
+            "\n" + " Field Defaults\n" + " Allowed Value Lists\n" +
+            "\n\nExample Request:\n" +
+            "clients/1/identifiers/template"
+    )
+    @ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)
     public String newClientIdentifierDetails(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -122,6 +135,10 @@ public class ClientIdentifiersApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Create an Identifier for a Client", notes = "Mandatory Fields\n" +
+            "documentKey, documentTypeId "
+    )
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String createClientIdentifier(@PathParam("clientId") final Long clientId, final String apiRequestBodyAsJson) {
 
         try {
@@ -148,6 +165,12 @@ public class ClientIdentifiersApiResource {
     @Path("{identifierId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a Client Identifier", notes = "Example Requests:\n" +
+            "clients/1/identifier/2\n" + "\n" + "\n" +
+            "clients/1/identifier/2?template=true\n" + "\n" +
+            "clients/1/identifiers/2?fields=documentKey,documentType,description"
+    )
+    @ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)
     public String retrieveClientIdentifiers(@PathParam("clientId") final Long clientId,
             @PathParam("identifierId") final Long clientIdentifierId, @Context final UriInfo uriInfo) {
 
@@ -169,6 +192,8 @@ public class ClientIdentifiersApiResource {
     @Path("{identifierId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Update a Client Identifier")
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String updateClientIdentifer(@PathParam("clientId") final Long clientId,
             @PathParam("identifierId") final Long clientIdentifierId, final String apiRequestBodyAsJson) {
 
@@ -195,6 +220,8 @@ public class ClientIdentifiersApiResource {
     @Path("{identifierId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Delete a Client Identifier")
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String deleteClientIdentifier(@PathParam("clientId") final Long clientId,
             @PathParam("identifierId") final Long clientIdentifierId) {
 

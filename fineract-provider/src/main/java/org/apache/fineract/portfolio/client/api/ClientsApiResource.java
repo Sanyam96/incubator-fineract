@@ -64,7 +64,7 @@ import org.springframework.stereotype.Component;
 @Path("/clients")
 @Component
 @Scope("singleton")
-@Api(value = "Client Api Resource", description = "Clients are people and businesses that have applied (or may apply) to an MFI for loans.\n" + "\n" + "Clients can be created in Pending or straight into Active state.")
+@Api(value = "Client Api", description = "Clients are people and businesses that have applied (or may apply) to an MFI for loans.\n" + "\n" + "Clients can be created in Pending or straight into Active state.")
 public class ClientsApiResource {
 
     private final PlatformSecurityContext context;
