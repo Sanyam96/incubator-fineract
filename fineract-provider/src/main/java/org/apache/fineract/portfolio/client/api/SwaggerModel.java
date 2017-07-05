@@ -34,10 +34,11 @@ import java.util.List;
  */
 // Java Bean class for Swagger annotation
 // to be passed to swagger annotation for POST and PUT method
-@ApiModel
+@ApiModel()
 public class SwaggerModel implements Serializable {
 
     private Boolean active;
+    @ApiModelProperty(required = true, hidden = false)
     private LocalDate activationDate;
     private Long id;
     private String accountNo;

@@ -41,7 +41,7 @@ import org.joda.time.LocalDate;
 /**
  * Immutable data object representing client data.
  */
-@ApiModel
+@ApiModel//
 final public class ClientData implements Comparable<ClientData> {
 
     private final Long id;

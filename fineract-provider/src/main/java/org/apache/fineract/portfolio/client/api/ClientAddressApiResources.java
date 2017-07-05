@@ -101,11 +101,8 @@ public class ClientAddressApiResources {
 	@Path("/{clientid}/addresses")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	@ApiOperation(value = "Create an address for a Client",
-			notes = "Mandatory Fields : \n" + "type and clientId")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
-	})
+	@ApiOperation(value = "Create an address for a Client", notes = "Mandatory Fields : \n" + "type and clientId")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class) })
 	public String AddClientAddress(@QueryParam("type") final long addressTypeId,
 			@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
 
@@ -121,11 +118,7 @@ public class ClientAddressApiResources {
 	@Path("/{clientid}/addresses")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	@ApiOperation(value = "List all addresses for a Client",
-			notes = "Example Requests:\n" + "\n" +
-					"client/1/addresses\n" + "\n" +	"\n" +
-					"clients/1/addresses?status=false,true&&type=1,2,3"
-	)
+	@ApiOperation(value = "List all addresses for a Client", notes = "Example Requests:\n" + "\n" +"client/1/addresses\n" + "\n" +	"\n" +"clients/1/addresses?status=false,true&&type=1,2,3" )
 	public String getAddresses(@QueryParam("status") final String status, @QueryParam("type") final long addressTypeId,
 							   @PathParam("clientid") final long clientid, @Context final UriInfo uriInfo) {
 		Collection<AddressData> address;
@@ -152,12 +145,10 @@ public class ClientAddressApiResources {
 	@Path("/{clientid}/addresses")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	@ApiOperation(value = "update an address for a Client", notes = "All the address fields can be updated by using update client address API" +
-			"Mandatory Fields\n" + "type and addressId")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
-	})
-	public String UpdateClientAddress(@PathParam("clientid") final long clientid, final String apiRequestBodyAsJson) {
+	@ApiOperation(value = "update an address for a Client", notes = "All the address fields can be updated by using update client address API\n" + "\n" + "Mandatory Fields\n" + "type and addressId")
+	@ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = ClientApiConstants.class)})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class) })
+	public String UpdateClientAddress(@PathParam("clientid") final long clientid, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
 		final CommandWrapper commandRequest = new CommandWrapperBuilder().updateClientAddress(clientid)
 				.withJson(apiRequestBodyAsJson).build();
