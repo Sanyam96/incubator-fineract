@@ -34,6 +34,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.accounting.journalentry.data.JournalEntryAssociationParametersData;
 import org.apache.fineract.accounting.journalentry.data.JournalEntryData;
@@ -58,6 +59,7 @@ import org.springframework.stereotype.Component;
 @Path("/journalentries")
 @Component
 @Scope("singleton")
+@Api(value = "Journal Entries", description = "A journal entry refers to the logging of transactions against general ledger accounts. A journal entry may consist of several line items, each of which is either a \"debit\" or a \"credit\". The total amount of the debits must equal the total amount of the credits or the journal entry is said to be \"unbalanced\" \n" + "\n" + "A journal entry directly changes the account balances on the general ledger")
 public class JournalEntriesApiResource {
 
     private static final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "officeId", "officeName",
@@ -88,6 +90,8 @@ public class JournalEntriesApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List Journal Entries", notes = "The list capability of journal entries can support pagination and sorting.\n\n" + "Example Requests:\n" + "\n" + "journalentries\n" + "\n" + "journalentries?transactionId=PB37X8Y21EQUY4S\n" + "\n" + "journalentries?officeId=1&manualEntriesOnly=true&fromDate=1 July 2013&toDate=15 July 2013&dateFormat=dd MMMM yyyy&locale=en\n" + "\n" + "journalentries?fields=officeName,glAccountName,transactionDate\n" + "\n" + "journalentries?offset=10&limit=50\n" + "\n" + "journalentries?orderBy=transactionId&sortOrder=DESC\n" + "\n" + "journalentries?runningBalance=true\n" + "\n" + "journalentries?transactionDetails=true\n" + "\n" + "journalentries?loanId=12\n" + "\n" + "journalentries?savingsId=24")
+    @ApiResponse(code = 200, message = "", response = JournalEntryData.class)
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("officeId") final Long officeId,
             @QueryParam("glAccountId") final Long glAccountId, @QueryParam("manualEntriesOnly") final Boolean onlyManualEntries,
             @QueryParam("fromDate") final DateParam fromDateParam, @QueryParam("toDate") final DateParam toDateParam,
@@ -124,6 +128,8 @@ public class JournalEntriesApiResource {
     @Path("{journalEntryId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a single Entry", notes = "Example Requests:\n" + "\n" + "journalentries/1\n" + "\n" + "\n" + "\n" + "journalentries/1?fields=officeName,glAccountId,entryType,amount\n" + "\n" + "journalentries/1?runningBalance=true\n" + "\n" + "journalentries/1?transactionDetails=true")
+    @ApiResponse(code = 200, message = "", response = JournalEntryData.class)
     public String retreiveJournalEntryById(@PathParam("journalEntryId") final Long journalEntryId, @Context final UriInfo uriInfo,
             @QueryParam("runningBalance") final boolean runningBalance, @QueryParam("transactionDetails") final boolean transactionDetails) {
 
@@ -140,7 +146,10 @@ public class JournalEntriesApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String createGLJournalEntry(final String jsonRequestBody, @QueryParam("command") final String commandParam) {
+    @ApiOperation(value = "Create \"Balanced\" Journal Entries", notes = "Note: A Balanced (simple) Journal entry would have atleast one \"Debit\" and one \"Credit\" entry whose amounts are equal \n" + "Compound Journal entries may have \"n\" debits and \"m\" credits where both \"m\" and \"n\" are greater than 0 and the net sum or all debits and credits are equal \n\n" + "\n" + "Mandatory Fields\n" + "officeId, transactionDate\n\n" + "\ncredits- glAccountId, amount, comments\n\n " + "\ndebits-  glAccountId, amount, comments\n\n " + "\n" + "Optional Fields\n" + "paymentTypeId, accountNumber, checkNumber, routingCode, receiptNumber, bankNumber")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String createGLJournalEntry(@ApiParam(hidden = true) final String jsonRequestBody, @QueryParam("command") final String commandParam) {
 
         CommandProcessingResult result = null;
         if (is(commandParam, "updateRunningBalance")) {
@@ -162,7 +171,10 @@ public class JournalEntriesApiResource {
     @Path("{transactionId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String createReversalJournalEntry(final String jsonRequestBody, @PathParam("transactionId") final String transactionId,
+    @ApiOperation(value = "Update Running balances for Journal Entries", notes = "This API calculates the running balances for office. If office ID not provided this API calculates running balances for all offices. \n" + "Mandatory Fields\n" + "officeId")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String createReversalJournalEntry(@ApiParam(hidden = true) final String jsonRequestBody, @PathParam("transactionId") final String transactionId,
             @QueryParam("command") final String commandParam) {
         CommandProcessingResult result = null;
         if (is(commandParam, "reverse")) {
