@@ -37,6 +37,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.*;
 import org.apache.fineract.accounting.common.AccountingConstants;
 import org.apache.fineract.accounting.common.AccountingDropdownReadPlatformService;
 import org.apache.fineract.accounting.glaccount.data.GLAccountData;
@@ -61,6 +62,7 @@ import org.springframework.stereotype.Component;
 @Path("/glaccounts")
 @Component
 @Scope("singleton")
+@Api(value = "General Ledger Account", description = "Ledger accounts represent an Individual account within an Organizations Chart Of Accounts(COA) and are assigned a name and unique number by which they can be identified. \n" + "All transactions relating to a company's assets, liabilities, owners' equity, revenue and expenses are recorded against these accounts")
 public class GLAccountsApiResource {
 
     private static final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "name", "parentId", "glCode",
@@ -98,6 +100,8 @@ public class GLAccountsApiResource {
     @Path("template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve GL Accounts Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "glaccounts/template\n" + "glaccounts/template?type=1\n" + "\n" + "type is optional and integer value from 1 to 5.\n" + "\n" + "1.Assets \n" + "2.Liabilities \n" + "3.Equity \n" + "4.Income \n" + "5.Expenses")
+    @ApiResponse(code = 200, message = "", response = GLAccountData.class)
     public String retrieveNewAccountDetails(@Context final UriInfo uriInfo, @QueryParam("type") final Integer type) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
@@ -112,6 +116,8 @@ public class GLAccountsApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List General Ledger Accounts", notes = "ARGUMENTS\n" + "type Integer optional manualEntriesAllowed boolean optional usage Integer optional disabled boolean optional parentId Long optional tagId Long optional\n" + "Example Requests:\n" + "\n" + "glaccounts\n" + "\n" + "\n" + "glaccounts?type=1&manualEntriesAllowed=true&usage=1&disabled=false\n" + "\n" + "glaccounts?fetchRunningBalance=true")
+    @ApiResponse(code = 200, message = "", response = GLAccountData.class)
     public String retrieveAllAccounts(@Context final UriInfo uriInfo, @QueryParam("type") final Integer type,
             @QueryParam("searchParam") final String searchParam, @QueryParam("usage") final Integer usage,
             @QueryParam("manualEntriesAllowed") final Boolean manualEntriesAllowed, @QueryParam("disabled") final Boolean disabled,
@@ -130,6 +136,8 @@ public class GLAccountsApiResource {
     @Path("{glAccountId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a General Ledger Account", notes = "Example Requests:\n" + "\n" + "glaccounts/1\n" + "\n" + "\n" + "glaccounts/1?template=true\n" + "\n" + "\n" + "glaccounts/1?fields=name,glCode\n" + "\n" + "\n" + "glaccounts/1?fetchRunningBalance=true")
+    @ApiResponse(code = 200, message = "", response = GLAccountData.class)
     public String retreiveAccount(@PathParam("glAccountId") final Long glAccountId, @Context final UriInfo uriInfo,
             @QueryParam("fetchRunningBalance") final boolean runningBalance) {
 
@@ -148,7 +156,10 @@ public class GLAccountsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String createGLAccount(final String jsonRequestBody) {
+    @ApiOperation(value = "Create a General Ledger Account", notes = "Note: You may optionally create Hierarchical Chart of Accounts by using the \"parentId\" property of an Account\n" + "Mandatory Fields\n" + "name, glCode, type, usage and manualEntriesAllowed")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = GLAccountData.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String createGLAccount(@ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createGLAccount().withJson(jsonRequestBody).build();
 
@@ -161,7 +172,10 @@ public class GLAccountsApiResource {
     @Path("{glAccountId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String updateGLAccount(@PathParam("glAccountId") final Long glAccountId, final String jsonRequestBody) {
+    @ApiOperation(value = "Update an Accounting closure", notes = "Once an accounting closure is created, only the comments associated with it may be edited\n" + "\n")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = GLAccountData.class)})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String updateGLAccount(@PathParam("glAccountId") final Long glAccountId, @ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateGLAccount(glAccountId).withJson(jsonRequestBody).build();
 
@@ -174,6 +188,8 @@ public class GLAccountsApiResource {
     @Path("{glAccountId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Delete an accounting closure", notes = "Note: Only the latest accounting closure associated with a branch may be deleted.")
+    @ApiResponse(code = 200, message = "", response = CommandWrapper.class)
     public String deleteGLAccount(@PathParam("glAccountId") final Long glAccountId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteGLAccount(glAccountId).build();
