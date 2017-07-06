@@ -39,6 +39,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.*;
 import org.apache.fineract.accounting.common.AccountingConstants;
 import org.apache.fineract.accounting.glaccount.data.GLAccountData;
 import org.apache.fineract.accounting.glaccount.service.GLAccountReadPlatformService;
@@ -66,6 +67,7 @@ import org.springframework.stereotype.Component;
 @Path("/accountingrules")
 @Component
 @Scope("singleton")
+@Api(value = "Accounting Rules", description = "It is typical scenario in MFI's that non accountants pass journal entries on a regular basis. For Ex: A branch office might deposit their entire cash at hand to their Bank account at the end of a working day. The branch office users might not understand enough of accounting to figure out which account needs to get credited and which account needs to be debited to represent this transaction.\n" + "\n" + "Enter accounting rules, an abstraction on top of manual Journal entires for enabling simpler data entry. An accounting rule can define any of the following abstractions\n" + "\n" + "A Simple journal entry where both the credit and debit account have been preselected\n" + "A Simple journal entry where either credit or debit accounts have been limited to a pre-selected list of accounts (Ex: Debit account should be one of \"Bank of America\" of \"JP Morgan\" and credit account should be \"Cash\")\n" + "A Compound journal entry where multiple debits and / or multiple credits may be made amongst a set of preselected list of accounts (Ex: Credit account should be either \"Bank Of America\" or \"Cash\" and debit account can be \"Employee Salary\" and/or \"Miscellenous Expenses\")\n" + "An accounting rule can also be optionally associated with a branch, so that only a particular Branch's users have access to the rule")
 public class AccountingRuleApiResource {
 
     private static final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "officeId", "officeName",
@@ -105,6 +107,8 @@ public class AccountingRuleApiResource {
     @Path("template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve Accounting Rule Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "accountingrules/template")
+    @ApiResponse(code = 200, message = "", response = AccountingRuleData.class)
     public String retrieveTemplate(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
@@ -119,6 +123,8 @@ public class AccountingRuleApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve Accounting Rules", notes = "Returns the list of defined accounting rules.\n" + "\n" + "Example Requests:\n" + "\n" + "accountingrules")
+    @ApiResponse(code = 200, message = "", response = AccountingRuleData.class)
     public String retrieveAllAccountingRules(@Context final UriInfo uriInfo) {
 
         final AppUser currentUser = this.context.authenticatedUser();
@@ -147,6 +153,8 @@ public class AccountingRuleApiResource {
     @Path("{accountingRuleId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a Accounting rule", notes = "Returns the details of a defined Accounting rule.\n" + "\n" + "Example Requests:\n" + "\n" + "accountingrules/1")
+    @ApiResponse(code = 200, message = "", response = AccountingRuleData.class)
     public String retreiveAccountingRule(@PathParam("accountingRuleId") final Long accountingRuleId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
@@ -163,7 +171,10 @@ public class AccountingRuleApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String createAccountingRule(final String jsonRequestBody) {
+    @ApiOperation(value = "Create/Define a Accounting rule", notes = "Define a new Accounting rule.\n" + "\n" + "Mandatory Fields\n" + "name, officeId,\n" + "accountToDebit OR debitTags,\n" + "accountToCredit OR creditTags.\n" + "\n" + "Optional Fields\n" + "description")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String createAccountingRule(@ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createAccountingRule().withJson(jsonRequestBody).build();
 
@@ -176,7 +187,10 @@ public class AccountingRuleApiResource {
     @Path("{accountingRuleId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String updateAccountingRule(@PathParam("accountingRuleId") final Long accountingRuleId, final String jsonRequestBody) {
+    @ApiOperation(value = "Update a Accounting Rule", notes = "Updates the details of a Accounting rule.")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String updateAccountingRule(@PathParam("accountingRuleId") final Long accountingRuleId,@ApiParam(hidden = true) final String jsonRequestBody) {
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateAccountingRule(accountingRuleId).withJson(jsonRequestBody)
                 .build();
 
@@ -189,6 +203,8 @@ public class AccountingRuleApiResource {
     @Path("{accountingRuleId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Delete a Accounting Rule", notes = "Deletes a Accounting rule.")
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String deleteAccountingRule(@PathParam("accountingRuleId") final Long accountingRuleId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteAccountingRule(accountingRuleId).build();

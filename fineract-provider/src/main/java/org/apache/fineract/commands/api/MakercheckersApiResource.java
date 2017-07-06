@@ -35,6 +35,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.commands.data.AuditData;
 import org.apache.fineract.commands.data.AuditSearchData;
@@ -53,6 +56,7 @@ import org.springframework.stereotype.Component;
 @Path("/makercheckers")
 @Component
 @Scope("singleton")
+@Api(value = "Maker Checker (or 4-eye) functionality")
 public class MakercheckersApiResource {
 
     private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "actionName", "entityName", "resourceId",
@@ -80,6 +84,8 @@ public class MakercheckersApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List Maker Checker Entries", notes = "Get a list of entries that can be checked by the requestor that match the criteria supplied.\n" + "\n" + "Example Requests:\n" + "\n" + "makercheckers\n" + "\n" + "makercheckers?fields=madeOnDate,maker,processingResult\n" + "\n" + "makercheckers?makerDateTimeFrom=2013-03-25 08:00:00&makerDateTimeTo=2013-04-04 18:00:00\n" + "\n" + "makercheckers?officeId=1\n" + "\n" + "makercheckers?officeId=1&includeJson=true")
+    @ApiResponse(code = 200, message = "", response = AuditData.class)
     public String retrieveCommands(@Context final UriInfo uriInfo, @QueryParam("actionName") final String actionName,
             @QueryParam("entityName") final String entityName, @QueryParam("resourceId") final Long resourceId,
             @QueryParam("makerId") final Long makerId, @QueryParam("makerDateTimeFrom") final String makerDateTimeFrom,
@@ -102,6 +108,8 @@ public class MakercheckersApiResource {
     @Path("/searchtemplate")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Maker Checker Search Template", notes = "This is a convenience resource. It can be useful when building a Checker Inbox UI. \"appUsers\" are data scoped to the office/branch the requestor is associated with. \"actionNames\" and \"entityNames\" returned are those that the requestor has Checker approval permissions for.\n" + "\n" + "Example Requests:\n" + "\n" + "makercheckers/searchtemplate\n" + "makercheckers/searchtemplate?fields=entityNames")
+    @ApiResponse(code = 200, message = "", response = AuditSearchData.class)
     public String retrieveAuditSearchTemplate(@Context final UriInfo uriInfo) {
 
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
@@ -118,6 +126,8 @@ public class MakercheckersApiResource {
     @Path("{auditId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Approve Maker Checker Entry | Reject Maker Checker Entry")
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String approveMakerCheckerEntry(@PathParam("auditId") final Long auditId, @QueryParam("command") final String commandParam) {
 
         CommandProcessingResult result = null;
@@ -140,6 +150,8 @@ public class MakercheckersApiResource {
     @Path("{auditId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Delete Maker Checker Entry")
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String deleteMakerCheckerEntry(@PathParam("auditId") final Long auditId) {
 
         final Long id = this.writePlatformService.deleteEntry(auditId);
