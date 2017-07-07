@@ -156,7 +156,7 @@ public class AccountNumberFormatsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update an Account number format")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true,paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
     @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class )
     public String update(@PathParam("accountNumberFormatId") final Long accountNumberFormatId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
