@@ -35,6 +35,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.*;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -52,6 +53,7 @@ import org.springframework.stereotype.Component;
 @Path("/reports")
 @Component
 @Scope("singleton")
+@Api(value = "Reports", description = "Non-core reports can be added, updated and deleted.")
 public class ReportsApiResource {
 
     private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "reportName", "reportType", "reportSubType",
@@ -79,6 +81,8 @@ public class ReportsApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List Reports", notes = "Lists all reports and their parameters.\n" + "\n" + "Example Request:\n" + "\n" + "reports")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportData.class)})
     public String retrieveReportList(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -93,6 +97,8 @@ public class ReportsApiResource {
     @Path("{id}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a Report\n", notes = "Example Requests:\n" + "\n" + "reports/1\n" + "\n" + "\n" + "reports/1?template=true")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportData.class)})
     public String retrieveReport(@PathParam("id") final Long id, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -111,6 +117,8 @@ public class ReportsApiResource {
     @Path("template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve Report Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "reports/template")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportData.class)})
     public String retrieveOfficeTemplate(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -125,7 +133,10 @@ public class ReportsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String createReport(final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "Create a Report", notes = "")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
+    public String createReport(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createReport().withJson(apiRequestBodyAsJson).build();
 
@@ -138,7 +149,10 @@ public class ReportsApiResource {
     @Path("{id}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String updateReport(@PathParam("id") final Long id, final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "Update a Report", notes = "Only the useReport value can be updated for core reports.")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
+    public String updateReport(@PathParam("id") final Long id, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateReport(id).withJson(apiRequestBodyAsJson).build();
 
@@ -151,6 +165,8 @@ public class ReportsApiResource {
     @Path("{id}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Delete a Report", notes = "Only non-core reports can be deleted.")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String deleteReport(@PathParam("id") final Long id) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteReport(id).build();
