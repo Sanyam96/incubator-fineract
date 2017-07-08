@@ -39,6 +39,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.fineract.infrastructure.core.api.ApiRequestParameterHelper;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.serialization.ApiRequestJsonSerializationSettings;
@@ -60,6 +64,7 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("{entityType}/{entityId}/documents")
 @Component
 @Scope("singleton")
+@Api(value = "Documents", description = "Multiple Documents (a combination of a name, description and a file) may be attached to different Entities like Clients, Groups, Staff, Loans, Savings and Client Identifiers in the system\n" + "\n" + "Note: The currently allowed Entities are\n" + "\n" + "Clients: URL Pattern as clients\n" + "Staff: URL Pattern as staff\n" + "Loans: URL Pattern as loans\n" + "Savings: URL Pattern as savings\n" + "Client Identifiers: URL Pattern as client_identifiers\n" + "Groups: URL Pattern as groups")
 public class DocumentManagementApiResource {
 
     private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("id", "parentEntityType", "parentEntityId",
@@ -87,6 +92,8 @@ public class DocumentManagementApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List documents", notes = "Example Requests:\n" + "\n" + "clients/1/documents\n" + "\n" + "client_identifiers/1/documents\n" + "\n" + "loans/1/documents?fields=name,description")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = DocumentData.class)})
     public String retreiveAllDocuments(@Context final UriInfo uriInfo, @PathParam("entityType") final String entityType,
             @PathParam("entityId") final Long entityId) {
 
@@ -101,6 +108,8 @@ public class DocumentManagementApiResource {
     @POST
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Create a Document", notes = "Note: A document is created using a Multi-part form upload \n" + "Body Parts\n" + "name\n" + "Name or summary of the document\n" + "description\n" + "Description of the document\n" + "file\n" + "The file to be uploaded\n" + "Mandatory Fields\n" + "file and description")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String createDocument(@PathParam("entityType") final String entityType, @PathParam("entityId") final Long entityId,
             @HeaderParam("Content-Length") final Long fileSize, @FormDataParam("file") final InputStream inputStream,
             @FormDataParam("file") final FormDataContentDisposition fileDetails, @FormDataParam("file") final FormDataBodyPart bodyPart,
@@ -127,6 +136,8 @@ public class DocumentManagementApiResource {
     @Path("{documentId}")
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Update a Document", notes = "Note: A document is updated using a Multi-part form upload \n" + "Body Parts\n" + "name\n" + "Name or summary of the document\n" + "description\n" + "Description of the document\n" + "file\n" + "The file to be uploaded")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String updateDocument(@PathParam("entityType") final String entityType, @PathParam("entityId") final Long entityId,
             @PathParam("documentId") final Long documentId, @HeaderParam("Content-Length") final Long fileSize,
             @FormDataParam("file") final InputStream inputStream, @FormDataParam("file") final FormDataContentDisposition fileDetails,
@@ -166,6 +177,8 @@ public class DocumentManagementApiResource {
     @Path("{documentId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a Document", notes = "Example Requests:\n" + "\n" + "clients/1/documents/1\n" + "\n" + "\n" + "loans/1/documents/1\n" + "\n" + "\n" + "client_identifiers/1/documents/1?fields=name,description")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = DocumentData.class)})
     public String getDocument(@PathParam("entityType") final String entityType, @PathParam("entityId") final Long entityId,
             @PathParam("documentId") final Long documentId, @Context final UriInfo uriInfo) {
 
@@ -181,6 +194,8 @@ public class DocumentManagementApiResource {
     @Path("{documentId}/attachment")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_OCTET_STREAM })
+    @ApiOperation(value = "Retrieve Binary File associated with Document", notes = "Request used to download the file associated with the document\n" + "\n" + "Example Requests:\n" + "\n" + "clients/1/documents/1/attachment\n" + "\n" + "\n" + "loans/1/documents/1/attachment")
+    @ApiResponses({@ApiResponse(code = 200, message = "")})
     public Response downloadFile(@PathParam("entityType") final String entityType, @PathParam("entityId") final Long entityId,
             @PathParam("documentId") final Long documentId) {
 
@@ -198,6 +213,8 @@ public class DocumentManagementApiResource {
     @Path("{documentId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Remove a Document", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String deleteDocument(@PathParam("entityType") final String entityType, @PathParam("entityId") final Long entityId,
             @PathParam("documentId") final Long documentId) {
 
