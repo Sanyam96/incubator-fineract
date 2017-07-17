@@ -93,7 +93,7 @@ public class CacheApiResource {
     @PUT
     @ApiOperation(value = "Switch Cache", notes = "Switches the cache to chosen one.")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = DefaultToApiJsonSerializer.class)
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String switchCache(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateCache().withJson(apiRequestBodyAsJson).build();

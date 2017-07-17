@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.portfolio.client.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.fineract.infrastructure.codes.data.CodeValueData;
@@ -32,30 +33,40 @@ import java.util.List;
 /**
  * Created by sanyam on 30/6/17.
  */
-// Java Bean class for Swagger annotation
+// Java Bean class for Swagger annotation just for defining the payload
 // to be passed to swagger annotation for POST and PUT method
-@ApiModel()
-public class SwaggerModel implements Serializable {
+@ApiModel(value = "Client payload swagger")
+public class ClientPayloadSwagger implements Serializable {
 
-    private Boolean active;
-    @ApiModelProperty(required = true, hidden = false)
-    private LocalDate activationDate;
-    private Long id;
-    private String accountNo;
-    private String externalId;
-    private AddressData address;
-    private Boolean isAddressEnabled;
-    private List<DatatableData> datatables;
     private String firstname;
-    private String middlename;
     private String lastname;
     private String fullname;
-    private String displayName;
+    private String middlename;
+    @ApiModelProperty(required = true, hidden = false)
+    private Long officeId;
+
+    private Boolean active;
+    private LocalDate activationDate;
+    private Boolean isAddressEnabled;
+    private AddressData address;
+    private String accountNo;
+    private String externalId;
     private String mobileNo;
-    private LocalDate dateOfBirth;
+
+    @ApiModelProperty(required = false, hidden = false)
     private CodeValueData gender;
 
-    public SwaggerModel(){
+    @ApiModelProperty(required = false, hidden = false)
+    private CodeValueData clientType;
+
+    @ApiModelProperty(required = false, hidden = false)
+    private Long staffId;
+
+    private List<DatatableData> datatables;
+    private String displayName;
+    private LocalDate dateOfBirth;
+
+    public ClientPayloadSwagger(){
 
     }
 
@@ -73,14 +84,6 @@ public class SwaggerModel implements Serializable {
 
     public void setActivationDate(LocalDate activationDate) {
         this.activationDate = activationDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getAccountNo() {

@@ -41,7 +41,6 @@ import org.joda.time.LocalDate;
 /**
  * Immutable data object representing client data.
  */
-@ApiModel//
 final public class ClientData implements Comparable<ClientData> {
 
     private final Long id;
@@ -52,18 +51,12 @@ final public class ClientData implements Comparable<ClientData> {
     private final CodeValueData subStatus;
 
     @SuppressWarnings("unused")
-    @ApiModelProperty(required = true, hidden = false)
     private final Boolean active;
-    @ApiModelProperty(required = true)
     private final LocalDate activationDate;
 
-    @ApiModelProperty(required = true)
     private final String firstname;
-    @ApiModelProperty(required = false, hidden = false)
     private final String middlename;
-    @ApiModelProperty(required = true)
     private final String lastname;
-    @ApiModelProperty(required = false, hidden = false)
     private final String fullname;
     private final String displayName;
     private final String mobileNo;
@@ -71,8 +64,7 @@ final public class ClientData implements Comparable<ClientData> {
     private final CodeValueData gender;
     private final CodeValueData clientType;
     private final CodeValueData clientClassification;
-    @ApiModelProperty(required = false, hidden = false)
-	private final Boolean isStaff;
+    private final Boolean isStaff;
 
     @ApiModelProperty(required = true, hidden = false, dataType = "long")
     private final Long officeId;

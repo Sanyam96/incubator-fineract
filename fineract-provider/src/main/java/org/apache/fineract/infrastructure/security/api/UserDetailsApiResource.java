@@ -28,6 +28,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.fineract.infrastructure.core.data.EnumOptionData;
 import org.apache.fineract.infrastructure.core.serialization.ToApiJsonSerializer;
 import org.apache.fineract.infrastructure.security.data.AuthenticatedOauthUserData;
@@ -51,6 +55,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Profile("oauth")
 @Scope("singleton")
+@Api(value = "Fetch authenticated user details\n", description = "")
 public class UserDetailsApiResource {
 
     private final ResourceServerTokenServices tokenServices;
@@ -68,6 +73,8 @@ public class UserDetailsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Fetch authenticated user details\n", notes = "checks the Authentication and returns the set roles and permissions allowed.")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AuthenticatedOauthUserData.class)})
     public String fetchAuthenticatedUserData(@QueryParam("access_token") final String accessToken) {
 
         final Authentication authentication = this.tokenServices.loadAuthentication(accessToken);
