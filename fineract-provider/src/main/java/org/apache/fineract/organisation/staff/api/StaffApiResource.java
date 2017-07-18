@@ -36,6 +36,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.*;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -55,6 +56,7 @@ import org.springframework.stereotype.Component;
 @Path("/staff")
 @Component
 @Scope("singleton")
+@Api(value = "Staff", description = "Allows you to model staff members. At present the key role of significance is whether this staff member is a loan officer or not.")
 public class StaffApiResource {
 
     /**
@@ -89,6 +91,8 @@ public class StaffApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve Staff", notes = "Returns the list of staff members.\n" + "\n" + "Example Requests:\n" + "\n" + "staff")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffData.class)})
     public String retrieveStaff(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") final String sqlSearch,
             @QueryParam("officeId") final Long officeId,
             @DefaultValue("false") @QueryParam("staffInOfficeHierarchy") final boolean staffInOfficeHierarchy,
@@ -111,7 +115,10 @@ public class StaffApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String createStaff(final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "Create a staff member", notes = "Creates a staff member.\n" + "\n" + "Mandatory Fields\n" + "officeId, firstname, lastname\n" + "\n" + "Optional Fields\n" + "isLoanOfficer, isActive")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String createStaff(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createStaff().withJson(apiRequestBodyAsJson).build();
 
@@ -124,6 +131,8 @@ public class StaffApiResource {
     @Path("{staffId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "Retrieve a Staff Member", notes = "Returns the details of a Staff Member.\n" + "\n" + "Example Requests:\n" + "\n" + "staff/1")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffData.class)})
     public String retreiveStaff(@PathParam("staffId") final Long staffId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -142,7 +151,10 @@ public class StaffApiResource {
     @Path("{staffId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String updateStaff(@PathParam("staffId") final Long staffId, final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "Update a Staff Member", notes = "Updates the details of a staff member.")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String updateStaff(@PathParam("staffId") final Long staffId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateStaff(staffId).withJson(apiRequestBodyAsJson).build();
 

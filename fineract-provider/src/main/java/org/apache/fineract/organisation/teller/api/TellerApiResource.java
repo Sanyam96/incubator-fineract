@@ -32,6 +32,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import io.swagger.annotations.*;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -57,6 +58,7 @@ import org.springframework.stereotype.Component;
 @Path("tellers")
 @Component
 @Scope("singleton")
+@Api(value = "Teller Cash Management", description = "Teller cash management which will allow an organization to manage their cash transactions at branches or head office more effectively.")
 public class TellerApiResource {
 
     private final PlatformSecurityContext securityContext;
@@ -78,6 +80,8 @@ public class TellerApiResource {
     @GET
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "List all tellers", notes = "Retrieves list tellers")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = TellerData.class)})
     public String getTellerData(@QueryParam("officeId") final Long officeId) {
         final Collection<TellerData> foundTellers = this.readPlatformService.getTellers(officeId);
 
@@ -88,6 +92,8 @@ public class TellerApiResource {
     @GET
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve tellers", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = TellerData.class)})
     public String findTeller(@PathParam("tellerId") final Long tellerId) {
         final TellerData teller = this.readPlatformService.findTeller(tellerId);
 
@@ -97,7 +103,10 @@ public class TellerApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
-    public String createTeller(final String tellerData) {
+    @ApiOperation(value = "Create teller", notes = "Mandatory Fields\n" + "Teller name, OfficeId, Description, Start Date, Status\n" + "Optional Fields\n" + "End Date")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String createTeller(@ApiParam(hidden = true) final String tellerData) {
         final CommandWrapper request = new CommandWrapperBuilder().createTeller().withJson(tellerData).build();
 
         final CommandProcessingResult result = this.commandWritePlatformService.logCommandSource(request);
@@ -109,7 +118,10 @@ public class TellerApiResource {
     @PUT
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateTeller(@PathParam("tellerId") final Long tellerId, final String tellerData) {
+    @ApiOperation(value = "Update teller", notes = "")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String updateTeller(@PathParam("tellerId") final Long tellerId, @ApiParam(hidden = true) final String tellerData) {
         final CommandWrapper request = new CommandWrapperBuilder().updateTeller(tellerId).withJson(tellerData).build();
 
         final CommandProcessingResult result = this.commandWritePlatformService.logCommandSource(request);
@@ -133,6 +145,8 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "List Cashiers", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CashiersForTeller.class)})
     public String getCashierData(@PathParam("tellerId") final Long tellerId, @QueryParam("fromdate") final String fromDateStr,
             @QueryParam("todate") final String toDateStr) {
         final DateTimeFormatter dateFormatter = ISODateTimeFormat.basicDate();
@@ -157,6 +171,8 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a cashier", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CashierData.class)})
     public String findCashierData(@PathParam("tellerId") final Long tellerId, @PathParam("cashierId") final Long cashierId) {
         final CashierData cashier = this.readPlatformService.findCashier(cashierId);
 
@@ -167,6 +183,8 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/template")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Find Cashiers", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CashierData.class)})
     public String getCashierTemplate(@PathParam("tellerId") final Long tellerId) {
 
         final TellerData teller = this.readPlatformService.findTeller(tellerId);
@@ -181,7 +199,10 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
-    public String createCashier(@PathParam("tellerId") final Long tellerId, final String cashierData) {
+    @ApiOperation(value = "Create Cashiers", notes = "Mandatory Fields\n" + "Cashier/staff, Fromm Date, To Date, Full Day or From time and To time\n" + "Optional Fields\n" + "Description/Notes")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String createCashier(@PathParam("tellerId") final Long tellerId, @ApiParam(hidden = true) final String cashierData) {
         final CommandWrapper request = new CommandWrapperBuilder().allocateTeller(tellerId).withJson(cashierData).build();
 
         final CommandProcessingResult result = this.commandWritePlatformService.logCommandSource(request);
@@ -193,8 +214,11 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Update Cashier", notes = "")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String updateCashier(@PathParam("tellerId") final Long tellerId, @PathParam("cashierId") final Long cashierId,
-            final String cashierDate) {
+            @ApiParam(hidden = true) final String cashierDate) {
         final CommandWrapper request = new CommandWrapperBuilder().updateAllocationTeller(tellerId, cashierId).withJson(cashierDate)
                 .build();
 
@@ -207,6 +231,8 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Delete Cashier", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String deleteCashier(@PathParam("tellerId") final Long tellerId, @PathParam("cashierId") final Long cashierId) {
         final CommandWrapper request = new CommandWrapperBuilder().deleteAllocationTeller(tellerId, cashierId).build();
 
@@ -219,8 +245,11 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}/allocate")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Allocate Cash To Cashier", notes = "Mandatory Fields\n" + "Date, Amount, Currency, Notes/Comments")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String allocateCashToCashier(@PathParam("tellerId") final Long tellerId, @PathParam("cashierId") final Long cashierId,
-            final String cashierTxnData) {
+            @ApiParam(hidden = true) final String cashierTxnData) {
         final CommandWrapper request = new CommandWrapperBuilder().allocateCashToCashier(tellerId, cashierId).withJson(cashierTxnData)
                 .build();
 
@@ -234,8 +263,11 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}/settle")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Settle Cash From Cashier", notes = "Mandatory Fields\n" + "Date, Amount, Currency, Notes/Comments")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String settleCashFromCashier(@PathParam("tellerId") final Long tellerId, @PathParam("cashierId") final Long cashierId,
-            final String cashierTxnData) {
+            @ApiParam(hidden = true) final String cashierTxnData) {
         final CommandWrapper request = new CommandWrapperBuilder().settleCashFromCashier(tellerId, cashierId).withJson(cashierTxnData)
                 .build();
 
@@ -249,6 +281,8 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}/transactions")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve Cashier Transaction", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CashierTransactionData.class)})
     public String getTransactionsForCashier(@PathParam("tellerId") final Long tellerId, @PathParam("cashierId") final Long cashierId,
             @QueryParam("currencyCode") final String currencyCode, @QueryParam("offset") final Integer offset, @QueryParam("limit") final Integer limit,
             @QueryParam("orderBy") final String orderBy, @QueryParam("sortOrder") final String sortOrder) {
@@ -268,6 +302,8 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}/summaryandtransactions")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Transactions Wtih Summary For Cashier", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CashierTransactionsWithSummaryData.class)})
     public String getTransactionsWtihSummaryForCashier(@PathParam("tellerId") final Long tellerId,
             @PathParam("cashierId") final Long cashierId, @QueryParam("currencyCode") final String currencyCode,
             @QueryParam("offset") final Integer offset, @QueryParam("limit") final Integer limit,
@@ -290,6 +326,8 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}/transactions/template")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve Cashier Transaction Template", notes = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CashierTransactionData.class)})
     public String getCashierTxnTemplate(@PathParam("tellerId") final Long tellerId, @PathParam("cashierId") final Long cashierId) {
 
         final CashierTransactionData cashierTxnTemplate = this.readPlatformService.retrieveCashierTxnTemplate(cashierId);
