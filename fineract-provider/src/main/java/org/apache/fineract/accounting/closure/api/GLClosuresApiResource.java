@@ -122,8 +122,8 @@ public class GLClosuresApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create an Accounting Closure", notes = "Mandatory Fields\n" + "officeId,closingDate")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = GLClosureData.class)})
-    @ApiResponse(code = 200, message = "", response = GLClosureJsonInputParams.class)
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
     public String createGLClosure(@ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createGLClosure().withJson(jsonRequestBody).build();
