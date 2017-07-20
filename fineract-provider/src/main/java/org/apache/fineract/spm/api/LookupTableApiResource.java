@@ -18,6 +18,10 @@
  */
 package org.apache.fineract.spm.api;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.spm.data.LookupTableData;
 import org.apache.fineract.spm.domain.LookupTable;
@@ -41,6 +45,7 @@ import java.util.List;
 @Path("/surveys/{surveyId}/lookuptables")
 @Component
 @Scope("singleton")
+@Api(value = "SPM API", description = "The Apache Fineract SPM API provides the ability to create custom surveys to collect social performance measurentment data or any additional questionnaire a financial institute want to collect.")
 public class LookupTableApiResource {
 
     private final PlatformSecurityContext securityContext;
@@ -61,6 +66,8 @@ public class LookupTableApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
+    @ApiOperation(value = "List all Lookup Table entries", notes = "List all Lookup Table entries for a survey.")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = LookupTableData.class)})
     public List<LookupTableData> fetchLookupTables(@PathParam("surveyId") final Long surveyId) {
         this.securityContext.authenticatedUser();
 
@@ -80,6 +87,8 @@ public class LookupTableApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
+    @ApiOperation(value = "Retrieve a Lookup Table entry", notes = "Retrieve a Lookup Table entry for a survey.")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = LookupTableData.class)})
     public LookupTableData findLookupTable(@PathParam("surveyId") final Long surveyId,
                                            @PathParam("key") final String key) {
         this.securityContext.authenticatedUser();
@@ -99,6 +108,8 @@ public class LookupTableApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
+    @ApiOperation(value = "Create a Lookup Table entry", notes = "Add a new netry to a survey.\n" + "\n" + "Mandatory Fields\n" + "key, score, validFrom, validTo")
+    @ApiResponses({@ApiResponse(code = 200, message = "OK")})
     public void createLookupTable(@PathParam("surveyId") final Long surveyId,
                                   final LookupTableData lookupTableData) {
         this.securityContext.authenticatedUser();

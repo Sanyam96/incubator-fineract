@@ -25,6 +25,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import io.swagger.annotations.*;
+import org.apache.fineract.accounting.accrual.swagger.runaccuralPost;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -55,7 +56,7 @@ public class AccrualAccountingApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Executes Periodic Accrual Accounting", httpMethod = "POST", notes = "Mandatory Fields\n" + "\n" + "tillDate\n")
-    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = AccrualAccountingConstants.class,dataType = "org.apache.fineract.accounting.accrual.api.AccrualAccountingConstants")})
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = runaccuralPost.class)})
     @ApiResponse(code = 200, message = "Success")
     public String executePeriodicAccrualAccounting( @ApiParam(hidden = true) final String jsonRequestBody) {
 

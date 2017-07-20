@@ -29,6 +29,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import io.swagger.annotations.*;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.portfolio.client.domain.Client;
 import org.apache.fineract.portfolio.client.domain.ClientRepositoryWrapper;
@@ -48,6 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Path("/surveys/{surveyId}/scorecards")
 @Component
 @Scope("singleton")
+@Api(value = "SPM - scorecards", description = " ")
 public class ScorecardApiResource {
 
     private final PlatformSecurityContext securityContext;
@@ -69,6 +71,8 @@ public class ScorecardApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
+    @ApiOperation(value = "List all Scorecard entries", notes = "List all Scorecard entries for a survey.")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = Scorecard.class)})
     public List<ScorecardData> findBySurvey(@PathParam("surveyId") final Long surveyId) {
         this.securityContext.authenticatedUser();
 
@@ -87,7 +91,9 @@ public class ScorecardApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
-    public void createScorecard(@PathParam("surveyId") final Long surveyId, final ScorecardData scorecardData) {
+    @ApiOperation(value = "Create a Scorecard entry", notes = "Add a new netry to a survey.\n" + "\n" + "Mandatory Fields\n" + "clientId, createdOn, questionId, responseId, staffId")
+    @ApiResponses({@ApiResponse(code = 200, message = "OK")})
+    public void createScorecard(@PathParam("surveyId") final Long surveyId, @ApiParam(format = "body", type = "body") final ScorecardData scorecardData) {
         final AppUser appUser = this.securityContext.authenticatedUser();
         final Survey survey = findSurvey(surveyId);
         final Client client = this.clientRepositoryWrapper.findOneWithNotFoundDetection(scorecardData.getClientId());
