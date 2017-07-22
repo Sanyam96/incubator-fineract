@@ -56,7 +56,7 @@ public class AccrualAccountingApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Executes Periodic Accrual Accounting", httpMethod = "POST", notes = "Mandatory Fields\n" + "\n" + "tillDate\n")
-    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = runaccuralPost.class)})
+//    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = runaccuralPost.class)})
     @ApiResponse(code = 200, message = "Success")
     public String executePeriodicAccrualAccounting( @ApiParam(hidden = true) final String jsonRequestBody) {
 
