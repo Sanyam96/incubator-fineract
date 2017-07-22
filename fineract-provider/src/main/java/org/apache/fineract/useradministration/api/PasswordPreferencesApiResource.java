@@ -29,6 +29,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.*;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -46,6 +47,7 @@ import org.springframework.stereotype.Component;
 @Path("/" + PasswordPreferencesApiConstants.RESOURCE_NAME)
 @Component
 @Scope("singleton")
+@Api(value = "Password preferences", description = "This API enables management of password policy for user administration.\n" + "\n" + "There is no Apache Fineract functionality for creating a validation policy. The validation policies come pre-installed.\n" + "\n" + "Validation policies may be updated")
 public class PasswordPreferencesApiResource {
 
     private final PlatformSecurityContext context;
@@ -85,7 +87,10 @@ public class PasswordPreferencesApiResource {
     @PUT
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String update(final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "Update password preferences", notes = "")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
+    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    public String update(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updatePasswordPreferences() //
@@ -101,6 +106,8 @@ public class PasswordPreferencesApiResource {
     @Path("/template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
+    @ApiOperation(value = "List Application Password validation policies", notes = "ARGUMENTS\n" + "Example Requests:\n" + "\n" + "passwordpreferences")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = PasswordValidationPolicyData.class)})
     public String template(@Context final UriInfo uriInfo) {
         this.context.authenticatedUser().validateHasReadPermission(PasswordPreferencesApiConstants.ENTITY_NAME);
 

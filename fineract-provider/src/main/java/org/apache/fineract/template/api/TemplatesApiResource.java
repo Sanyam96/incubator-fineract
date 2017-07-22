@@ -139,7 +139,7 @@ public class TemplatesApiResource {
     @ApiOperation(value = "Add a UGD", notes = "Adds a new UGD.\n" + "\n" + "Mandatory Fields\n" + "name\n" + "Example Requests:\n" + "\n" + "templates/1")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
     @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
-    public String createTemplate(final String apiRequestBodyAsJson) {
+    public String createTemplate(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createTemplate().withJson(apiRequestBodyAsJson).build();
 
         final CommandProcessingResult result = this.commandsSourceWritePlatformService.logCommandSource(commandRequest);
@@ -178,7 +178,7 @@ public class TemplatesApiResource {
     @ApiOperation(value = "Update a UGD", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
     @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
-    public String saveTemplate(@PathParam("templateId") final Long templateId, final String apiRequestBodyAsJson) {
+    public String saveTemplate(@PathParam("templateId") final Long templateId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateTemplate(templateId).withJson(apiRequestBodyAsJson).build();
 

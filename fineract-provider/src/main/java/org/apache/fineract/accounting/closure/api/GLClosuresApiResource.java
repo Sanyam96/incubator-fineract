@@ -39,6 +39,9 @@ import javax.ws.rs.core.UriInfo;
 import io.swagger.annotations.*;
 import org.apache.fineract.accounting.closure.data.GLClosureData;
 import org.apache.fineract.accounting.closure.service.GLClosureReadPlatformService;
+import org.apache.fineract.accounting.closure.swagger.GETglclosuresResponse;
+import org.apache.fineract.accounting.closure.swagger.POSTglclosuresPayload;
+import org.apache.fineract.accounting.closure.swagger.POSTglclosuresResponse;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -88,7 +91,7 @@ public class GLClosuresApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Accounting closures", notes = "Example Requests:\n" + "\n" + "glclosures")
-    @ApiResponse(code = 200, response = GLClosureData.class, message = "")
+    @ApiResponse(code = 200, response = GETglclosuresResponse.class, message = "")
     public String retrieveAllClosures(@Context final UriInfo uriInfo, @QueryParam("officeId") final Long officeId) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
@@ -103,7 +106,7 @@ public class GLClosuresApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve an Accounting Closure", notes = "Example Requests:\n" + "\n" + "glclosures/1\n" + "\n" + "\n" + "/glclosures/1?fields=officeName,closingDate")
-    @ApiResponse(code = 200, message = "", response = GLClosureData.class)
+    @ApiResponse(code = 200, message = "", response = GETglclosuresResponse.class)
     public String retreiveClosure(@PathParam("glClosureId") final Long glClosureId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
@@ -122,8 +125,8 @@ public class GLClosuresApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create an Accounting Closure", notes = "Mandatory Fields\n" + "officeId,closingDate")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = POSTglclosuresPayload.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = POSTglclosuresResponse.class)})
     public String createGLClosure(@ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createGLClosure().withJson(jsonRequestBody).build();
@@ -138,7 +141,7 @@ public class GLClosuresApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update an Accounting closure", notes = "Once an accounting closure is created, only the comments associated with it may be edited")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = GLClosureData.class)})
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = GLClosureData.class, required = true)})
     @ApiResponse(code = 200, message = "", response = GLClosureJsonInputParams.class)
     public String updateGLClosure(@PathParam("glClosureId") final Long glClosureId,@ApiParam(hidden = true) final String jsonRequestBody) {
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateGLClosure(glClosureId).withJson(jsonRequestBody).build();
