@@ -29,7 +29,7 @@ public final class GLClosuresApiResourceSwagger {
         // don't allow to instantiate
     }
 
-    @ApiModel(value = "POST GLCLosures Paylaod")
+    @ApiModel(value = "POST GLCLosures Request")
     public static final class PostGlClosuresRequest {
         private PostGlClosuresRequest() {
             // don't allow to instantiate
@@ -51,7 +51,7 @@ public final class GLClosuresApiResourceSwagger {
         public String dateFormat;
     }
 
-    @ApiModel(value = "POST GlClosures")
+    @ApiModel(value = "POST GlClosures response")
     public static final class PostGlClosuresResponse {
         private PostGlClosuresResponse() {
             // don't allow to instantiate
