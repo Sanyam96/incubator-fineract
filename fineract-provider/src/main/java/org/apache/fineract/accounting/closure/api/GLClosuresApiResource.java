@@ -42,6 +42,7 @@ import org.apache.fineract.accounting.closure.service.GLClosureReadPlatformServi
 import org.apache.fineract.accounting.closure.swagger.GETglclosuresResponse;
 import org.apache.fineract.accounting.closure.swagger.POSTglclosuresPayload;
 import org.apache.fineract.accounting.closure.swagger.POSTglclosuresResponse;
+import org.apache.fineract.accounting.closure.swagger.GLClosuresApiResourceSwagger;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
@@ -121,12 +122,13 @@ public class GLClosuresApiResource {
         return this.apiJsonSerializerService.serialize(settings, glClosureData, RESPONSE_DATA_PARAMETERS);
     }
 
+    // NOTE: proposal slight changes @Aleks
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create an Accounting Closure", notes = "Mandatory Fields\n" + "officeId,closingDate")
-    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = POSTglclosuresPayload.class)})
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = POSTglclosuresResponse.class)})
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = GLClosuresApiResourceSwagger.PostGlClosuresRequest.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = GLClosuresApiResourceSwagger.PostGlClosuresResponse.class)})
     public String createGLClosure(@ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createGLClosure().withJson(jsonRequestBody).build();
