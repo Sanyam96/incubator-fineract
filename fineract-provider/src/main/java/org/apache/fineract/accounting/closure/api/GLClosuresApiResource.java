@@ -42,7 +42,6 @@ import org.apache.fineract.accounting.closure.service.GLClosureReadPlatformServi
 import org.apache.fineract.accounting.closure.swagger.GETglclosuresResponse;
 import org.apache.fineract.accounting.closure.swagger.POSTglclosuresPayload;
 import org.apache.fineract.accounting.closure.swagger.POSTglclosuresResponse;
-import org.apache.fineract.accounting.closure.swagger.GLClosuresApiResourceSwagger;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;

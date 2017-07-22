@@ -16,23 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.fineract.accounting.closure.swagger;
+package org.apache.fineract.accounting.closure.api;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import org.joda.time.LocalDate;
 
-public final class GLClosuresApiResourceSwagger {
+final class GLClosuresApiResourceSwagger {
     private GLClosuresApiResourceSwagger() {
-        // don't allow to instantiate
+        // don't allow to instantiate; use only for live API documentation
     }
 
-    @ApiModel(value = "POST GLCLosures Request")
+    /**
+     * TODO: describe where this belongs: {GLClosuresApiResource#createGLClosure}
+     */
+
+    @ApiModel(value = "GLCLosuresRequest")
     public static final class PostGlClosuresRequest {
         private PostGlClosuresRequest() {
-            // don't allow to instantiate
+            // don't allow to instantiate; use only for live API documentation
         }
 
         @ApiModelProperty(example = "1")
@@ -51,10 +53,10 @@ public final class GLClosuresApiResourceSwagger {
         public String dateFormat;
     }
 
-    @ApiModel(value = "POST GlClosures response")
+    @ApiModel(value = "GlClosuresResponse")
     public static final class PostGlClosuresResponse {
         private PostGlClosuresResponse() {
-            // don't allow to instantiate
+            // don't allow to instantiate; use only for live API documentation
         }
 
         @ApiModelProperty(example = "1")
