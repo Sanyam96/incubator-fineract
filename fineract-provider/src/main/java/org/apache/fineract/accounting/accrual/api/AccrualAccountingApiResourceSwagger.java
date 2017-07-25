@@ -16,39 +16,31 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.fineract.accounting.closure.swagger;
+package org.apache.fineract.accounting.accrual.api;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Created by sanyam on 21/7/17.
+ * Created by sanyam on 24/7/17.
  */
-@ApiModel(value = "POST GlClosures")
-public class POSTglclosuresResponse {
-    public Long officeId;
-    public Long resourceId;
-
-    public POSTglclosuresResponse(Long officeId, Long resourceId) {
-        this.officeId = officeId;
-        this.resourceId = resourceId;
+final class AccrualAccountingApiResourceSwagger {
+    private AccrualAccountingApiResourceSwagger() {
+        // don't allow to instantiate; use only for live API documentation
     }
 
-    @ApiModelProperty(example = "1")
-    public Long getOfficeId() {
-        return officeId;
+    @ApiModel(value = "runaccrualsRequest")
+    public static final class PostRunaccrualsRequest {
+        private PostRunaccrualsRequest() {
+            // don't allow to instantiate; use only for live API documentation
+        }
+
+        @ApiModelProperty(example = "en")
+        public String locale;
+        @ApiModelProperty(example = "dd MMMM yyyy")
+        public String dateFormat;
+        @ApiModelProperty(example = "04 June 2014", notes = "which specifies periodic accruals should happen till the given Date", required = true)
+        public String tillDate;
     }
 
-    public void setOfficeId(Long officeId) {
-        this.officeId = officeId;
-    }
-
-    @ApiModelProperty(example = "9")
-    public Long getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(Long resourceId) {
-        this.resourceId = resourceId;
-    }
 }

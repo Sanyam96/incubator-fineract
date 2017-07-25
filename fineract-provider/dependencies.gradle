@@ -94,7 +94,6 @@ dependencies {
 
                 [group: 'io.swagger', name: 'swagger-jersey-jaxrs', version: '1.5.15'],
 
-//                files('/home/sanyam/Desktop/sanyam-0.1.0.jar'),
     )
      testCompile 'junit:junit:4.11',
                  'junit:junit-dep:4.11',

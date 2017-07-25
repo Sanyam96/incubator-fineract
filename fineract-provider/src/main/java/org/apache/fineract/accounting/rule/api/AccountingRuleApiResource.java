@@ -108,7 +108,7 @@ public class AccountingRuleApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Accounting Rule Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "accountingrules/template")
-    @ApiResponse(code = 200, message = "", response = AccountingRuleData.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleApiResourceSwagger.GetAccountRulesTemplateResponse.class)})
     public String retrieveTemplate(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
@@ -124,7 +124,7 @@ public class AccountingRuleApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Accounting Rules", notes = "Returns the list of defined accounting rules.\n" + "\n" + "Example Requests:\n" + "\n" + "accountingrules")
-    @ApiResponse(code = 200, message = "", response = AccountingRuleData.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleApiResourceSwagger.GetAccountRulesResponse.class)})
     public String retrieveAllAccountingRules(@Context final UriInfo uriInfo) {
 
         final AppUser currentUser = this.context.authenticatedUser();
@@ -154,8 +154,8 @@ public class AccountingRuleApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Accounting rule", notes = "Returns the details of a defined Accounting rule.\n" + "\n" + "Example Requests:\n" + "\n" + "accountingrules/1")
-    @ApiResponse(code = 200, message = "", response = AccountingRuleData.class)
-    public String retreiveAccountingRule(@PathParam("accountingRuleId") final Long accountingRuleId, @Context final UriInfo uriInfo) {
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleData.class)})
+    public String retreiveAccountingRule(@PathParam("accountingRuleId") @ApiParam(value = "accountingRuleId") final Long accountingRuleId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
@@ -172,8 +172,8 @@ public class AccountingRuleApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create/Define a Accounting rule", notes = "Define a new Accounting rule.\n" + "\n" + "Mandatory Fields\n" + "name, officeId,\n" + "accountToDebit OR debitTags,\n" + "accountToCredit OR creditTags.\n" + "\n" + "Optional Fields\n" + "description")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", value = "body", dataType = "body", dataTypeClass = AccountingRuleApiResourceSwagger.PostAccountingRulesRequest.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleApiResourceSwagger.PostAccountingRulesResponse.class)})
     public String createAccountingRule(@ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createAccountingRule().withJson(jsonRequestBody).build();
@@ -188,9 +188,9 @@ public class AccountingRuleApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Accounting Rule", notes = "Updates the details of a Accounting rule.")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
-    public String updateAccountingRule(@PathParam("accountingRuleId") final Long accountingRuleId,@ApiParam(hidden = true) final String jsonRequestBody) {
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", value = "body", dataType = "body", dataTypeClass = AccountingRuleApiResourceSwagger.PutAccountingRulesRequest.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleApiResourceSwagger.PutAccountingRulesResponse.class)})
+    public String updateAccountingRule(@PathParam("accountingRuleId") @ApiParam(value = "accountingRuleId") final Long accountingRuleId,@ApiParam(hidden = true) final String jsonRequestBody) {
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateAccountingRule(accountingRuleId).withJson(jsonRequestBody)
                 .build();
 
@@ -204,8 +204,8 @@ public class AccountingRuleApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Accounting Rule", notes = "Deletes a Accounting rule.")
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
-    public String deleteAccountingRule(@PathParam("accountingRuleId") final Long accountingRuleId) {
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleApiResourceSwagger.DeleteAccountingRulesResponse.class)})
+    public String deleteAccountingRule(@PathParam("accountingRuleId") @ApiParam(value = "accountingRuleId") final Long accountingRuleId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteAccountingRule(accountingRuleId).build();
 

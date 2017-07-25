@@ -22,6 +22,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.LocalDate;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 final class GLClosuresApiResourceSwagger {
     private GLClosuresApiResourceSwagger() {
         // don't allow to instantiate; use only for live API documentation
@@ -30,38 +33,99 @@ final class GLClosuresApiResourceSwagger {
     /**
      * TODO: describe where this belongs: {GLClosuresApiResource#createGLClosure}
      */
+    // Check !!
 
-    @ApiModel(value = "GLCLosuresRequest")
+    @ApiModel(value = "GetGLClosureResponse")
+    public static final class GetGlClosureResponse {
+        private GetGlClosureResponse() {
+            // dont allow to initiatiate
+        }
+
+        @ApiModelProperty(example = "7")
+        public Long id;
+        @ApiModelProperty(example = "1")
+        public Long officeId;
+        @ApiModelProperty(example = "Head Office")
+        public String officeName;
+        @ApiModelProperty(example = "2013,1,2")
+        public LocalDate closingDate;
+        @ApiModelProperty(example = "false")
+        public boolean deleted;
+        @ApiModelProperty(example = "2013,1,3")
+        public LocalDate createdDate;
+        @ApiModelProperty(example = "2013,1,3")
+        public LocalDate lastUpdatedDate;
+        @ApiModelProperty(example = "1")
+        public Long createdByUserId;
+        @ApiModelProperty(example = "mifos")
+        public String createdByUsername;
+        @ApiModelProperty(example = "1")
+        public Long lastUpdatedByUserId;
+        @ApiModelProperty(example = "mifos")
+        public String lastUpdatedByUsername;
+        @ApiModelProperty(example = "closed")
+        public String comments;
+
+    }
+
+    @ApiModel(value = "PostGLCLosuresRequest")
     public static final class PostGlClosuresRequest {
         private PostGlClosuresRequest() {
             // don't allow to instantiate; use only for live API documentation
         }
-
         @ApiModelProperty(example = "1")
         public Long officeId;
-
         @ApiModelProperty(example = "06 December 2012")
         public LocalDate closingDate;
-
         @ApiModelProperty(example = "The accountants are heading for a carribean vacation")
         public String comments;
-
         @ApiModelProperty(example = "en")
         public String locale;
-
         @ApiModelProperty(example = "dd MMMM yyyy")
         public String dateFormat;
     }
 
-    @ApiModel(value = "GlClosuresResponse")
+    @ApiModel(value = "PostGlClosuresResponse")
     public static final class PostGlClosuresResponse {
         private PostGlClosuresResponse() {
             // don't allow to instantiate; use only for live API documentation
         }
+        @ApiModelProperty(example = "1")
+        public Long officeId;
+        @ApiModelProperty(example = "9")
+        public Long resourceId;
+    }
+
+    @ApiModel(value = "PutGlClosuresRequest")
+    public static final class PutGlClosuresRequest {
+        private PutGlClosuresRequest() {
+            // don't allow to instantiate; use only for live API documentation
+        }
+        @ApiModelProperty(example = "All transactions verified by Johnny Cash")
+        public String comments;
+    }
+
+    @ApiModel(value = "PutGlClosuresResponse")
+    public static final class PutGlClosuresResponse{
+        private PutGlClosuresResponse() {
+            // don't allow to instantiate; use only for live API documentation
+        }
+        @ApiModelProperty(example = "1")
+        public Long officeId;
+        @ApiModelProperty(example = "9")
+        public Long resourceId;
+        @ApiModelProperty(example = "All transactions verified by Johnny Cash")
+        public String comments;
+    }
+
+    @ApiModel(value = "DeleteGlClosuresResponse")
+    public static final class DeleteGlClosuresResponse{
+        private DeleteGlClosuresResponse(){
+
+        }
 
         @ApiModelProperty(example = "1")
         public Long officeId;
-
         @ApiModelProperty(example = "9")
         public Long resourceId;
     }

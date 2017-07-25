@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
 @Path("/runaccruals")
 @Component
 @Scope("singleton")
-@Api(value = "Periodic Accrual Accounting", description = "Periodic Accrual is to accrue the loan income till the specific date or till batch job scheduled time.\n\n " + "\n" + "Field Descriptions: \n" + "tillDate\n" + "which specifies periodic accruals should happen till the given Date" )
+@Api(value = "Periodic Accrual Accounting", description = "Periodic Accrual is to accrue the loan income till the specific date or till batch job scheduled time.\n\n ")
 public class AccrualAccountingApiResource {
 
     private final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService;
@@ -56,8 +56,8 @@ public class AccrualAccountingApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Executes Periodic Accrual Accounting", httpMethod = "POST", notes = "Mandatory Fields\n" + "\n" + "tillDate\n")
-    // @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = runaccuralPost.class)})
-    @ApiResponse(code = 200, message = "Success")
+    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", required = true, type = "body", dataTypeClass = AccrualAccountingApiResourceSwagger.PostRunaccrualsRequest.class, value = "Request Body\n" + "\n" + "Field Descriptions: \n" + "tillDate: \n" + "which specifies periodic accruals should happen till the given Date" )})
+    @ApiResponses({@ApiResponse(code = 200, message = "OK")})
     public String executePeriodicAccrualAccounting( @ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().excuteAccrualAccounting().withJson(jsonRequestBody).build();
