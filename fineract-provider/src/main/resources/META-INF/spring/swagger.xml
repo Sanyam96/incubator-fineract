@@ -35,20 +35,20 @@
         <property name="version" value="1.0.0" />
         <property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform.
 
+        >
+            The goal of the Apache Fineract API > is to empower developers to build apps on top of the Apache Fineract Platform. The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
+        >
+            The API is organized around REST.
+            The API is designed to have:
+            -   predictable, resource-oriented URLs\
+            -   to use HTTP response codes to indicate API errors\
+            -   to use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients.
 
-        \nThe goal of the Apache Fineract API is to empower developers to build apps on top of the Apache Fineract Platform. The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
+        >
+            JSON is returned in all responses from the API, including errors.
 
-
-        \n\nThe API is organized around REST.
-
-        \nThe API is designed to have:
-        \n- predictable, resource-oriented URLs
-        \n- to use HTTP response codes to indicate API errors
-        \n- to use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients.
-
-        \nJSON is returned in all responses from the API, including errors.
-
-        \nMuch of the API presentation and design ideas are owed to the excellent Apigee Web API Design eBook/PDF and the very good Stripe API reference.
+        |
+            Much of the API presentation and design ideas are owed to the excellent Apigee Web API Design eBook/PDF and the very good Stripe API reference.
 
 
 
