@@ -89,7 +89,7 @@ public class CodeValuesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Code Values", notes = "Returns the list of Code Values for a given Code\n" + "\n" + "Example Requests:\n" + "\n" + "codes/1/codevalues")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeValueData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeValuesApiResourceSwagger.GetCodeValuesDataResponse.class)})
     public String retrieveAllCodeValues(@Context final UriInfo uriInfo, @PathParam("codeId") @ApiParam(value = "codeId") final Long codeId) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -105,7 +105,7 @@ public class CodeValuesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Code Value", notes = "Returns the details of a Code Value\n" + "\n" + "Example Requests:\n" + "\n" + "codes/1/codevalues/1")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeValueData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeValuesApiResourceSwagger.GetCodeValuesDataResponse.class)})
     public String retrieveCodeValue(@Context final UriInfo uriInfo, @PathParam("codeValueId") @ApiParam(value = "codeValueId") final Long codeValueId) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -120,8 +120,8 @@ public class CodeValuesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create a Code Value", notes = "")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CodeValuesApiResourceSwagger.PostCodeValuesDataRequest.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeValuesApiResourceSwagger.PostCodeValueDataResponse.class)})
     public String createCodeValue(@PathParam("codeId") @ApiParam(value = "codeId") final Long codeId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createCodeValue(codeId).withJson(apiRequestBodyAsJson).build();
@@ -137,8 +137,8 @@ public class CodeValuesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Code Value", notes = "Updates the details of a code value.")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CodeValuesApiResourceSwagger.PutCodeValuesDataRequest.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeValuesApiResourceSwagger.PutCodeValueDataResponse.class)})
     public String updateCodeValue(@PathParam("codeId") @ApiParam(value = "codeId") final Long codeId, @PathParam("codeValueId") @ApiParam(value = "codeValueId") final Long codeValueId,
             @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
@@ -155,7 +155,7 @@ public class CodeValuesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Code Value", notes = "Deletes a code value")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeValuesApiResourceSwagger.DeleteCodeValueDataResponse.class)})
     public String deleteCodeValue(@PathParam("codeId") @ApiParam(value = "codeId") final Long codeId, @PathParam("codeValueId") @ApiParam(value = "codeValueId") final Long codeValueId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteCodeValue(codeId, codeValueId).build();
