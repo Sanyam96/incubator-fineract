@@ -115,7 +115,7 @@ public class CodesApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Code", notes = "Returns the details of a Code.\n" + "\n" + "Example Requests:\n" + "\n" + "codes/1")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = CodeData.class)})
-    public String retrieveCode(@PathParam("codeId") final Long codeId, @Context final UriInfo uriInfo) {
+    public String retrieveCode(@PathParam("codeId") @ApiParam(value = "codeId") final Long codeId, @Context final UriInfo uriInfo) {
 
         final CodeData code = this.readPlatformService.retrieveCode(codeId);
 
@@ -130,7 +130,7 @@ public class CodesApiResource {
     @ApiOperation(value = "Update a Code", notes = "Updates the details of a code if it is not system defined.")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-    public String updateCode(@PathParam("codeId") final Long codeId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String updateCode(@PathParam("codeId") @ApiParam(value = "codeId") final Long codeId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateCode(codeId).withJson(apiRequestBodyAsJson).build();
 
@@ -145,7 +145,7 @@ public class CodesApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Code", notes = "Deletes a code if it is not system defined.")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-    public String deleteCode(@PathParam("codeId") final Long codeId) {
+    public String deleteCode(@PathParam("codeId") @ApiParam(value = "codeId") final Long codeId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteCode(codeId).build();
 
