@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
 @Path("/mixreport")
 @Component
 @Scope("singleton")
-@Api(value = "MixReport", description = "")
+@Api(value = "Mix Report", description = "")
 public class MixReportApiResource {
 
     private final XBRLResultService xbrlResultService;

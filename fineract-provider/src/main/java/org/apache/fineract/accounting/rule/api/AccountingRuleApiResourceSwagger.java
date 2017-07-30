@@ -109,14 +109,14 @@ final class AccountingRuleApiResourceSwagger {
 
         }
 
-        public class changesSwagger {
-            public changesSwagger(){}
+        public class PutAccountingRulesResponsechangesSwagger {
+            public PutAccountingRulesResponsechangesSwagger(){}
             @ApiModelProperty(example = "Employee Salary posting rule")
             public String name;
         }
         @ApiModelProperty(example = "1")
         public Long resourceId;
-        public changesSwagger changes;
+        public PutAccountingRulesResponsechangesSwagger changes;
     }
 
     @ApiModel(value = "DeleteAccountingRulesResponse")

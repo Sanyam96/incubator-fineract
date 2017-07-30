@@ -54,15 +54,15 @@ final class CacheApiResourceSwagger {
         private PutCachesResponse() {
 
         }
-        public static final class changesSwagger{
-            private changesSwagger() {
+        public static final class PutCachechangesSwagger{
+            private PutCachechangesSwagger() {
 
             }
             @ApiModelProperty(example = "2")
             public Long cacheType;
 
         }
-        public changesSwagger cacheType;
+        public PutCachechangesSwagger cacheType;
 
     }
 }

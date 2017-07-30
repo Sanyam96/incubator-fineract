@@ -84,8 +84,8 @@ final class CodeValuesApiResourceSwagger {
         private PutCodeValueDataResponse() {
 
         }
-        private final class changesSwagger{
-            private changesSwagger() {}
+        private final class PutCodeValuechangesSwagger{
+            private PutCodeValuechangesSwagger() {}
             @ApiModelProperty(example = "Passport")
             public String name;
             @ApiModelProperty(example = "Passport information")
@@ -95,7 +95,7 @@ final class CodeValuesApiResourceSwagger {
         }
         @ApiModelProperty(example = "4")
         public Long resourceId;
-        public changesSwagger changes;
+        public PutCodeValuechangesSwagger changes;
     }
 
     @ApiModel(value = "DeleteCodeValueDataResponse")

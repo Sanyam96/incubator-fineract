@@ -38,8 +38,8 @@ final class BatchApiResourceSwagger {
 
         }
 
-        public static final class BodyRequestSwagger{
-            private BodyRequestSwagger() {
+        public static final class PostBodyRequestSwagger{
+            private PostBodyRequestSwagger() {
 
             }
 
@@ -73,6 +73,6 @@ final class BatchApiResourceSwagger {
         public Set<Header> headers;
         @ApiModelProperty(example = "1")
         public Long reference;
-        public BodyRequestSwagger body;
+        public PostBodyRequestSwagger body;
     }
 }

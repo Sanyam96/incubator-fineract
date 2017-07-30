@@ -102,8 +102,8 @@ final class AccountNumberFormatsApiResourceSwagger {
         private PutAccountNumberFormatsResponse() {
 
         }
-        public static final class changesSwagger {
-            private changesSwagger() {
+        public static final class PutAccountNumberFormatschangesSwagger {
+            private PutAccountNumberFormatschangesSwagger() {
 
             }
             @ApiModelProperty(example = "OFFICE_NAME")
@@ -112,7 +112,7 @@ final class AccountNumberFormatsApiResourceSwagger {
 
         @ApiModelProperty(example = "2")
         public Long resourceId;
-        public changesSwagger changes;
+        public PutAccountNumberFormatschangesSwagger changes;
 
     }
 

@@ -81,14 +81,14 @@ final class FinancialActivityAccountsApiResourceSwagger {
         private PutFinancialActivityAccountsResponse() {
 
         }
-        public final class commentsSwagger{
-            private commentsSwagger(){}
+        public final class PutFinancialActivityAccountscommentsSwagger{
+            private PutFinancialActivityAccountscommentsSwagger(){}
             @ApiModelProperty(example = "1")
             public Long glAccountId;
         }
         @ApiModelProperty(example = "1")
         public Long resourceId;
-        public commentsSwagger comments;
+        public PutFinancialActivityAccountscommentsSwagger comments;
     }
 
     @ApiModel(value = "DeleteFinancialActivityAccountsResponse")

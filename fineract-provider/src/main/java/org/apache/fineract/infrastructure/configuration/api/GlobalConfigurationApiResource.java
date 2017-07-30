@@ -79,8 +79,8 @@ public class GlobalConfigurationApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Global Configuration | Retrieve Global Configuration for surveys", notes = "Returns the list global enable/disable configurations.\n" + "\n" + "Example Requests:\n" + "\n" + "configurations\n\n" + "\n" + "Returns the list global enable/disable survey configurations.\n" + "\n" + "Example Requests:\n" + "\n" + "configurations/survey")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = GlobalConfigurationData.class)})
-    public String retrieveConfiguration(@Context final UriInfo uriInfo,@DefaultValue("false") @QueryParam("survey") final boolean survey) {
+    @ApiResponses({@ApiResponse(code = 200, message = "List of example \n response \nsurveys response   \ngiven below", response = GlobalConfigurationApiResourceSwagger.GetGlobalConfigurationsResponse.class)})
+    public String retrieveConfiguration(@Context final UriInfo uriInfo,@DefaultValue("false") @QueryParam("survey") @ApiParam(value = "survey") final boolean survey) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
 
@@ -95,8 +95,8 @@ public class GlobalConfigurationApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Global Configuration", notes = "Returns a global enable/disable configurations.\n" + "\n" + "Example Requests:\n" + "\n" + "configurations/1")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = GlobalConfigurationData.class)})
-    public String retrieveOne(@PathParam("configId") final Long configId, @Context final UriInfo uriInfo) {
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = GlobalConfigurationApiResourceSwagger.GetGlobalConfigurationsResponse.class)})
+    public String retrieveOne(@PathParam("configId") @ApiParam(value = "configId") final Long configId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
 
@@ -112,9 +112,9 @@ public class GlobalConfigurationApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update Global Configuration", notes = "Updates an enable/disable global configuration item.")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-    public String updateConfiguration(@PathParam("configId") final Long configId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = GlobalConfigurationApiResourceSwagger.PutGlobalConfigurationsRequest.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = GlobalConfigurationApiResourceSwagger.PutGlobalConfigurationsResponse.class)})
+    public String updateConfiguration(@PathParam("configId") @ApiParam(value = "configId") final Long configId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateGlobalConfiguration(configId) //

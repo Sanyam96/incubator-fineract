@@ -74,14 +74,14 @@ final class CodesApiResourceSwagger {
         private PutCodesResponse() {
 
         }
-        private final class changesSwagger{
-            private changesSwagger() {}
+        private final class PutCodesApichangesSwagger{
+            private PutCodesApichangesSwagger() {}
             @ApiModelProperty(example = "MyNewCode(changed)")
             public String name;
         }
         @ApiModelProperty(example = "4")
         public Long resourceId;
-        public changesSwagger changes;
+        public PutCodesApichangesSwagger changes;
     }
 
     @ApiModel(value = "DeleteCodesResponse")

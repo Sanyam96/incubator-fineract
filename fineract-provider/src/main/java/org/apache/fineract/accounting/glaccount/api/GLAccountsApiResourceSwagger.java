@@ -160,14 +160,14 @@ final class GLAccountsApiResourceSwagger {
 
         }
         @ApiModel
-        public static final class changesSwagger{
-            private changesSwagger(){}
+        public static final class PutGLAccountsResponsechangesSwagger{
+            private PutGLAccountsResponsechangesSwagger(){}
             @ApiModelProperty(example = "Cash at Bangalore")
             public String name;
         }
         @ApiModelProperty(example = "1")
         public int resourceId;
-        public changesSwagger changes;
+        public PutGLAccountsResponsechangesSwagger changes;
     }
 
     @ApiModel(value = "DeleteGLAccountsRequest")
@@ -176,15 +176,15 @@ final class GLAccountsApiResourceSwagger {
 
         }
 
-        private static final class changesSwagger{
-            private changesSwagger(){}
+        private static final class DeleteGLAccountsRequestchangesSwagger{
+            private DeleteGLAccountsRequestchangesSwagger(){}
 
         }
 
         @ApiModelProperty(example = "1")
         public int resourceId;
 
-        private changesSwagger changes;
+        private DeleteGLAccountsRequestchangesSwagger changes;
     }
 
 }

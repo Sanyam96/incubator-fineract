@@ -34,7 +34,6 @@ final class JournalEntriesApiResourceSwagger {
         private PostJournalEntriesResponse(){
 
         }
-
         @ApiModelProperty(value = "1")
         public Long officeId;
         @ApiModelProperty(value = "RS9MCISID4WK1ZM")

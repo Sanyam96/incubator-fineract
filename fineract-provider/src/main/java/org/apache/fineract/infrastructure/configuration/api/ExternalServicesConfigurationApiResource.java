@@ -79,7 +79,7 @@ public class ExternalServicesConfigurationApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve External Services Configuration", notes = "Returns a external Service configurations based on the Service Name.\n" + "\n" + "Service Names supported are S3 and SMTP.\n" + "\n" + "Example Requests:\n" + "\n" + "externalservice/SMTP")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = ExternalServicesPropertiesData.class)})
-    public String retrieveOne(@PathParam("servicename") final String serviceName, @Context final UriInfo uriInfo) {
+    public String retrieveOne(@PathParam("servicename") @ApiParam(value = "servicename") final String serviceName, @Context final UriInfo uriInfo) {
         this.context.authenticatedUser().validateHasReadPermission(ExternalServiceConfigurationApiConstant.EXTERNAL_SERVICE_RESOURCE_NAME);
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
         final Collection<ExternalServicesPropertiesData> externalServiceNVPs = this.externalServicePropertiesReadPlatformService
@@ -92,10 +92,10 @@ public class ExternalServicesConfigurationApiResource {
     @Path("{servicename}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Update External Service", notes = "Updates the external Service Configuration for a Service Name.")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-    public String updateExternalServiceProperties(@PathParam("servicename") final String serviceName,
+    @ApiOperation(value = "Update External Service", notes = "Updates the external Service Configuration for a Service Name.\n" + "\n" + "Example: \n" + "\n" + "externalservice/S3")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ExternalServicesConfigurationApiResourceSwagger.PutExternalServiceRequest.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "")})
+    public String updateExternalServiceProperties(@PathParam("servicename") @ApiParam(value = "servicename") final String serviceName,
                                                   @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         // ExternalServicesData external =
         // this.externalServiceReadPlatformService.getExternalServiceDetailsByServiceName(serviceName);

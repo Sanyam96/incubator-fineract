@@ -49,7 +49,7 @@ import org.springframework.stereotype.Component;
 @Path("/mixmapping")
 @Component
 @Scope("singleton")
-@Api(value = "mixmapping")
+@Api(value = "Mix Mapping")
 public class MixTaxonomyMappingApiResource {
 
     private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("identifier", "config"));

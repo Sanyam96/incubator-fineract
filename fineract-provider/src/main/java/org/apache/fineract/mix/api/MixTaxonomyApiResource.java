@@ -45,7 +45,7 @@ import org.springframework.stereotype.Component;
 @Path("/mixtaxonomy")
 @Component
 @Scope("singleton")
-@Api(value = "mixtaxonomy", description = "")
+@Api(value = "Mix Taxonomy", description = "")
 public class MixTaxonomyApiResource {
 
     private final Set<String> RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList("taxonomyId", "name", "namespace", "dimension",

@@ -31,7 +31,8 @@ final class GLClosuresApiResourceSwagger {
     }
 
     /**
-     * TODO: describe where this belongs: {GLClosuresApiResource#createGLClosure}
+     * TODO: describe where this belongs: {@link GLClosuresApiResource }
+     * {@Link GLClosuresApiResource}
      */
     // Check !!
 
