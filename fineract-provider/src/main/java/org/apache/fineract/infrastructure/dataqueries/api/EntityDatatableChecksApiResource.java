@@ -79,10 +79,10 @@ public class EntityDatatableChecksApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Entity-Datatable Checks", notes = "The list capability of Entity-Datatable Checks can support pagination.\n" + "\n" + "OPTIONAL ARGUMENTS\n" + "offset Integer optional, defaults to 0 Indicates the result from which pagination startslimit Integer optional, defaults to 200 Restricts the size of results returned. To override the default and return all entries you must explicitly pass a non-positive integer value for limit e.g. limit=0, or limit=-1\n" + "Example Request:\n" + "\n" + "entityDatatableChecks?offset=0&limit=15")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDataTableChecksData.class)})
-    public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("status") final Long status,
-            @QueryParam("entity") final String entity, @QueryParam("productId") final Long productId,
-            @QueryParam("offset") final Integer offset, @QueryParam("limit") final Integer limit) {
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDatatableChecksApiResourceSwagger.GetEntityDatatableChecksResponse.class)})
+    public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("status") @ApiParam(value = "status") final Long status,
+            @QueryParam("entity") @ApiParam(value = "entity") final String entity, @QueryParam("productId") @ApiParam(value = "productId") final Long productId,
+            @QueryParam("offset") @ApiParam(value = "offset") final Integer offset, @QueryParam("limit") @ApiParam(value = "limit") final Integer limit) {
         final SearchParameters searchParameters = SearchParameters.forPagination(offset, limit);
         final Page<EntityDataTableChecksData> result = this.readEntityDatatableChecksService.retrieveAll(searchParameters, status, entity,
                 productId);
@@ -96,7 +96,7 @@ public class EntityDatatableChecksApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Entity-Datatable Checks Template", notes = "This is a convenience resource useful for building maintenance user interface screens for Entity-Datatable Checks applications. The template data returned consists of:\n" + "\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "entityDatatableChecks/template")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDataTableChecksTemplateData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDatatableChecksApiResourceSwagger.GetEntityDatatableChecksTemplateResponse.class)})
     public String getTemplate(@Context final UriInfo uriInfo) {
 
         final EntityDataTableChecksTemplateData result = this.readEntityDatatableChecksService.retrieveTemplate();
@@ -109,8 +109,8 @@ public class EntityDatatableChecksApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create Entity-Datatable Checks", notes = "Mandatory Fields\n" + "entity, status, datatableName\n" + "\n" + "Non-Mandatory Fields\n" + "productId")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = EntityDatatableChecksApiResourceSwagger.PostEntityDatatableChecksTemplateRequest.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDatatableChecksApiResourceSwagger.PostEntityDatatableChecksTemplateResponse.class)})
     public String createEntityDatatableCheck(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createEntityDatatableChecks(apiRequestBodyAsJson).build();
@@ -123,8 +123,8 @@ public class EntityDatatableChecksApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete Entity-Datatable Checks", notes = "Deletes an existing Entity-Datatable Check")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-    public String deleteDatatable(@PathParam("entityDatatableCheckId") final long entityDatatableCheckId, final String apiRequestBodyAsJson) {
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDatatableChecksApiResourceSwagger.DeleteEntityDatatableChecksTemplateResponse.class)})
+    public String deleteDatatable(@PathParam("entityDatatableCheckId") @ApiParam(value = "entityDatatableCheckId") final long entityDatatableCheckId, final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteEntityDatatableChecks(entityDatatableCheckId,
                 apiRequestBodyAsJson).build();
