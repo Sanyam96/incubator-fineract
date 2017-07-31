@@ -33,12 +33,14 @@
     <bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
         <property name="title" value="Apache Fineract API Documentation"/>
         <property name="version" value="1.0.0" />
-        <property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform.
+        <property name="description" value="Apache/\\n/g Fineract #xA is a \n\n secure, '\n' multi-tenanted \u000A microfinance /[\n']/platform.
 
         >
-            The goal of the Apache Fineract API > is to empower developers to build apps on top of the Apache Fineract Platform. The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
+            The [ www.google.com ] ( www.google.com ) goal of the #xD#xA Apache Fineract API > is to empower developers to build apps on top of the Apache Fineract Platform. The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
         >
-            The API is organized around REST.
+            The API
+             >
+             is #xD#xA organized around REST.
             The API is designed to have:
             -   predictable, resource-oriented URLs\
             -   to use HTTP response codes to indicate API errors\
@@ -52,7 +54,7 @@
 
 
 
-        \nTry The API From Your Browser
+        \nTry The API From Your Browser\\n'\'n
         \nGET (read) examples can be run directly from this documentation. It is just a matter of clicking a link. Most browsers display the output on the same page (or another tab if you right click and select that option). Internet Explorer will probably treat the output as if you wanted to download a file. In that case just elect to open the output in a text editor.
 
         \nIf you want to check out the POST, PUT and DELETE (update) examples a good approach is to take a moment to install a REST plugin for your browser e.g. RESTClient for FireFox
