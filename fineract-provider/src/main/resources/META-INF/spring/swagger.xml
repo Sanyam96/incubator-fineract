@@ -33,10 +33,12 @@
     <bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
         <property name="title" value="Apache Fineract API Documentation"/>
         <property name="version" value="1.0.0" />
-        <property name="description" value="Apache/\\n/g Fineract #xA is a \n\n secure, '\n' multi-tenanted \u000A microfinance /[\n']/platform.
+        <property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform._________
 
-        >
-            The [ www.google.com ] ( www.google.com ) goal of the #xD#xA Apache Fineract API > is to empower developers to build apps on top of the Apache Fineract Platform. The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
+
+
+
+             The goal of the #xD#xA Apache Fineract API is to empower developers to build apps on top of the Apache Fineract Platform. The reference app (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
         >
             The API
              >
