@@ -49,7 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Path("/surveys/{surveyId}/scorecards")
 @Component
 @Scope("singleton")
-@Api(value = "SPM - scorecards", description = " ")
+@Api(value = "SPM - Scorecards", description = " ")
 public class ScorecardApiResource {
 
     private final PlatformSecurityContext securityContext;
@@ -73,7 +73,7 @@ public class ScorecardApiResource {
     @Transactional
     @ApiOperation(value = "List all Scorecard entries", notes = "List all Scorecard entries for a survey.")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = Scorecard.class)})
-    public List<ScorecardData> findBySurvey(@PathParam("surveyId") final Long surveyId) {
+    public List<ScorecardData> findBySurvey(@PathParam("surveyId") @ApiParam(value = "Enter surveyId") final Long surveyId) {
         this.securityContext.authenticatedUser();
 
         final Survey survey = findSurvey(surveyId);
@@ -93,7 +93,7 @@ public class ScorecardApiResource {
     @Transactional
     @ApiOperation(value = "Create a Scorecard entry", notes = "Add a new netry to a survey.\n" + "\n" + "Mandatory Fields\n" + "clientId, createdOn, questionId, responseId, staffId")
     @ApiResponses({@ApiResponse(code = 200, message = "OK")})
-    public void createScorecard(@PathParam("surveyId") final Long surveyId, @ApiParam(format = "body", type = "body") final ScorecardData scorecardData) {
+    public void createScorecard(@PathParam("surveyId") @ApiParam(value = "Enter surveyId") final Long surveyId, @ApiParam(format = "body", type = "body") final ScorecardData scorecardData) {
         final AppUser appUser = this.securityContext.authenticatedUser();
         final Survey survey = findSurvey(surveyId);
         final Client client = this.clientRepositoryWrapper.findOneWithNotFoundDetection(scorecardData.getClientId());
@@ -105,8 +105,8 @@ public class ScorecardApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
-    public List<ScorecardData> findBySurveyClient(@PathParam("surveyId") final Long surveyId,
-                                                  @PathParam("clientId") final Long clientId) {
+    public List<ScorecardData> findBySurveyClient(@PathParam("surveyId") @ApiParam(value = "Enter surveyId") final Long surveyId,
+                                                  @PathParam("clientId") @ApiParam(value = "Enter clientId") final Long clientId) {
         this.securityContext.authenticatedUser();
         final Survey survey = findSurvey(surveyId);
         final Client client = this.clientRepositoryWrapper.findOneWithNotFoundDetection(clientId);

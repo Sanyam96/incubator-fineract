@@ -18,10 +18,7 @@
  */
 package org.apache.fineract.spm.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.spm.data.SurveyData;
 import org.apache.fineract.spm.domain.Survey;
@@ -83,7 +80,7 @@ public class SpmApiResource {
     @Transactional
     @ApiOperation(value = "Retrieve a Survey", notes = "")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = SurveyData.class)})
-    public SurveyData findSurvey(@PathParam("id") final Long id) {
+    public SurveyData findSurvey(@PathParam("id") @ApiParam(value = "Enter id") final Long id) {
         this.securityContext.authenticatedUser();
 
         final Survey survey = this.spmService.findById(id);
@@ -99,9 +96,9 @@ public class SpmApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
-    @ApiOperation(value = "Create a Survey", notes = "Adds a new survey to collect client related data.\n" + "\n" + "Mandatory Fields\n" + "countryCode, key, name, questions, responses, sequenceNo, text, value")
+    @ApiOperation(value = "Create a Survey", notes = "Adds a new survey to collect client related data.\n" + "\n" + "Mandatory Fields\n" + "\n" + "countryCode, key, name, questions, responses, sequenceNo, text, value")
     @ApiResponses({@ApiResponse(code = 200, message = "OK")})
-    public void createSurvey(final SurveyData surveyData) {
+    public void createSurvey(@ApiParam(value = "Create survey") final SurveyData surveyData) {
         this.securityContext.authenticatedUser();
 
         final Survey survey = SurveyMapper.map(surveyData);
@@ -116,7 +113,7 @@ public class SpmApiResource {
     @Transactional
     @ApiOperation(value = "Deactivate Survey", notes = "")
     @ApiResponses({@ApiResponse(code = 200, message = "OK")})
-    public void deactivateSurvey(@PathParam("id") final Long id) {
+    public void deactivateSurvey(@PathParam("id") @ApiParam(value = "Enter id") final Long id) {
         this.securityContext.authenticatedUser();
 
         this.spmService.deactivateSurvey(id);
