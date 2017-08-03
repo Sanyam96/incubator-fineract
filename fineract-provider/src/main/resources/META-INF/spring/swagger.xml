@@ -33,37 +33,29 @@
     <bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
         <property name="title" value="Apache Fineract API Documentation"/>
         <property name="version" value="1.0.0" />
-        <property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform._________
+        <property name="description" value="Apache Fineract is a secure, multi-tenanted microfinance platform.
 
-
-            ____________
             The goal of the Apache Fineract API is to empower developers to build apps on top of the Apache Fineract Platform. The reference app [  https://demo.openmf.org  ] (username: mifos, password: password) works on the same demo 'tenant' as the interactive links in this documentation.
 
-            _______
             The API
 
-              is organized around REST [ https://en.wikipedia.org/wiki/Representational_state_transfer ].
-              Find out more about Apache Fineract on ... [ https://demo.openmf.org/api-docs/apiLive.htm#top ].
+              is organized around REST [ https://en.wikipedia.org/wiki/Representational_state_transfer ]  . .
+              Find out more about Apache Fineract on ... [ https://demo.openmf.org/api-docs/apiLive.htm#top ] . .
 
-            ____________
-            You can Try The API From Your Browser itself at [ https://demo.openmf.org/api-docs/apiLive.htm#interact ]
+            You can Try The API From Your Browser itself at [ https://demo.openmf.org/api-docs/apiLive.htm#interact ] . .
 
-            ____________
-            The Generic Options are available at [ https://demo.openmf.org/api-docs/apiLive.htm#genopts ]
+            The Generic Options are available at [ https://demo.openmf.org/api-docs/apiLive.htm#genopts ] . .
 
-            ____________
-            Find out more about Updating Dates and Numbers at [ https://demo.openmf.org/api-docs/apiLive.htm#dates_and_numbers ].
+            Find out more about Updating Dates and Numbers at [ https://demo.openmf.org/api-docs/apiLive.htm#dates_and_numbers ] . .
 
-            ____________
-            For the Authentication and the Basic of HTTP and HTTPS refer [ https://demo.openmf.org/api-docs/apiLive.htm#authentication_overview ]
+            For the Authentication and the Basic of HTTP and HTTPS refer [ https://demo.openmf.org/api-docs/apiLive.htm#authentication_overview ] . .
 
-            ____________
-            Check about ERROR codes at [ https://demo.openmf.org/api-docs/apiLive.htm#errors ]
+            Check about ERROR codes at [ https://demo.openmf.org/api-docs/apiLive.htm#errors ] . .
 
-            ____________
-            Please refer to the old documentation for any documentation queries [ https://demo.openmf.org/api-docs/apiLive.htm ]
+            ______________________________________________________________________________________________________________________________
+            Please refer to the old documentation for any documentation queries [ https://demo.openmf.org/api-docs/apiLive.htm ] . .
 
-            ____________
+            ______________________________________________________________________________________________________________________________
             Lets go for the financial Inclusion all over the globe ;)
             Happy Fineracting!!
         "/>

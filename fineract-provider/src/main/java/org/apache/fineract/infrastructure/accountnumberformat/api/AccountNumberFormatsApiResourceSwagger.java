@@ -38,7 +38,7 @@ final class AccountNumberFormatsApiResourceSwagger {
         private GetAccountNumberFormatsResponse() {
 
         }
-        public List<GetAccountNumberFormatsIdResponse> _;
+//        public List<GetAccountNumberFormatsIdResponse> _;
 
     }
 

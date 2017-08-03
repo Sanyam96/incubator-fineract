@@ -81,7 +81,8 @@ public class DatatablesApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "List Data Tables", notes = "Lists registered data tables and the Apache Fineract Core application table they are registered to.\n" + "\n" + "ARGUMENTS\n" + "\n" + "apptable  - optional ,The Apache Fineract core application table.\n" + "\n" + "Example Requests:\n" + "\n" + "datatables?apptable=m_client\n" + "\n" + "\n" + "datatables")
+    @ApiOperation(value = "List Data Tables", notes = "Lists registered data tables and the Apache Fineract Core application table they are registered to.\n" + "\n" + "ARGUMENTS\n" + "\n" + "apptable  - optional" + "\n"+ "The Apache Fineract core application table.\n" + "\n" + "Example Requests:\n" + "\n" + "datatables?apptable=m_client\n" + "\n" + "\n" + "datatables",
+    responseContainer = "List", response = DatatablesApiResourceSwagger.GetDataTablesResponse.class)
     @ApiResponses({@ApiResponse(code = 200, message = "", response = DatatablesApiResourceSwagger.GetDataTablesResponse.class)})
     public String getDatatables(@QueryParam("apptable") @ApiParam(value = "apptable") final String apptable, @Context final UriInfo uriInfo) {
 
