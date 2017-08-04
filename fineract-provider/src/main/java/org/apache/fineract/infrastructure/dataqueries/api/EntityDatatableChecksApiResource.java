@@ -108,7 +108,7 @@ public class EntityDatatableChecksApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Create Entity-Datatable Checks", notes = "Mandatory Fields\n" + "entity, status, datatableName\n" + "\n" + "Non-Mandatory Fields\n" + "productId")
+    @ApiOperation(value = "Create Entity-Datatable Checks", notes = "Mandatory Fields : \n" + "entity, status, datatableName\n" + "\n" + "Non-Mandatory Fields : \n" + "productId")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = EntityDatatableChecksApiResourceSwagger.PostEntityDatatableChecksTemplateRequest.class )})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDatatableChecksApiResourceSwagger.PostEntityDatatableChecksTemplateResponse.class)})
     public String createEntityDatatableCheck(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
