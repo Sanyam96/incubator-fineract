@@ -40,10 +40,10 @@ final class DatatablesApiResourceSwagger {
 
         }
         @ApiModelProperty(example = "m_client")
-        public String applicationTableName;
+        public String appTableName;
         @ApiModelProperty(example = "extra_client_details")
-        public String registeredTableName;
-        public List<ResultsetColumnHeaderData> columnHeaderData;
+        public String datatableName;
+        public List<ResultsetColumnHeaderData> column;
     }
 
     @ApiModel(value = "PostDataTablesRequest")
@@ -106,7 +106,7 @@ final class DatatablesApiResourceSwagger {
             public boolean mandatory;
         }
         @ApiModelProperty(example = "m_client")
-        public String applicationTableName;
+        public String appTableName;
         public List<PutDataTablesRequestDropColumns> dropColumns;
         public List<PutDataTablesRequestAddColumns> addColumns;
         public List<PutDataTablesRequestChangeColumns> ChangeColumns;
@@ -207,7 +207,7 @@ final class DatatablesApiResourceSwagger {
         private PutDataTablesAppTableIdDatatableIdRequest() {
 
         }
-        @ApiModelProperty(example = "Livestock sales updated")
+        @ApiModelProperty(example = "01 June 1982")
         public String DateOfBirth;
         @ApiModelProperty(example = "5")
         public Long Education_cdHighest;
