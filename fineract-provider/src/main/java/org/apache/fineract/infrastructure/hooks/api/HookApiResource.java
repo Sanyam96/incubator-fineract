@@ -79,8 +79,8 @@ public class HookApiResource {
 	}
 
 	@GET
-	@ApiOperation(value = "Retrieve Hooks", notes = "Returns the list of hooks.\n" + "\n" + "Example Requests:\n" + "\n" + "hooks")
-	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookData.class)})
+	@ApiOperation(value = "Retrieve Hooks", notes = "Returns the list of hooks.\n" + "\n" + "Example Requests:\n" + "\n" + "hooks", responseContainer = "List", response = HookApiResourceSwagger.GetHookResponse.class)
+	@ApiResponses({@ApiResponse(code = 200, message = "")})
 	public String retrieveHooks(@Context final UriInfo uriInfo) {
 
 		this.context.authenticatedUser().validateHasReadPermission(
@@ -98,8 +98,8 @@ public class HookApiResource {
 	@GET
 	@Path("{hookId}")
 	@ApiOperation(value = "Retrieve a Hook", notes = "Returns the details of a Hook.\n" + "\n" + "Example Requests:\n" + "\n" + "hooks/1")
-	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookData.class)})
-	public String retrieveHook(@PathParam("hookId") final Long hookId,
+	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookApiResourceSwagger.GetHookResponse.class)})
+	public String retrieveHook(@PathParam("hookId") @ApiParam(value = "hookId") final Long hookId,
 			@Context final UriInfo uriInfo) {
 
 		this.context.authenticatedUser().validateHasReadPermission(
@@ -123,7 +123,7 @@ public class HookApiResource {
 	@GET
 	@Path("template")
 	@ApiOperation(value = "Retrieve Hooks Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "hooks/template")
-	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookData.class)})
+	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookApiResourceSwagger.GetHookTemplateResponse.class)})
 	public String template(@Context final UriInfo uriInfo) {
 
 		this.context.authenticatedUser().validateHasReadPermission(
@@ -156,9 +156,9 @@ public class HookApiResource {
 	@PUT
 	@Path("{hookId}")
 	@ApiOperation(value = "Update a Hook", notes = "Updates the details of a hook.")
-	@ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "CommandWrapper.class", required = true, type = "body", dataTypeClass = CommandWrapper.class)})
-	@ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-	public String updateHook(@PathParam("hookId") final Long hookId,
+	@ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "body", required = true, type = "body", dataTypeClass = HookApiResourceSwagger.PutHookRequest.class)})
+	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookApiResourceSwagger.PutHookResponse.class)})
+	public String updateHook(@PathParam("hookId") @ApiParam(value = "hookId") final Long hookId,
 			@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
 		final CommandWrapper commandRequest = new CommandWrapperBuilder()
@@ -173,8 +173,8 @@ public class HookApiResource {
 	@DELETE
 	@Path("{hookId}")
 	@ApiOperation(value = "Delete a Hook", notes = "Deletes a hook.")
-	@ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-	public String deleteHook(@PathParam("hookId") final Long hookId) {
+	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookApiResourceSwagger.DeleteHookResponse.class)})
+	public String deleteHook(@PathParam("hookId") @ApiParam(value = "hookId") final Long hookId) {
 
 		final CommandWrapper commandRequest = new CommandWrapperBuilder()
 				.deleteHook(hookId).build();
