@@ -79,7 +79,7 @@ public class GlobalConfigurationApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Global Configuration | Retrieve Global Configuration for surveys", notes = "Returns the list global enable/disable configurations.\n" + "\n" + "Example Requests:\n" + "\n" + "configurations\n\n" + "\n" + "Returns the list global enable/disable survey configurations.\n" + "\n" + "Example Requests:\n" + "\n" + "configurations/survey")
-    @ApiResponses({@ApiResponse(code = 200, message = "List of example \n response \nsurveys response   \ngiven below", response = GlobalConfigurationApiResourceSwagger.GetGlobalConfigurationsResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "List of example \n response \nsurveys response   \ngiven below", response = GlobalConfigurationApiResourceSwagger.GetGlobalConfigurationsResponse.class, responseContainer = "list")})
     public String retrieveConfiguration(@Context final UriInfo uriInfo,@DefaultValue("false") @QueryParam("survey") @ApiParam(value = "survey") final boolean survey) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);

@@ -79,7 +79,7 @@ public class EntityDatatableChecksApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Entity-Datatable Checks", notes = "The list capability of Entity-Datatable Checks can support pagination.\n" + "\n" + "OPTIONAL ARGUMENTS\n" + "offset Integer optional, defaults to 0 Indicates the result from which pagination startslimit Integer optional, defaults to 200 Restricts the size of results returned. To override the default and return all entries you must explicitly pass a non-positive integer value for limit e.g. limit=0, or limit=-1\n" + "Example Request:\n" + "\n" + "entityDatatableChecks?offset=0&limit=15")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDatatableChecksApiResourceSwagger.GetEntityDatatableChecksResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = EntityDatatableChecksApiResourceSwagger.GetEntityDatatableChecksResponse.class, responseContainer = "list")})
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("status") @ApiParam(value = "status") final Long status,
             @QueryParam("entity") @ApiParam(value = "entity") final String entity, @QueryParam("productId") @ApiParam(value = "productId") final Long productId,
             @QueryParam("offset") @ApiParam(value = "offset") final Integer offset, @QueryParam("limit") @ApiParam(value = "limit") final Integer limit) {

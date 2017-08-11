@@ -89,7 +89,7 @@ public class CodeValuesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Code Values", notes = "Returns the list of Code Values for a given Code\n" + "\n" + "Example Requests:\n" + "\n" + "codes/1/codevalues")
-    @ApiResponses({@ApiResponse(code = 200, message = "A List of Given response", response = CodeValuesApiResourceSwagger.GetCodeValuesDataResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "A List of Given response", response = CodeValuesApiResourceSwagger.GetCodeValuesDataResponse.class, responseContainer = "list")})
     public String retrieveAllCodeValues(@Context final UriInfo uriInfo, @PathParam("codeId") @ApiParam(value = "codeId") final Long codeId) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);

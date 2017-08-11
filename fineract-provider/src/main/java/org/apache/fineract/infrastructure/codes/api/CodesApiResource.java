@@ -83,7 +83,7 @@ public class CodesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Codes", notes = "Returns the list of codes.\n" + "\n" + "Example Requests:\n" + "\n" + "codes")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodesApiResourceSwagger.GetCodesResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CodesApiResourceSwagger.GetCodesResponse.class, responseContainer = "list")})
     public String retrieveCodes(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
