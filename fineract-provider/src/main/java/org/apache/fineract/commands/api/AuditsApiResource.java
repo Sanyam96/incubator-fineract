@@ -82,7 +82,7 @@ public class AuditsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Audits", notes = "Get a 200 list of audits that match the criteria supplied and sorted by audit id in descending order, and are within the requestors' data scope. Also it supports pagination and sorting\n" + "\n" + "Example Requests:\n" + "\n" + "audits\n" + "\n" + "audits?fields=madeOnDate,maker,processingResult\n" + "\n" + "audits?makerDateTimeFrom=2013-03-25 08:00:00&makerDateTimeTo=2013-04-04 18:00:00\n" + "\n" + "audits?officeId=1\n" + "\n" + "audits?officeId=1&includeJson=true")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = MakercheckersApiResourceSwagger.GetMakerCheckerResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = MakercheckersApiResourceSwagger.GetMakerCheckerResponse.class, responseContainer = "list")})
     public String retrieveAuditEntries(@Context final UriInfo uriInfo, @QueryParam("actionName") @ApiParam(value = "actionName") final String actionName,
             @QueryParam("entityName") @ApiParam(value = "entityName") final String entityName, @QueryParam("resourceId") @ApiParam(value = "resourceId") final Long resourceId,
             @QueryParam("makerId") @ApiParam(value = "makerId") final Long makerId, @QueryParam("makerDateTimeFrom") @ApiParam(value = "makerDateTimeFrom") final String makerDateTimeFrom,

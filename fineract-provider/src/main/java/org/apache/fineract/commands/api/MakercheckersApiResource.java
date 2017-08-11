@@ -83,7 +83,7 @@ public class MakercheckersApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Maker Checker Entries", notes = "Get a list of entries that can be checked by the requestor that match the criteria supplied.\n" + "\n" + "Example Requests:\n" + "\n" + "makercheckers\n" + "\n" + "makercheckers?fields=madeOnDate,maker,processingResult\n" + "\n" + "makercheckers?makerDateTimeFrom=2013-03-25 08:00:00&makerDateTimeTo=2013-04-04 18:00:00\n" + "\n" + "makercheckers?officeId=1\n" + "\n" + "makercheckers?officeId=1&includeJson=true")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = MakercheckersApiResourceSwagger.GetMakerCheckerResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = MakercheckersApiResourceSwagger.GetMakerCheckerResponse.class, responseContainer = "list")})
     public String retrieveCommands(@Context final UriInfo uriInfo, @QueryParam("actionName") @ApiParam(value = "actionName") final String actionName,
             @QueryParam("entityName") @ApiParam(value = "entityName") final String entityName, @QueryParam("resourceId") @ApiParam(value = "resourceId") final Long resourceId,
             @QueryParam("makerId") @ApiParam(value = "makerId") final Long makerId, @QueryParam("makerDateTimeFrom") @ApiParam(value = "makerDateTimeFrom") final String makerDateTimeFrom,

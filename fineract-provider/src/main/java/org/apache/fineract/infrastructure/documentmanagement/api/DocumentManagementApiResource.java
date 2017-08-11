@@ -90,7 +90,7 @@ public class DocumentManagementApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List documents", notes = "Example Requests:\n" + "\n" + "clients/1/documents\n" + "\n" + "client_identifiers/1/documents\n" + "\n" + "loans/1/documents?fields=name,description")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = DocumentManagementApiResourceSwagger.GetEntityTypeEntityIdDocumentsResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = DocumentManagementApiResourceSwagger.GetEntityTypeEntityIdDocumentsResponse.class, responseContainer = "list")})
     public String retreiveAllDocuments(@Context final UriInfo uriInfo, @PathParam("entityType") @ApiParam(value = "entityType") final String entityType,
             @PathParam("entityId") @ApiParam(value = "entityId") final Long entityId) {
 

@@ -88,7 +88,7 @@ public class GLClosuresApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Accounting closures", notes = "Example Requests:\n" + "\n" + "glclosures")
-    @ApiResponses({@ApiResponse(code = 200, response = GLClosuresApiResourceSwagger.GetGlClosureResponse.class, message = "")})
+    @ApiResponses({@ApiResponse(code = 200, response = GLClosuresApiResourceSwagger.GetGlClosureResponse.class, message = "", responseContainer = "list")})
     public String retrieveAllClosures(@Context final UriInfo uriInfo, @QueryParam("officeId") @ApiParam(value = "officeId") final Long officeId) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermission);
