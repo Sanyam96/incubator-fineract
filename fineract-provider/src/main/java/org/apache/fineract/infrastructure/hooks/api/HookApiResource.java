@@ -139,9 +139,9 @@ public class HookApiResource {
 	}
 
 	@POST
-	@ApiOperation(value = "Create a Hook", notes = "The following parameters can be passed for the creation of a hook :-\n" + "\n" + "name - string - Required. The name of the template that is being called. (See /hooks/template for the list of valid hook names.)\n" + "isActive - boolean - Determines whether the hook is actually triggered.\n" + "events - array - Determines what events the hook is triggered for.\n" + "config - hash - Required. Key/value pairs to provide settings for this hook. These settings vary between the templates.\n" + "templateId - Optional. The UGD template ID associated with the same entity (client or loan).")
-	@ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "CommandWrapper.class", required = true, type = "body", dataTypeClass = CommandWrapper.class)})
-	@ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
+	@ApiOperation(value = "Create a Hook", notes = "The following parameters can be passed for the creation of a hook :-\n" + "\n" + "name - string - Required. The name of the template that is being called. (See /hooks/template for the list of valid hook names.)\n" + "\n" + "isActive - boolean - Determines whether the hook is actually triggered.\n" + "\n" + "events - array - Determines what events the hook is triggered for.\n" + "\n" + "config - hash - Required. Key/value pairs to provide settings for this hook. These settings vary between the templates.\n" + "\n" + "templateId - Optional. The UGD template ID associated with the same entity (client or loan).")
+	@ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "body", required = true, type = "body", dataTypeClass = HookApiResourceSwagger.PostHookRequest.class)})
+	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookApiResourceSwagger.PostHookResponse.class)})
 	public String createHook(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
 		final CommandWrapper commandRequest = new CommandWrapperBuilder()
