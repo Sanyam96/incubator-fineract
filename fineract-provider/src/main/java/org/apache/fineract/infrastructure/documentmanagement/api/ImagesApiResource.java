@@ -59,7 +59,7 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("{entity}/{entityId}/images")
 @Component
 @Scope("singleton")
-@Api(value = "DomainName/api/v1/{entity}/{entityId}/images", description = "")
+@Api(value = "DomainName//api//v1//{entity}//{entityId}//images", description = "")
 public class ImagesApiResource {
 
     private final PlatformSecurityContext context;
