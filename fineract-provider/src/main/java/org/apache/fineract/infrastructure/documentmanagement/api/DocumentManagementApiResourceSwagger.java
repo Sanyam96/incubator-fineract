@@ -58,4 +58,53 @@ final class DocumentManagementApiResourceSwagger {
         public Integer storageType;
     }
 
+    @ApiModel(value = "PostEntityTypeEntityIdDocumentsResponse")
+    public static final class PostEntityTypeEntityIdDocumentsResponse {
+        private PostEntityTypeEntityIdDocumentsResponse() {
+
+        }
+        @ApiModelProperty(example = "3")
+        public Long resourceId;
+        @ApiModelProperty(example = "3")
+        public String resourceIdentifier;
+    }
+
+    @ApiModel(value = "PutEntityTypeEntityIdDocumentsResponse")
+    public static final class PutEntityTypeEntityIdDocumentsResponse {
+        private PutEntityTypeEntityIdDocumentsResponse() {
+
+        }
+
+        public final class PutEntityTypeEntityIdDocumentsResponseChangesSwagger{
+            private PutEntityTypeEntityIdDocumentsResponseChangesSwagger() {
+
+            }
+
+        }
+        @ApiModelProperty(example = "3")
+        public Long resourceId;
+        public PutEntityTypeEntityIdDocumentsResponseChangesSwagger changes;
+        @ApiModelProperty(example = "3")
+        public String resourceIdentifier;
+    }
+
+    @ApiModel(value = "DeleteEntityTypeEntityIdDocumentsResponse")
+    public static final class DeleteEntityTypeEntityIdDocumentsResponse {
+        private DeleteEntityTypeEntityIdDocumentsResponse() {
+
+        }
+
+        public final class PutEntityTypeEntityIdDocumentsResponseChangesSwagger{
+            private PutEntityTypeEntityIdDocumentsResponseChangesSwagger() {
+
+            }
+
+        }
+        @ApiModelProperty(example = "3")
+        public Long resourceId;
+        public PutEntityTypeEntityIdDocumentsResponseChangesSwagger changes;
+        @ApiModelProperty(example = "3")
+        public String resourceIdentifier;
+    }
+
 }
