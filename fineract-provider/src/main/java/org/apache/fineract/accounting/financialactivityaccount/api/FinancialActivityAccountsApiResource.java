@@ -93,7 +93,7 @@ public class FinancialActivityAccountsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Financial Activities to Accounts Mappings", notes = "Example Requests:\n" + "\n" + "financialactivityaccounts")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = FinancialActivityAccountsApiResourceSwagger.GetFinancialActivityAccountsResponse.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = FinancialActivityAccountsApiResourceSwagger.GetFinancialActivityAccountsResponse.class, responseContainer = "list" )})
     public String retrieveAll(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(FinancialActivityAccountsConstants.resourceNameForPermission);

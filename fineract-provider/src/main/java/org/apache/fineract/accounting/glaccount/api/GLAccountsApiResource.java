@@ -118,7 +118,7 @@ public class GLAccountsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List General Ledger Accounts", notes = "ARGUMENTS\n" + "type Integer optional manualEntriesAllowed boolean optional usage Integer optional disabled boolean optional parentId Long optional tagId Long optional\n" + "Example Requests:\n" + "\n" + "glaccounts\n" + "\n" + "\n" + "glaccounts?type=1&manualEntriesAllowed=true&usage=1&disabled=false\n" + "\n" + "glaccounts?fetchRunningBalance=true")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = GLAccountsApiResourceSwagger.GetGLAccountsResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = GLAccountsApiResourceSwagger.GetGLAccountsResponse.class, responseContainer = "list")})
     public String retrieveAllAccounts(@Context final UriInfo uriInfo, @QueryParam("type") @ApiParam(value = "type") final Integer type,
             @QueryParam("searchParam") @ApiParam(value = "searchParam") final String searchParam, @QueryParam("usage") @ApiParam(value = "usage") final Integer usage,
             @QueryParam("manualEntriesAllowed") @ApiParam(value = "manualEntriesAllowed") final Boolean manualEntriesAllowed, @QueryParam("disabled") @ApiParam(value = "disabled") final Boolean disabled,

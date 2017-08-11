@@ -64,7 +64,7 @@ public class LookupTableApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
     @ApiOperation(value = "List all Lookup Table entries", notes = "List all Lookup Table entries for a survey.")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = LookupTableData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = LookupTableData.class, responseContainer = "list")})
     public List<LookupTableData> fetchLookupTables(@PathParam("surveyId") @ApiParam(value = "Enter surveyId") final Long surveyId) {
         this.securityContext.authenticatedUser();
 

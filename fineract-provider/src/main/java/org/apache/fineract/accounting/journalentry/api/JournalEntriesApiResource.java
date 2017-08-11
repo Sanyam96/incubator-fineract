@@ -93,7 +93,7 @@ public class JournalEntriesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Journal Entries", notes = "The list capability of journal entries can support pagination and sorting.\n\n" + "Example Requests:\n" + "\n" + "journalentries\n" + "\n" + "journalentries?transactionId=PB37X8Y21EQUY4S\n" + "\n" + "journalentries?officeId=1&manualEntriesOnly=true&fromDate=1 July 2013&toDate=15 July 2013&dateFormat=dd MMMM yyyy&locale=en\n" + "\n" + "journalentries?fields=officeName,glAccountName,transactionDate\n" + "\n" + "journalentries?offset=10&limit=50\n" + "\n" + "journalentries?orderBy=transactionId&sortOrder=DESC\n" + "\n" + "journalentries?runningBalance=true\n" + "\n" + "journalentries?transactionDetails=true\n" + "\n" + "journalentries?loanId=12\n" + "\n" + "journalentries?savingsId=24")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = JournalEntryData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = JournalEntryData.class, responseContainer = "list")})
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("officeId") @ApiParam(value = "officeId") final Long officeId,
             @QueryParam("glAccountId") @ApiParam(value = "glAccountId") final Long glAccountId, @QueryParam("manualEntriesOnly") @ApiParam(value = "manualEntriesOnly") final Boolean onlyManualEntries,
             @QueryParam("fromDate") @ApiParam(value = "fromDate") final DateParam fromDateParam, @QueryParam("toDate") @ApiParam(value = "toDate") final DateParam toDateParam,

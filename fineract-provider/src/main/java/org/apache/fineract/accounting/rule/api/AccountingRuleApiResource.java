@@ -124,7 +124,7 @@ public class AccountingRuleApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Accounting Rules", notes = "Returns the list of defined accounting rules.\n" + "\n" + "Example Requests:\n" + "\n" + "accountingrules")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleApiResourceSwagger.GetAccountRulesResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountingRuleApiResourceSwagger.GetAccountRulesResponse.class, responseContainer = "list")})
     public String retrieveAllAccountingRules(@Context final UriInfo uriInfo) {
 
         final AppUser currentUser = this.context.authenticatedUser();

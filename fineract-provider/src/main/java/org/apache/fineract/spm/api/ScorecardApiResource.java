@@ -72,7 +72,7 @@ public class ScorecardApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
     @ApiOperation(value = "List all Scorecard entries", notes = "List all Scorecard entries for a survey.")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = Scorecard.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = Scorecard.class, responseContainer = "list")})
     public List<ScorecardData> findBySurvey(@PathParam("surveyId") @ApiParam(value = "Enter surveyId") final Long surveyId) {
         this.securityContext.authenticatedUser();
 

@@ -154,7 +154,7 @@ public class ProvisioningEntriesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List all Provisioning Entries")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = ProvisioningEntryData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ProvisioningEntryData.class, responseContainer = "list")})
     public String retrieveAllProvisioningEntries(@QueryParam("offset") @ApiParam(value = "offset") final Integer offset, @QueryParam("limit") @ApiParam(value = "limit") final Integer limit,
             @Context final UriInfo uriInfo) {
         platformSecurityContext.authenticatedUser();

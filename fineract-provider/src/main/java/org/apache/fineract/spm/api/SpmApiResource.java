@@ -56,7 +56,7 @@ public class SpmApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
     @ApiOperation(value = "List all Surveys", notes = "")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = SurveyData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = SurveyData.class, responseContainer = "list")})
     public List<SurveyData> fetchActiveSurveys() {
         this.securityContext.authenticatedUser();
 
