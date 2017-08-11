@@ -80,7 +80,7 @@ public class HookApiResource {
 
 	@GET
 	@ApiOperation(value = "Retrieve Hooks", notes = "Returns the list of hooks.\n" + "\n" + "Example Requests:\n" + "\n" + "hooks", responseContainer = "List", response = HookApiResourceSwagger.GetHookResponse.class)
-	@ApiResponses({@ApiResponse(code = 200, message = "")})
+	@ApiResponses({@ApiResponse(code = 200, message = "", response = HookApiResourceSwagger.GetHookResponse.class)})
 	public String retrieveHooks(@Context final UriInfo uriInfo) {
 
 		this.context.authenticatedUser().validateHasReadPermission(
