@@ -96,7 +96,7 @@ public class AccountNumberFormatsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Account number formats", notes = "Example Requests:\n" + "\n" + "accountnumberformats\n" + "\n" + "\n" + "accountnumberformats?fields=accountType,prefixType", responseContainer = "List")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountNumberFormatsApiResourceSwagger.GetAccountNumberFormatsIdResponse.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountNumberFormatsApiResourceSwagger.GetAccountNumberFormatsIdResponse.class, responseContainer = "List")})
     public String retrieveAll(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(AccountNumberFormatConstants.ENTITY_NAME);
