@@ -28,14 +28,14 @@ import java.util.Collection;
 /**
  * Created by sanyam on 13/8/17.
  */
-final class AuthenticationApiResourceSwagger {
-    private AuthenticationApiResourceSwagger(){
+final class UserDetailsApiResourceSwagger {
+    private UserDetailsApiResourceSwagger() {
 
     }
 
-    @ApiModel(value = "PostAuthenticationResponse")
-    public static final class PostAuthenticationResponse {
-        private PostAuthenticationResponse() {
+    @ApiModel(value = "GetUserDetailsResponse")
+    public static final class GetUserDetailsResponse {
+        private GetUserDetailsResponse(){
 
         }
         @ApiModelProperty(example = "mifos")
@@ -43,7 +43,7 @@ final class AuthenticationApiResourceSwagger {
         @ApiModelProperty(example = "1")
         public Long userId;
         @ApiModelProperty(example = "bWlmb3M6cGFzc3dvcmQ=")
-        public String base64EncodedAuthenticationKey;
+        public String accessToken;
         @ApiModelProperty(example = "true")
         public boolean authenticated;
         @ApiModelProperty(example = "1")
@@ -52,7 +52,7 @@ final class AuthenticationApiResourceSwagger {
         public String officeName;
         @ApiModelProperty(example = "1")
         public Long staffId;
-        @ApiModelProperty(example = "Director, Program")
+        @ApiModelProperty(example = "mifosStaffDisplayName")
         public String staffDisplayName;
         public EnumOptionData organisationalRole;
         public Collection<RoleData> roles;
