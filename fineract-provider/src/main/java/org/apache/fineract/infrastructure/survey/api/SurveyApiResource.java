@@ -96,7 +96,7 @@ public class SurveyApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve survey", notes = "Lists a registered survey table details and the Apache Fineract Core application table they are registered to.")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = SurveyApiResourceSwagger.GetSurveyResponse.class)})
-    public String retrieveSurvey(@PathParam("surveyName") final String surveyName) {
+    public String retrieveSurvey(@PathParam("surveyName") @ApiParam(value = "surveyName") final String surveyName) {
 
         this.context.authenticatedUser().validateHasReadPermission(SurveyApiConstants.SURVEY_RESOURCE_NAME);
 
@@ -113,7 +113,7 @@ public class SurveyApiResource {
     @ApiOperation(value = "Create an entry in the survey table", notes = "Insert and entry in a survey table (full fill the survey)." + "\n" + "\n" + "Refer Link for sample Body:  [ https://demo.openmf.org/api-docs/apiLive.htm#survey_create ] ")
     @ApiImplicitParams({@ApiImplicitParam(value = "[ https://demo.openmf.org/api-docs/apiLive.htm#survey_create ]", required = true, paramType = "body", dataType = "body", format = "body", name = "[ https://demo.openmf.org/api-docs/apiLive.htm#survey_create ]")})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = SurveyApiResourceSwagger.PostSurveySurveyNameApptableIdResponse.class)})
-    public String createDatatableEntry(@PathParam("surveyName") final String datatable, @PathParam("apptableId") final Long apptableId,
+    public String createDatatableEntry(@PathParam("surveyName") @ApiParam(value = "surveyName") final String datatable, @PathParam("apptableId") @ApiParam(value = "apptableId") final Long apptableId,
             final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
