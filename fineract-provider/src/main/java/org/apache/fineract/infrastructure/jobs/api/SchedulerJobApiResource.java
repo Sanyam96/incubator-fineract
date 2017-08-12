@@ -99,7 +99,7 @@ public class SchedulerJobApiResource {
     @Path("{" + SchedulerJobApiConstants.JOB_ID + "}")
     @ApiOperation(value = "Retrieve a Job", notes = "Returns the details of a Job.\n" + "\n" + "Example Requests:\n" + "\n" + "jobs/5")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = SchedulerJobApiResourceSwagger.GetJobsResponse.class)})
-    public String retrieveOne(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "") final Long jobId, @Context final UriInfo uriInfo) {
+    public String retrieveOne(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "jobId") final Long jobId, @Context final UriInfo uriInfo) {
         this.context.authenticatedUser().validateHasReadPermission(SchedulerJobApiConstants.SCHEDULER_RESOURCE_NAME);
         final JobDetailData jobDetailData = this.schedulerJobRunnerReadService.retrieveOne(jobId);
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
@@ -110,9 +110,9 @@ public class SchedulerJobApiResource {
     @Path("{" + SchedulerJobApiConstants.JOB_ID + "}/" + SchedulerJobApiConstants.JOB_RUN_HISTORY)
     @ApiOperation(value = "Retrieve Job Run History", notes = "Example Requests:\n" + "\n" + "jobs/5/runhistory?offset=0&limit=200")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = SchedulerJobApiResourceSwagger.GetJobsJobIDJobRunHistoryResponse.class)})
-    public String retrieveHistory(@Context final UriInfo uriInfo, @PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "") final Long jobId,
-            @QueryParam("offset") @ApiParam(value = "") final Integer offset, @QueryParam("limit") @ApiParam(value = "") final Integer limit,
-            @QueryParam("orderBy") @ApiParam(value = "") final String orderBy, @QueryParam("sortOrder") @ApiParam(value = "") final String sortOrder) {
+    public String retrieveHistory(@Context final UriInfo uriInfo, @PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "jobId") final Long jobId,
+            @QueryParam("offset") @ApiParam(value = "offset") final Integer offset, @QueryParam("limit") @ApiParam(value = "limit") final Integer limit,
+            @QueryParam("orderBy") @ApiParam(value = "orderBy") final String orderBy, @QueryParam("sortOrder") @ApiParam(value = "sortOrder") final String sortOrder) {
         this.context.authenticatedUser().validateHasReadPermission(SchedulerJobApiConstants.SCHEDULER_RESOURCE_NAME);
         final SearchParameters searchParameters = SearchParameters.forPagination(offset, limit, orderBy, sortOrder);
         final Page<JobDetailHistoryData> jobhistoryDetailData = this.schedulerJobRunnerReadService.retrieveJobHistory(jobId,
@@ -126,8 +126,8 @@ public class SchedulerJobApiResource {
     @Path("{" + SchedulerJobApiConstants.JOB_ID + "}")
     @ApiOperation(value = "Run a Job", notes = "Manually Execute Specific Job.")
     @ApiResponse(code = 200, message = "POST: jobs/1?command=executeJob")
-    public Response executeJob(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "") final Long jobId,
-            @QueryParam(SchedulerJobApiConstants.COMMAND) @ApiParam(value = "") final String commandParam) {
+    public Response executeJob(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "jobId") final Long jobId,
+            @QueryParam(SchedulerJobApiConstants.COMMAND) @ApiParam(value = "command") final String commandParam) {
         // check the logged in user have permissions to execute scheduler jobs
         final boolean hasNotPermission = this.context.authenticatedUser().hasNotPermissionForAnyOf("ALL_FUNCTIONS", "EXECUTEJOB_SCHEDULER");
         if (hasNotPermission) {
@@ -149,7 +149,7 @@ public class SchedulerJobApiResource {
     @ApiOperation(value = "Update a Job", notes = "Updates the details of a job.")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = SchedulerJobApiResourceSwagger.PutJobsJobIDRequest.class )})
     @ApiResponse(code = 200, message = "")
-    public String updateJobDetail(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "") final Long jobId, @ApiParam(hidden = true) final String jsonRequestBody) {
+    public String updateJobDetail(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "jobId") final Long jobId, @ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateJobDetail(jobId) //

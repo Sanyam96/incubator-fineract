@@ -75,22 +75,22 @@ final class SchedulerJobApiResourceSwagger {
 
         }
 
+        final class JobDetailHistoryDataSwagger {
+            private JobDetailHistoryDataSwagger(){}
+            @ApiModelProperty(example = "1")
+            public Long version;
+            @ApiModelProperty(example = "Jul 16, 2013 12:00:00 PM")
+            public Date jobRunStartTime;
+            @ApiModelProperty(example = "Jul 16, 2013 12:00:00 PM")
+            public Date jobRunEndTime;
+            @ApiModelProperty(example = "success")
+            public String status;
+            @ApiModelProperty(example = "cron")
+            public String triggerType;
+        }
+        @ApiModelProperty(example = "8")
         public int totalFilteredRecords;
-        public List<JobDetailHistoryData> pageItems;
+        public List<JobDetailHistoryDataSwagger> pageItems;
 
-//        @ApiModelProperty(example = "1")
-//        public Long version;
-//        @ApiModelProperty(example = "")
-//        public Date jobRunStartTime;
-//        @ApiModelProperty(example = "")
-//        public Date jobRunEndTime;
-//        @ApiModelProperty(example = "")
-//        public String status;
-//        @ApiModelProperty(example = "")
-//        public String jobRunErrorMessage;
-//        @ApiModelProperty(example = "")
-//        public String triggerType;
-//        @ApiModelProperty(example = "")
-//        public String jobRunErrorLog;
     }
 }
