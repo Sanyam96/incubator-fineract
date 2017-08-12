@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.fineract.infrastructure.dataqueries.data.DatatableData;
 import org.apache.fineract.infrastructure.dataqueries.data.ResultsetColumnHeaderData;
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -34,6 +35,40 @@ final class SurveyApiResourceSwagger {
         @ApiModelProperty(example = "false")
         public boolean enabled;
     }
+
+    @ApiModel(value = "PostSurveySurveyNameApptableIdRequest")
+    public static final class PostSurveySurveyNameApptableIdRequest {
+        private PostSurveySurveyNameApptableIdRequest() {
+
+        }
+        @ApiModelProperty(example = "167")
+        public Long ppi_household_members_cd_q1_householdmembers;
+        @ApiModelProperty(example = "174")
+        public Long ppi_highestschool_cd_q2_highestschool;
+        @ApiModelProperty(example = "180")
+        public Long ppi_businessoccupation_cd_q3_businessoccupation;
+        @ApiModelProperty(example = "184")
+        public Long ppi_habitablerooms_cd_q4_habitablerooms;
+        @ApiModelProperty(example = "188")
+        public Long ppi_floortype_cd_q5_floortype;
+        @ApiModelProperty(example = "190")
+        public Long ppi_lightingsource_cd_q6_lightingsource;
+        @ApiModelProperty(example = "193")
+        public Long ppi_irons_cd_q7_irons;
+        @ApiModelProperty(example = "195")
+        public Long ppi_mosquitonets_cd_q8_mosquitonets;
+        @ApiModelProperty(example = "198")
+        public Long ppi_towels_cd_q9_towels;
+        @ApiModelProperty(example = "201")
+        public Long ppi_fryingpans_cd_q10_fryingpans;
+        @ApiModelProperty(example = "2014-12-02 20:30:00")
+        public DateTime Date;
+        @ApiModelProperty(example = "Y-m-d H:i:s")
+        public DateTime dateFormat;
+        @ApiModelProperty(example = "en_GB")
+        public String locale;
+    }
+
 
     @ApiModel(value = "PostSurveySurveyNameApptableIdResponse")
     public static final class PostSurveySurveyNameApptableIdResponse {
