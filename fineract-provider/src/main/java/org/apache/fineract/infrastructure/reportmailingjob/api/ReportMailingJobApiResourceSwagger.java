@@ -72,7 +72,7 @@ final class ReportMailingJobApiResourceSwagger {
         public EnumOptionData emailAttachmentFileFormat;
         @ApiModelProperty(example = "")
         public ReportData stretchyReport;
-        @ApiModelProperty(example = "{\\\"startDate\\\":\\\"2016-07-01\\\",\\\"endDate\\\":\\\"2016-08-02\\\",\\\"selectOffice\\\":\\\"1\\\",\\\"environementUrl\\\":\\\"environementUrl\\\"}")
+        @ApiModelProperty(example = "{\"startDate\":\"2016-07-01\",\"endDate\":\"2016-08-02\",\"selectOffice\":\"1\",\"environementUrl\":\"environementUrl\"}")
         public String stretchyReportParamMap;
         @ApiModelProperty(example = "1469627093000")
         public DateTime nextRunDateTime;
@@ -111,7 +111,7 @@ final class ReportMailingJobApiResourceSwagger {
         public String recurrence;
         @ApiModelProperty(example = "true")
         public boolean isActive;
-        @ApiModelProperty(example = "{\\\"startDate\\\":\\\"2016-07-01\\\",\\\"endDate\\\":\\\"2016-08-02\\\",\\\"selectOffice\\\":\\\"1\\\",\\\"environementUrl\\\":\\\"environementUrl\\\"}")
+        @ApiModelProperty(example = "{\"startDate\":\"2016-07-01\",\"endDate\":\"2016-08-02\",\"selectOffice\":\"1\",\"environementUrl\":\"environementUrl\"}")
         public String stretchyReportParamMap;
 
     }

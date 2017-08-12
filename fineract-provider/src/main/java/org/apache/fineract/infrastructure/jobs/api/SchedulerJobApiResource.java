@@ -125,7 +125,7 @@ public class SchedulerJobApiResource {
     @POST
     @Path("{" + SchedulerJobApiConstants.JOB_ID + "}")
     @ApiOperation(value = "Run a Job", notes = "Manually Execute Specific Job.")
-    @ApiResponse(code = 200, message = "POST: jobs/1?command=executeJob")
+    @ApiResponses({@ApiResponse(code = 200, message = "POST: jobs/1?command=executeJob")})
     public Response executeJob(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "jobId") final Long jobId,
             @QueryParam(SchedulerJobApiConstants.COMMAND) @ApiParam(value = "command") final String commandParam) {
         // check the logged in user have permissions to execute scheduler jobs
@@ -148,7 +148,7 @@ public class SchedulerJobApiResource {
     @Path("{" + SchedulerJobApiConstants.JOB_ID + "}")
     @ApiOperation(value = "Update a Job", notes = "Updates the details of a job.")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = SchedulerJobApiResourceSwagger.PutJobsJobIDRequest.class )})
-    @ApiResponse(code = 200, message = "")
+    @ApiResponses({@ApiResponse(code = 200, message = "")})
     public String updateJobDetail(@PathParam(SchedulerJobApiConstants.JOB_ID) @ApiParam(value = "jobId") final Long jobId, @ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //

@@ -79,7 +79,7 @@ public class ReportMailingJobApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create a Report Mailing Job", notes = "Mandatory Fields: " + "name, startDateTime, stretchyReportId, emailRecipients, emailSubject, emailMessage, emailAttachmentFileFormatId, recurrence, isActive\n" + "\n" + "Optional Fields: " + "description, stretchyReportParamMap")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.PostReportMailingJobsRequest.class )})
-    @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.PostReportMailingJobsResponse.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.PostReportMailingJobsResponse.class)})
     public String createReportMailingJob(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 createReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME).
@@ -96,7 +96,7 @@ public class ReportMailingJobApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Report Mailing Job\n", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.PutReportMailingJobsRequest.class )})
-    @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.PutReportMailingJobsResponse.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.PutReportMailingJobsResponse.class)})
     public String updateReportMailingJob(@PathParam("entityId") @ApiParam(value = "entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 updateReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME, entityId).
@@ -113,7 +113,7 @@ public class ReportMailingJobApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Report Mailing Job", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.DeleteReportMailingJobsRequest.class )})
-    @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.DeleteReportMailingJobsResponse.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.DeleteReportMailingJobsResponse.class)})
     public String deleteReportMailingJob(@PathParam("entityId") @ApiParam(value = "entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 deleteReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME, entityId).

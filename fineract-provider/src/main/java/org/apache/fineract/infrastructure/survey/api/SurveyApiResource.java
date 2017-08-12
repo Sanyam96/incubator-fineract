@@ -112,7 +112,7 @@ public class SurveyApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create an entry in the survey table", notes = "Insert and entry in a survey table (full fill the survey).")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String createDatatableEntry(@PathParam("surveyName") final String datatable, @PathParam("apptableId") final Long apptableId,
             final String apiRequestBodyAsJson) {
 
