@@ -28,10 +28,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.apache.fineract.infrastructure.core.data.EnumOptionData;
 import org.apache.fineract.infrastructure.core.serialization.ToApiJsonSerializer;
 import org.apache.fineract.infrastructure.security.data.AuthenticatedUserData;
@@ -75,8 +72,8 @@ public class AuthenticationApiResource {
     @POST
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Verify authentication", notes = "Authenticates the credentials provided and returns the set roles and permissions allowed.")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = AuthenticatedUserData.class)})
-    public String authenticate(@QueryParam("username") final String username, @QueryParam("password") final String password) {
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AuthenticationApiResourceSwagger.PostAuthenticationResponse.class), @ApiResponse(code = 400, message = "Unauthenticated. Please login")})
+    public String authenticate(@QueryParam("username") @ApiParam(value = "username") final String username, @QueryParam("password") @ApiParam(value = "password") final String password) {
 
         final Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
         final Authentication authenticationCheck = this.customAuthenticationProvider.authenticate(authentication);
