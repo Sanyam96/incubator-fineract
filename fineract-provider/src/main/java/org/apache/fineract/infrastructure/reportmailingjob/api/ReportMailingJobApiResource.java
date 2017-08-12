@@ -97,7 +97,7 @@ public class ReportMailingJobApiResource {
     @ApiOperation(value = "Update a Report Mailing Job\n", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.PutReportMailingJobsRequest.class )})
     @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.PutReportMailingJobsResponse.class)
-    public String updateReportMailingJob(@PathParam("entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String updateReportMailingJob(@PathParam("entityId") @ApiParam(value = "entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 updateReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME, entityId).
                 withJson(apiRequestBodyAsJson).build();
@@ -114,7 +114,7 @@ public class ReportMailingJobApiResource {
     @ApiOperation(value = "Delete a Report Mailing Job", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.DeleteReportMailingJobsRequest.class )})
     @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.DeleteReportMailingJobsResponse.class)
-    public String deleteReportMailingJob(@PathParam("entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String deleteReportMailingJob(@PathParam("entityId") @ApiParam(value = "entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 deleteReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME, entityId).
                 withJson(apiRequestBodyAsJson).build();
@@ -130,7 +130,7 @@ public class ReportMailingJobApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Report Mailing Job", notes = "Example Requests:\n" + "\n" + "reportmailingjobs/1\n" + "\n" + "\n" + "reportmailingjobs/1?template=true")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.GetReportMailingJobsResponse.class)})
-    public String retrieveReportMailingJob(@PathParam("entityId") final Long entityId, @Context final UriInfo uriInfo) {
+    public String retrieveReportMailingJob(@PathParam("entityId") @ApiParam(value = "entityId") final Long entityId, @Context final UriInfo uriInfo) {
         this.platformSecurityContext.authenticatedUser().validateHasReadPermission(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME);
         
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
@@ -165,9 +165,9 @@ public class ReportMailingJobApiResource {
     @ApiOperation(value = "List Report Mailing Jobs", notes = "Example Requests:\n" + "\n" + "reportmailingjobs")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.GetReportMailingJobsResponse.class, responseContainer = "list")})
     public String retrieveAllReportMailingJobs(@Context final UriInfo uriInfo, 
-            @QueryParam("offset") final Integer offset,
-            @QueryParam("limit") final Integer limit, @QueryParam("orderBy") final String orderBy,
-            @QueryParam("sortOrder") final String sortOrder) {
+            @QueryParam("offset") @ApiParam(value = "offset") final Integer offset,
+            @QueryParam("limit") @ApiParam(value = "limit") final Integer limit, @QueryParam("orderBy") @ApiParam(value = "orderBy") final String orderBy,
+            @QueryParam("sortOrder") @ApiParam(value = "sortOrder") final String sortOrder) {
         this.platformSecurityContext.authenticatedUser().validateHasReadPermission(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME);
         
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
