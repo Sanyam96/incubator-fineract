@@ -79,7 +79,7 @@ public class SchedulerApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Activate Scheduler Jobs | Suspend Scheduler Jobs", notes = "Activates the scheduler job service. | Suspends the scheduler job service.")
-    @ApiResponses({@ApiResponse(code = 200, message = "POST :  scheduler?command=start\n\n"+"\n"+"POST scheduler?command=stop")})
+    @ApiResponses({@ApiResponse(code = 200, message = "POST :  scheduler?command=start\n\n"+"\n"+"POST : scheduler?command=stop")})
     public Response changeSchedulerStatus(@QueryParam(SchedulerJobApiConstants.COMMAND) @ApiParam(value = "command") final String commandParam) {
         // check the logged in user have permissions to update scheduler status
         final boolean hasNotPermission = this.context.authenticatedUser().hasNotPermissionForAnyOf("ALL_FUNCTIONS", "UPDATE_SCHEDULER");
