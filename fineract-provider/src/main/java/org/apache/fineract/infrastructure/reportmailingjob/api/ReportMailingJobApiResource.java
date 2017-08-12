@@ -77,9 +77,9 @@ public class ReportMailingJobApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Create a Report Mailing Job", notes = "Mandatory Fields\n" + "name, startDateTime, stretchyReportId, emailRecipients, emailSubject, emailMessage, emailAttachmentFileFormatId, recurrence, isActive\n" + "\n" + "Optional Fields\n" + "description, stretchyReportParamMap")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiOperation(value = "Create a Report Mailing Job", notes = "Mandatory Fields: " + "name, startDateTime, stretchyReportId, emailRecipients, emailSubject, emailMessage, emailAttachmentFileFormatId, recurrence, isActive\n" + "\n" + "Optional Fields: " + "description, stretchyReportParamMap")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.PostReportMailingJobsRequest.class )})
+    @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.PostReportMailingJobsResponse.class)
     public String createReportMailingJob(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 createReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME).
@@ -95,8 +95,8 @@ public class ReportMailingJobApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Report Mailing Job\n", notes = "")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.PutReportMailingJobsRequest.class )})
+    @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.PutReportMailingJobsResponse.class)
     public String updateReportMailingJob(@PathParam("entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 updateReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME, entityId).
@@ -112,8 +112,8 @@ public class ReportMailingJobApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Report Mailing Job", notes = "")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ReportMailingJobApiResourceSwagger.DeleteReportMailingJobsRequest.class )})
+    @ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.DeleteReportMailingJobsResponse.class)
     public String deleteReportMailingJob(@PathParam("entityId") final Long entityId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
         final CommandWrapper commandWrapper = new CommandWrapperBuilder().
                 deleteReportMailingJob(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME, entityId).
@@ -129,7 +129,7 @@ public class ReportMailingJobApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Report Mailing Job", notes = "Example Requests:\n" + "\n" + "reportmailingjobs/1\n" + "\n" + "\n" + "reportmailingjobs/1?template=true")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.GetReportMailingJobsResponse.class)})
     public String retrieveReportMailingJob(@PathParam("entityId") final Long entityId, @Context final UriInfo uriInfo) {
         this.platformSecurityContext.authenticatedUser().validateHasReadPermission(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME);
         
@@ -149,7 +149,7 @@ public class ReportMailingJobApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Report Mailing Job Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for report mailing job applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "reportmailingjobs/template")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.GetReportMailingJobsTemplate.class)})
     public String retrieveReportMailingJobTemplate(@Context final UriInfo uriInfo) {
         this.platformSecurityContext.authenticatedUser().validateHasReadPermission(ReportMailingJobConstants.REPORT_MAILING_JOB_ENTITY_NAME);
         
@@ -163,7 +163,7 @@ public class ReportMailingJobApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Report Mailing Jobs", notes = "Example Requests:\n" + "\n" + "reportmailingjobs")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ReportMailingJobApiResourceSwagger.GetReportMailingJobsResponse.class, responseContainer = "list")})
     public String retrieveAllReportMailingJobs(@Context final UriInfo uriInfo, 
             @QueryParam("offset") final Integer offset,
             @QueryParam("limit") final Integer limit, @QueryParam("orderBy") final String orderBy,
