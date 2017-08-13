@@ -88,7 +88,7 @@ public class OfficesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Offices", notes = "Example Requests:\n" + "\n" + "offices\n" + "\n" + "\n" + "offices?fields=id,name,openingDate")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficeData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.GetOfficesResponse.class, responseContainer = "List")})
     public String retrieveOffices(@Context final UriInfo uriInfo,
             @DefaultValue("false") @QueryParam("includeAllOffices") final boolean onlyManualEntries,
             @QueryParam("orderBy") final String orderBy, @QueryParam("sortOrder") final String sortOrder) {
@@ -108,7 +108,7 @@ public class OfficesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Office Details Template", notes = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Request:\n" + "\n" + "offices/template")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficeData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.GetOfficesTemplateResponse.class)})
     public String retrieveOfficeTemplate(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -126,8 +126,8 @@ public class OfficesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create an Office", notes = "Mandatory Fields\n" + "name, openingDate, parentId")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = OfficesApiResourceSwagger.PostOfficesRequest.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.PostOfficesResponse.class)})
     public String createOffice(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
@@ -145,7 +145,7 @@ public class OfficesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve an Office", notes = "Example Requests:\n" + "\n" + "offices/1\n" + "\n" + "\n" + "offices/1?template=true\n" + "\n" + "\n" + "offices/1?fields=id,name,parentName")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficeData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.GetOfficesResponse.class)})
     public String retreiveOffice(@PathParam("officeId") final Long officeId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -166,8 +166,8 @@ public class OfficesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update Office", notes = "")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = OfficesApiResourceSwagger.PutOfficesOfficeIdRequest.class )})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.PutOfficesOfficeIdResponse.class)})
     public String updateOffice(@PathParam("officeId") final Long officeId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
