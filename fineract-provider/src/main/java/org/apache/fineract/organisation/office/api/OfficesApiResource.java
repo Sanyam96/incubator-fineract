@@ -90,8 +90,8 @@ public class OfficesApiResource {
     @ApiOperation(value = "List Offices", notes = "Example Requests:\n" + "\n" + "offices\n" + "\n" + "\n" + "offices?fields=id,name,openingDate")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.GetOfficesResponse.class, responseContainer = "List")})
     public String retrieveOffices(@Context final UriInfo uriInfo,
-            @DefaultValue("false") @QueryParam("includeAllOffices") final boolean onlyManualEntries,
-            @QueryParam("orderBy") final String orderBy, @QueryParam("sortOrder") final String sortOrder) {
+            @DefaultValue("false") @QueryParam("includeAllOffices") @ApiParam(value = "includeAllOffices") final boolean onlyManualEntries,
+            @QueryParam("orderBy") @ApiParam(value = "orderBy") final String orderBy, @QueryParam("sortOrder") @ApiParam(value = "sortOrder") final String sortOrder) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
 
@@ -146,7 +146,7 @@ public class OfficesApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve an Office", notes = "Example Requests:\n" + "\n" + "offices/1\n" + "\n" + "\n" + "offices/1?template=true\n" + "\n" + "\n" + "offices/1?fields=id,name,parentName")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.GetOfficesResponse.class)})
-    public String retreiveOffice(@PathParam("officeId") final Long officeId, @Context final UriInfo uriInfo) {
+    public String retreiveOffice(@PathParam("officeId") @ApiParam(value = "officeId") final Long officeId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
 
@@ -168,7 +168,7 @@ public class OfficesApiResource {
     @ApiOperation(value = "Update Office", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = OfficesApiResourceSwagger.PutOfficesOfficeIdRequest.class )})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = OfficesApiResourceSwagger.PutOfficesOfficeIdResponse.class)})
-    public String updateOffice(@PathParam("officeId") final Long officeId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String updateOffice(@PathParam("officeId") @ApiParam(value = "officeId") final Long officeId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateOffice(officeId) //
