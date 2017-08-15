@@ -40,7 +40,7 @@
             &lt;br/&gt;The API
 
               &lt;br/&gt; is organized around REST [ https://en.wikipedia.org/wiki/Representational_state_transfer ]
-              &lt;br/&gt; Find out more about Apache Fineract on ... [ https://demo.openmf.org/api-docs/apiLive.htm#top ]
+              &lt;br/&gt; Find out more about Apache Fineract on [ https://demo.openmf.org/api-docs/apiLive.htm#top ]
 
             &lt;br/&gt; You can Try The API From Your Browser itself at [ https://demo.openmf.org/api-docs/apiLive.htm#interact ]
 
@@ -57,13 +57,13 @@
 
             &lt;br/&gt;
             ______________________________________________________________________________________________________________________________
-            Lets go for the financial Inclusion all over the globe ;)
-            &lt;br/&gt;Happy Fineracting!!
+            &lt;br/&gt; Lets go for the financial Inclusion all over the globe ;)
+            &lt;br/&gt; Happy Fineracting!!
         "/>
 
         <property name="license" value="Apache 2.0" />
         <property name="schemes" value="https" />
-        <property name="host" value="localhost:8443" />
+        <property name="host" value="https://demo.openmf.org" />
         <property name="basePath" value="fineract-provider/api/v1"/>
         <property name="termsOfServiceUrl" value="https://demo.openmf.org/api-docs/apiLive.htm"/>
         <property name="contact" value="https://gitter.im/openMF/mifos"/>
