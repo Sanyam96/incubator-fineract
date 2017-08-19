@@ -50,7 +50,7 @@ import org.springframework.stereotype.Component;
 @Path("/provisioningcategory")
 @Component
 @Scope("singleton")
-@Api(value = "provisioningcategory", description = "")
+@Api(value = "Provisioning Category", description = "")
 public class ProvisioningCategoryApiResource {
 
     private final PlatformSecurityContext platformSecurityContext;
