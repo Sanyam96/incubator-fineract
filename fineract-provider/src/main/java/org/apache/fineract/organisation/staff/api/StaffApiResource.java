@@ -91,8 +91,8 @@ public class StaffApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Retrieve Staff", notes = "Returns the list of staff members.\n" + "\n" + "Example Requests:\n" + "\n" + "staff")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffData.class)})
+    @ApiOperation(value = "Retrieve Staff", notes = "Returns the list of staff members.\n" + "\n" + "Example Requests:\n" + "\n" + "staff\n\n\n\n" + "\n" + "Retrieve a Staff by status\n" + "\n" + "Returns the details of a Staff based on status.\n" + "\n" + "By default it Returns all the ACTIVE Staff.\n" + "\n" + "If status=INACTIVE, then it returns all INACTIVE Staff.\n" + "\n" + "and for status=ALL, it Returns both ACTIVE and INACTIVE Staff.\n" + "\n" + "Example Requests:\n" + "\n" + "staff?status=active")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.GetStaffResponse.class, responseContainer = "List"), @ApiResponse(code = 200, message = "GET https://DomainName/api/v1/staff?status={ACTIVE|INACTIVE|ALL}", response = StaffApiResourceSwagger.GetStaffResponse.class)})
     public String retrieveStaff(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") final String sqlSearch,
             @QueryParam("officeId") final Long officeId,
             @DefaultValue("false") @QueryParam("staffInOfficeHierarchy") final boolean staffInOfficeHierarchy,
@@ -115,9 +115,9 @@ public class StaffApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Create a staff member", notes = "Creates a staff member.\n" + "\n" + "Mandatory Fields\n" + "officeId, firstname, lastname\n" + "\n" + "Optional Fields\n" + "isLoanOfficer, isActive")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiOperation(value = "Create a staff member", notes = "Creates a staff member.\n" + "\n" + "Mandatory Fields: \n" + "officeId, firstname, lastname\n" + "\n" + "Optional Fields: \n" + "isLoanOfficer, isActive")
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = StaffApiResourceSwagger.PostStaffRequest.class )})
+    @ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.PostStaffResponse.class)
     public String createStaff(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createStaff().withJson(apiRequestBodyAsJson).build();
@@ -132,7 +132,7 @@ public class StaffApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Staff Member", notes = "Returns the details of a Staff Member.\n" + "\n" + "Example Requests:\n" + "\n" + "staff/1")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffData.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.GetStaffResponse.class)})
     public String retreiveStaff(@PathParam("staffId") final Long staffId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -152,8 +152,8 @@ public class StaffApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Staff Member", notes = "Updates the details of a staff member.")
-    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = CommandWrapper.class )})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = StaffApiResourceSwagger.PutStaffRequest.class )})
+    @ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.PutStaffResponse.class)
     public String updateStaff(@PathParam("staffId") final Long staffId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateStaff(staffId).withJson(apiRequestBodyAsJson).build();
