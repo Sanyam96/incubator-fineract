@@ -85,7 +85,7 @@ public class WorkingDaysApiResource {
     @ApiOperation(value = "Update a Working Day", notes = "Mandatory Fields\n" + "recurrence,repaymentRescheduleType,extendTermForDailyRepayments,locale")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = WorkingDaysApiResourceSwagger.PutWorkingDaysRequest.class )})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = WorkingDaysApiResourceSwagger.PutWorkingDaysResponse.class)})
-    public String update(final String jsonRequestBody) {
+    public String update(@ApiParam(hidden = true) final String jsonRequestBody) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateWorkingDays().withJson(jsonRequestBody).build();
 

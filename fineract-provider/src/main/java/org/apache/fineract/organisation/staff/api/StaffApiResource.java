@@ -117,7 +117,7 @@ public class StaffApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create a staff member", notes = "Creates a staff member.\n" + "\n" + "Mandatory Fields: \n" + "officeId, firstname, lastname\n" + "\n" + "Optional Fields: \n" + "isLoanOfficer, isActive")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = StaffApiResourceSwagger.PostStaffRequest.class )})
-    @ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.PostStaffResponse.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.PostStaffResponse.class)})
     public String createStaff(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createStaff().withJson(apiRequestBodyAsJson).build();
@@ -153,7 +153,7 @@ public class StaffApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Staff Member", notes = "Updates the details of a staff member.")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = StaffApiResourceSwagger.PutStaffRequest.class )})
-    @ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.PutStaffResponse.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = StaffApiResourceSwagger.PutStaffResponse.class)})
     public String updateStaff(@PathParam("staffId") @ApiParam(value = "staffId") final Long staffId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateStaff(staffId).withJson(apiRequestBodyAsJson).build();
