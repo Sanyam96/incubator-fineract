@@ -102,8 +102,8 @@ public class TemplatesApiResource {
     @GET
     @ApiOperation(value = "Retrieve all UGDs", notes = "Example Requests:\n" + "\n" + "templates\n" + "\n" + "It is also possible to get specific UGDs by entity and type:\n" + "\n" + "templates?type=0&entity=0\n" + "[Entity: Id]\n\n\n\n" + "\n\n" + "client: 0, loan: 1" + "\n\n" + "[Type: Id]\n\n\n\n" + "Document: 0, E-Mail (not yet): 1,  SMS: 2" )
     @ApiResponses({@ApiResponse(code = 200, message = "", response = TemplatesApiResourcesSwagger.GetTemplatesResponse.class)})
-    public String retrieveAll(@DefaultValue("-1") @QueryParam("typeId") final int typeId,
-            @DefaultValue("-1") @QueryParam("entityId") final int entityId, @Context final UriInfo uriInfo) {
+    public String retrieveAll(@DefaultValue("-1") @QueryParam("typeId") @ApiParam(value = "typeId") final int typeId,
+            @DefaultValue("-1") @QueryParam("entityId") @ApiParam(value = "entityId") final int entityId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.RESOURCE_NAME_FOR_PERMISSION);
 
@@ -151,7 +151,7 @@ public class TemplatesApiResource {
     @Path("{templateId}")
     @ApiOperation(value = "Retrieve a UGD", notes = "Example Requests:\n" + "\n" + "templates/1")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = TemplatesApiResourcesSwagger.GetTemplatesTemplateIdResponse.class)})
-    public String retrieveOne(@PathParam("templateId") final Long templateId, @Context final UriInfo uriInfo) {
+    public String retrieveOne(@PathParam("templateId") @ApiParam(value = "templateId") final Long templateId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.RESOURCE_NAME_FOR_PERMISSION);
 
@@ -178,7 +178,7 @@ public class TemplatesApiResource {
     @ApiOperation(value = "Update a UGD", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = TemplatesApiResourcesSwagger.PutTemplatesTemplateIdRequest.class)})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = TemplatesApiResourcesSwagger.PutTemplatesTemplateIdResponse.class)})
-    public String saveTemplate(@PathParam("templateId") final Long templateId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String saveTemplate(@PathParam("templateId") @ApiParam(value = "templateId") final Long templateId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().updateTemplate(templateId).withJson(apiRequestBodyAsJson).build();
 
@@ -191,7 +191,7 @@ public class TemplatesApiResource {
     @Path("{templateId}")
     @ApiOperation(value = "Delete a UGD", notes = "")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = TemplatesApiResourcesSwagger.DeleteTemplatesTemplateIdResponse.class)})
-    public String deleteTemplate(@PathParam("templateId") final Long templateId) {
+    public String deleteTemplate(@PathParam("templateId") @ApiParam(value = "templateId") final Long templateId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteTemplate(templateId).build();
 
