@@ -107,7 +107,7 @@ public class UsersApiResource {
     @Path("{userId}")
     @ApiOperation(value = "Retrieve a User", notes = "Example Requests:\n" + "\n" + "users/1\n" + "\n" + "\n" + "users/1?template=true\n" + "\n" + "\n" + "users/1?fields=username,officeName")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = AppUserData.class)})
-    public String retrieveOne(@PathParam("userId") final Long userId, @Context final UriInfo uriInfo) {
+    public String retrieveOne(@PathParam("userId") @ApiParam(value = "userId") final Long userId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions, userId);
 
@@ -157,7 +157,7 @@ public class UsersApiResource {
     @ApiOperation(value = "Update a User", notes = "When updating a password you must provide the repeatPassword parameter also.")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = CommandWrapper.class)})
     @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
-    public String update(@PathParam("userId") final Long userId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String update(@PathParam("userId") @ApiParam(value = "userId") final Long userId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateUser(userId) //
@@ -173,7 +173,7 @@ public class UsersApiResource {
     @Path("{userId}")
     @ApiOperation(value = "Delete a User", notes = "Removes the user and the associated roles and permissions.")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
-    public String delete(@PathParam("userId") final Long userId) {
+    public String delete(@PathParam("userId") @ApiParam(value = "userId") final Long userId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .deleteUser(userId) //
