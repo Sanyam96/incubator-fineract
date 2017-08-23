@@ -138,7 +138,7 @@ public class RolesApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Role", notes = "Example Requests:\n" + "\n" + "roles/1\n" + "\n" + "\n" + "roles/1?fields=name")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = RolesApiResourceSwagger.GetRolesRoleIdResponse.class)})
-    public String retrieveRole(@PathParam("roleId") final Long roleId, @Context final UriInfo uriInfo) {
+    public String retrieveRole(@PathParam("roleId") @ApiParam(value = "roleId") final Long roleId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
 
@@ -164,7 +164,7 @@ public class RolesApiResource {
     @ApiOperation(value = "Enable Role | Disable Role", notes = "Description : Enable role in case role is disabled. | Disable the role in case role is not associated with any users.\n\n\n\n" + "\n\n" + "Example Request:   https://DomainName/api/v1/roles/{roleId}?command=enable" + "\n\n\n\n" + "\n\n" + "https://DomainName/api/v1/roles/{roleId}?command=disable")
     @ApiImplicitParams({@ApiImplicitParam(value = "No Request Body", name = "No Request Body")})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = RolesApiResourceSwagger.PostRolesRoleIdResponse.class)})
-    public String actionsOnRoles(@PathParam("roleId") final Long roleId, @QueryParam("command") final String commandParam,
+    public String actionsOnRoles(@PathParam("roleId") @ApiParam(value = "roleId") final Long roleId, @QueryParam("command") @ApiParam(value = "command") final String commandParam,
             @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapperBuilder builder = new CommandWrapperBuilder().withJson(apiRequestBodyAsJson);
@@ -188,7 +188,7 @@ public class RolesApiResource {
     @ApiOperation(value = "Update a Role", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = RolesApiResourceSwagger.PutRolesRoleIdRequest.class)})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = RolesApiResourceSwagger.PutRolesRoleIdResponse.class)})
-    public String updateRole(@PathParam("roleId") final Long roleId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String updateRole(@PathParam("roleId") @ApiParam(value = "roleId") final Long roleId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateRole(roleId) //
@@ -206,7 +206,7 @@ public class RolesApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Role's Permissions", notes = "Example Requests:\n" + "\n" + "roles/1/permissions")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = RolesApiResourceSwagger.GetRolesRoleIdPermissionsResponse.class)})
-    public String retrieveRolePermissions(@PathParam("roleId") final Long roleId, @Context final UriInfo uriInfo) {
+    public String retrieveRolePermissions(@PathParam("roleId") @ApiParam(value = "roleId") final Long roleId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
 
@@ -225,7 +225,7 @@ public class RolesApiResource {
     @ApiOperation(value = "Update a Role's Permissions", notes = "")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = RolesApiResourceSwagger.PutRolesRoleIdPermissionsRequest.class)})
     @ApiResponses({@ApiResponse(code = 200, message = "", response = RolesApiResourceSwagger.PutRolesRoleIdPermissionsResponse.class)})
-    public String updateRolePermissions(@PathParam("roleId") final Long roleId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+    public String updateRolePermissions(@PathParam("roleId") @ApiParam(value = "roleId") final Long roleId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .updateRolePermissions(roleId) //
@@ -249,7 +249,7 @@ public class RolesApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Role", notes = "Description : Delete the role in case role is not associated with any users.")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = RolesApiResourceSwagger.DeleteRolesRoleIdResponse.class)})
-    public String deleteRole(@PathParam("roleId") final Long roleId) {
+    public String deleteRole(@PathParam("roleId") @ApiParam(value = "roleId") final Long roleId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder() //
                 .deleteRole(roleId) //
