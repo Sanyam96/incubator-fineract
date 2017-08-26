@@ -129,7 +129,7 @@ public class ClientsApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Clients",
             notes = "Example Requests:\n" + "\n" + "clients\n" + "\n" + "clients?fields=displayName,officeName,timeline\n" + "\n" + "clients?offset=10&limit=50\n" + "\n" + "clients?orderBy=displayName&sortOrder=DESC" )
-    @ApiResponse(code = 200, message = "", response = ClientData.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ClientData.class)})
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") final String sqlSearch,
             @QueryParam("officeId") final Long officeId, @QueryParam("externalId") final String externalId,
             @QueryParam("displayName") final String displayName, @QueryParam("firstName") final String firstname,
@@ -166,7 +166,7 @@ public class ClientsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Client", notes = "Example Requests:\n" + "\n" + "clients/1\n" +"\n" + "\n" + "clients/1?template=true\n" + "\n" + "\n" + "clients/1?fields=id,displayName,officeName" )
-    @ApiResponse(code = 200, message = "", response = ClientData.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ClientData.class)})
     public String retrieveOne(@PathParam("clientId") final Long clientId, @Context final UriInfo uriInfo,
             @DefaultValue("false") @QueryParam("staffInSelectedOfficeOnly") final boolean staffInSelectedOfficeOnly) {
 
@@ -192,7 +192,7 @@ public class ClientsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:" + "\n" + "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name).\n" + "\n" + "2.If address is enable(enable-address=true), then additional field called address has to be passed.", response = CommandProcessingResult.class, consumes="application/json")
-    @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataTypeClass = ClientPayloadSwagger.class, required = true, value = "Mandatory Fields : Office ID, firstname, lastname, dateformat, locale, active, activationDate, external Id\n" + "\n Optional Fields : groupId, externalId, accountNo, staffId, mobileNo, savingsProductId, genderId, clientTypeId, clientClassificationId", type = "body")})
+    @ApiImplicitParams({@ApiImplicitParam( paramType = "body", dataType = "ClientData", required = true, type = "body", dataTypeClass = ClientData.class)})
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Client Created", response = CommandProcessingResult.class) })
     public String create(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
@@ -212,9 +212,6 @@ public class ClientsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Client", notes = "You can update any of the basic attributes of a client (but not its associations) using this API.\n" + "\n" + "Changing the relationship between a client and its office is not supported through this API. An API specific to handling transfers of clients between offices is available for the same.\n" + "\n" + "The relationship between a client and a group must be removed through the Groups API." )
-//    @ApiImplicitParams(value = {
-//            @ApiImplicitParam(value = "externalId", required = true, paramType = "body", dataType = "string", name = "externalId", example = "786444UUUYYH7")
-//    })
     @ApiImplicitParams({@ApiImplicitParam( paramType = "body", dataType = "ClientData", required = true, type = "body", dataTypeClass = ClientData.class)})
     @ApiResponses(value = { @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class) })
     public String update(@ApiParam(value = "ClientId") @PathParam("clientId") final Long clientId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {

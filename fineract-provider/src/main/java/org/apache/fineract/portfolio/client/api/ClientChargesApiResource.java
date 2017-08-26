@@ -224,7 +224,7 @@ public class ClientChargesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Client Charge", notes = "Deletes a Client Charge on which no transactions have taken place (either payments or waivers). ")
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String deleteClientCharge(@PathParam("clientId") final Long clientId, @PathParam("chargeId") final Long chargeId) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().deleteClientCharge(clientId, chargeId).build();

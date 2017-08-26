@@ -119,6 +119,7 @@ public class ClientAddressApiResources {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	@ApiOperation(value = "List all addresses for a Client", notes = "Example Requests:\n" + "\n" +"client/1/addresses\n" + "\n" +	"\n" +"clients/1/addresses?status=false,true&&type=1,2,3" )
+	@ApiResponses({@ApiResponse(code = 200, message = "", response = AddressData.class)})
 	public String getAddresses(@QueryParam("status") final String status, @QueryParam("type") final long addressTypeId,
 							   @PathParam("clientid") final long clientid, @Context final UriInfo uriInfo) {
 		Collection<AddressData> address;

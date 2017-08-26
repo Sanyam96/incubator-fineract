@@ -95,7 +95,7 @@ public class ClientIdentifiersApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List all Identifiers for a Client", notes = "Example Requests:\n" + "clients/1/identifiers\n" + "\n" + "\n" + "clients/1/identifiers?fields=documentKey,documentType,description")
-    @ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)})
     public String retrieveAllClientIdentifiers(@Context final UriInfo uriInfo, @PathParam("clientId") final Long clientId) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -112,7 +112,7 @@ public class ClientIdentifiersApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve Client Identifier Details Template", notes = "This is a convenience resource useful for building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n" + "\n" + " Field Defaults\n" + " Allowed Value Lists\n" + "\n\nExample Request:\n" + "clients/1/identifiers/template" )
-    @ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)})
     public String newClientIdentifierDetails(@Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(this.resourceNameForPermissions);
@@ -129,7 +129,7 @@ public class ClientIdentifiersApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Create an Identifier for a Client", notes = "Mandatory Fields\n" + "documentKey, documentTypeId " )
     @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = ClientData.class)})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String createClientIdentifier(@PathParam("clientId") final Long clientId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         try {
@@ -157,7 +157,7 @@ public class ClientIdentifiersApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Retrieve a Client Identifier", notes = "Example Requests:\n" + "clients/1/identifier/2\n" + "\n" + "\n" + "clients/1/identifier/2?template=true\n" + "\n" + "clients/1/identifiers/2?fields=documentKey,documentType,description" )
-    @ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = ClientIdentifierData.class)})
     public String retrieveClientIdentifiers(@PathParam("clientId") final Long clientId,
             @PathParam("identifierId") final Long clientIdentifierId, @Context final UriInfo uriInfo) {
 
@@ -181,7 +181,7 @@ public class ClientIdentifiersApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Update a Client Identifier")
     @ApiImplicitParams({@ApiImplicitParam(value = "body", dataType = "body", dataTypeClass = ClientData.class)})
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String updateClientIdentifer(@PathParam("clientId") final Long clientId,
             @PathParam("identifierId") final Long clientIdentifierId, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
@@ -209,7 +209,7 @@ public class ClientIdentifiersApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "Delete a Client Identifier")
-    @ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = CommandProcessingResult.class)})
     public String deleteClientIdentifier(@PathParam("clientId") final Long clientId,
             @PathParam("identifierId") final Long clientIdentifierId) {
 
