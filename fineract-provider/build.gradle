@@ -111,7 +111,7 @@ rat {
 	'**/NOTICE_RELEASE',
 	'**/NOTICE_SOURCE',
     // Swagger License
-    '**/fineract-provider/src/main/resources/swaggerUI/*.*',
+    '**/fineract-provider/src/main/resources/swagger-ui/*.*',
     // gradle
     '**/.gradle/**',
     '**/gradlew',
