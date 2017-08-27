@@ -101,6 +101,31 @@ public class CommandWrapperBuilder {
         this.clientId=clientId;
         return this;
     }
+    
+    
+    public CommandWrapperBuilder addFamilyMembers(final long clientId) {
+        this.actionName = "CREATE";
+        this.entityName = "FAMILYMEMBERS";
+        this.href = "/clients/"+clientId+"/familymembers";
+        this.clientId=clientId;
+        return this;
+    }
+  
+    public CommandWrapperBuilder updateFamilyMembers(final long familyMemberId) {
+        this.actionName = "UPDATE";
+        this.entityName = "FAMILYMEMBERS";
+        this.href = "/clients/"+clientId+"/familymembers";
+        this.entityId=familyMemberId;
+        return this;
+    }
+    
+    public CommandWrapperBuilder deleteFamilyMembers(final long familyMemberId) {
+        this.actionName = "DELETE";
+        this.entityName = "FAMILYMEMBERS";
+        this.href = "/clients/"+clientId+"/familymembers";
+        this.entityId=familyMemberId;
+        return this;
+    }
   
     public CommandWrapperBuilder withLoanId(final Long withLoanId) {
         this.loanId = withLoanId;
@@ -2902,6 +2927,118 @@ public class CommandWrapperBuilder {
         this.entityName = "SMSCAMPAIGN";
         this.entityId = resourceId;
         this.href = "/smscampaigns/"+resourceId;
+        return this;
+    }
+    
+    public CommandWrapperBuilder holdAmount(final Long accountId) {
+        this.actionName = "HOLDAMOUNT";
+        this.entityName = "SAVINGSACCOUNT";
+        this.savingsId = accountId;
+        this.entityId = null;
+        this.href = "/savingsaccounts/" + accountId + "/transactions?command=holdAmount";
+        return this;
+    }
+
+    public CommandWrapperBuilder releaseAmount(final Long accountId, final Long transactionId) {
+        this.actionName = "RELEASEAMOUNT";
+        this.entityName = "SAVINGSACCOUNT";
+        this.entityId = null;
+        this.savingsId = accountId;
+        this.transactionId = transactionId.toString();
+        this.href = "/savingsaccounts/" + accountId + "/transactions/" + transactionId + "?command=releaseAmount";
+        return this;
+    }
+
+    public CommandWrapperBuilder blockDebitsFromSavingsAccount(final Long accountId) {
+        this.actionName = "BLOCKDEBIT";
+        this.entityName = "SAVINGSACCOUNT";
+        this.savingsId = accountId;
+        this.entityId = null;
+        this.href = "/savingsaccounts/" + accountId + "?command=blockDebit";
+        return this;
+    }
+
+    public CommandWrapperBuilder unblockDebitsFromSavingsAccount(final Long accountId) {
+        this.actionName = "UNBLOCKDEBIT";
+        this.entityName = "SAVINGSACCOUNT";
+        this.savingsId = accountId;
+        this.entityId = null;
+        this.href = "/savingsaccounts/" + accountId + "?command=unblockDebit";
+        return this;
+    }
+
+    public CommandWrapperBuilder blockCreditsToSavingsAccount(final Long accountId) {
+        this.actionName = "BLOCKCREDIT";
+        this.entityName = "SAVINGSACCOUNT";
+        this.savingsId = accountId;
+        this.entityId = null;
+        this.href = "/savingsaccounts/" + accountId + "?command=blockCredit";
+        return this;
+    }
+
+    public CommandWrapperBuilder unblockCreditsToSavingsAccount(final Long accountId) {
+        this.actionName = "UNBLOCKCREDIT";
+        this.entityName = "SAVINGSACCOUNT";
+        this.savingsId = accountId;
+        this.entityId = null;
+        this.href = "/savingsaccounts/" + accountId + "?command=unblockCredit";
+        return this;
+    }
+
+    public CommandWrapperBuilder blockSavingsAccount(final Long accountId) {
+        this.actionName = "BLOCK";
+        this.entityName = "SAVINGSACCOUNT";
+        this.savingsId = accountId;
+        this.entityId = null;
+        this.href = "/savingsaccounts/" + accountId + "?command=block";
+        return this;
+    }
+
+    public CommandWrapperBuilder unblockSavingsAccount(final Long accountId) {
+        this.actionName = "UNBLOCK";
+        this.entityName = "SAVINGSACCOUNT";
+        this.savingsId = accountId;
+        this.entityId = null;
+        this.href = "/savingsaccounts/" + accountId + "?command=unblock";
+        return this;
+    }
+	public CommandWrapperBuilder disableAdHoc(Long adHocId) {
+        this.actionName = "DISABLE";
+        this.entityName = "ADHOC";
+        this.entityId = adHocId;
+        this.href = "/adhoc/" + adHocId + "/disbale";
+        this.json = "{}";
+        return this;
+    }
+
+    public CommandWrapperBuilder enableAdHoc(Long adHocId) {
+        this.actionName = "ENABLE";
+        this.entityName = "ADHOC";
+        this.entityId = adHocId;
+        this.href = "/adhoc/" + adHocId + "/enable";
+        this.json = "{}";
+        return this;
+    }
+    public CommandWrapperBuilder createAdHoc() {
+        this.actionName = "CREATE";
+        this.entityName = "ADHOC";
+        this.href = "/adhocquery/template";
+        return this;
+    }
+    public CommandWrapperBuilder updateAdHoc(final Long adHocId) {
+        this.actionName = "UPDATE";
+        this.entityName = "ADHOC";
+        this.entityId = adHocId;
+        this.href = "/adhocquery/" + adHocId;
+        return this;
+    }
+
+    public CommandWrapperBuilder deleteAdHoc(Long adHocId) {
+        this.actionName = "DELETE";
+        this.entityName = "ADHOC";
+        this.entityId = adHocId;
+        this.href = "/adhocquery/" + adHocId;
+        this.json = "{}";
         return this;
     }
 }

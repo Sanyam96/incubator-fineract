@@ -18,7 +18,10 @@
  */
 package org.apache.fineract.infrastructure.accountnumberformat.api;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -60,6 +63,10 @@ public class AccountNumberFormatsApiResource {
     private final ToApiJsonSerializer<AccountNumberFormatData> toApiJsonSerializer;
     private final ApiRequestParameterHelper apiRequestParameterHelper;
     private final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService;
+	private static final Set<String> ACCOUNT_NUMBER_FORMAT_RESPONSE_DATA_PARAMETERS = new HashSet<>(Arrays.asList(
+			AccountNumberFormatConstants.idParamName, AccountNumberFormatConstants.accountTypeParamName,
+			AccountNumberFormatConstants.prefixTypeParamName, AccountNumberFormatConstants.accountTypeOptionsParamName,
+			AccountNumberFormatConstants.prefixTypeOptionsParamName));
 
     @Autowired
     public AccountNumberFormatsApiResource(final PlatformSecurityContext context,
@@ -88,8 +95,8 @@ public class AccountNumberFormatsApiResource {
         AccountNumberFormatData accountNumberFormatData = this.accountNumberFormatReadPlatformService.retrieveTemplate(accountType);
 
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
-        return this.toApiJsonSerializer.serialize(settings, accountNumberFormatData,
-                AccountNumberFormatConstants.ACCOUNT_NUMBER_FORMAT_RESPONSE_DATA_PARAMETERS);
+		return this.toApiJsonSerializer.serialize(settings, accountNumberFormatData,
+				ACCOUNT_NUMBER_FORMAT_RESPONSE_DATA_PARAMETERS);
     }
 
     @GET
@@ -105,8 +112,8 @@ public class AccountNumberFormatsApiResource {
                 .getAllAccountNumberFormats();
 
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
-        return this.toApiJsonSerializer.serialize(settings, accountNumberFormatData,
-                AccountNumberFormatConstants.ACCOUNT_NUMBER_FORMAT_RESPONSE_DATA_PARAMETERS);
+		return this.toApiJsonSerializer.serialize(settings, accountNumberFormatData,
+				ACCOUNT_NUMBER_FORMAT_RESPONSE_DATA_PARAMETERS);
     }
 
     @GET
@@ -129,8 +136,8 @@ public class AccountNumberFormatsApiResource {
             accountNumberFormatData.templateOnTop(templateData.getAccountTypeOptions(), templateData.getPrefixTypeOptions());
         }
 
-        return this.toApiJsonSerializer.serialize(settings, accountNumberFormatData,
-                AccountNumberFormatConstants.ACCOUNT_NUMBER_FORMAT_RESPONSE_DATA_PARAMETERS);
+		return this.toApiJsonSerializer.serialize(settings, accountNumberFormatData,
+				ACCOUNT_NUMBER_FORMAT_RESPONSE_DATA_PARAMETERS);
     }
 
     @POST

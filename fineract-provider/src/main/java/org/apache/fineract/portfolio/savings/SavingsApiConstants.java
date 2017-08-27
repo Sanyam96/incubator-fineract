@@ -26,7 +26,7 @@ import org.apache.fineract.accounting.common.AccountingConstants.SAVINGS_PRODUCT
 import org.apache.fineract.portfolio.savings.data.SavingsAccountData;
 import org.apache.fineract.portfolio.savings.data.SavingsProductData;
 
-public class SavingsApiConstants {
+public class    SavingsApiConstants {
 
     public static final String SAVINGS_PRODUCT_RESOURCE_NAME = "savingsproduct";
     public static final String SAVINGS_ACCOUNT_RESOURCE_NAME = "savingsaccount";
@@ -50,6 +50,12 @@ public class SavingsApiConstants {
     public static final String payChargeTransactionAction = ".paycharge";
     public static final String waiveChargeTransactionAction = ".waivecharge";
     public static final String updateMaturityDetailsAction = ".updateMaturityDetails";
+    public static final String blockAction = ".block";
+    public static final String unblockAction = ".unblock";
+    public static final String blockCreditsAction = ".blockCredits";
+    public static final String unblockCreditsAction = ".unblockCredits";
+    public static final String blockDebitsAction = ".blockDebits";
+    public static final String unblockDebitsAction = ".unblockDebits";
 
     // command
     public static final String COMMAND_UNDO_TRANSACTION = "undo";
@@ -57,6 +63,14 @@ public class SavingsApiConstants {
     public static final String COMMAND_WAIVE_CHARGE = "waive";
     public static final String COMMAND_PAY_CHARGE = "paycharge";
     public static final String COMMAND_INACTIVATE_CHARGE = "inactivate";
+    public static final String COMMAND_HOLD_AMOUNT = "holdAmount";
+    public static final String COMMAND_RELEASE_AMOUNT = "releaseAmount";
+    public static final String COMMAND_UNBLOCK_ACCOUNT= "unblock";
+    public static final String COMMAND_BLOCK_ACCOUNT = "block";
+    public static final String COMMAND_BLOCK_CREDIT = "blockCredit";
+    public static final String COMMAND_BLOCK_DEBIT = "blockDebit";
+    public static final String COMMAND_UNBLOCK_DEBIT = "unblockDebit";
+    public static final String COMMAND_UNBLOCK_CREDIT = "unblockCredit";
 
     // general
     public static final String localeParamName = "locale";
@@ -69,6 +83,7 @@ public class SavingsApiConstants {
     public static final String accountNoParamName = "accountNo";
     public static final String externalIdParamName = "externalId";
     public static final String statusParamName = "status";
+    public static final String subStatusParamName = "subStatus";
     public static final String clientIdParamName = "clientId";
     public static final String groupIdParamName = "groupId";
     public static final String productIdParamName = "productId";
@@ -118,6 +133,7 @@ public class SavingsApiConstants {
     public static final String minBalanceForInterestCalculationParamName = "minBalanceForInterestCalculation";
     public static final String withdrawBalanceParamName = "withdrawBalance";
     public static final String onHoldFundsParamName = "onHoldFunds";
+    public static final String savingsAmountOnHold = "savingsAmountOnHold";
     public static final String withHoldTaxParamName = "withHoldTax";
     public static final String taxGroupIdParamName = "taxGroupId";
 
@@ -169,4 +185,6 @@ public class SavingsApiConstants {
     public static final String daysToEscheatParamName = "daysToEscheat";
 
     public static final String datatables = "datatables";
+    
+    public static final String ERROR_MSG_SAVINGS_ACCOUNT_NOT_ACTIVE = "not.in.active.state";
 }
