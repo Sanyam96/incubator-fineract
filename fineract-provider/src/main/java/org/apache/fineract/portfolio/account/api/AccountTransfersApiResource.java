@@ -48,6 +48,7 @@ import org.springframework.stereotype.Component;
 @Path("/accounttransfers")
 @Component
 @Scope("singleton")
+@Api(value = "Account transfers api", description = "The class for getting info about account and creating an account")
 public class AccountTransfersApiResource {
 
     private final PlatformSecurityContext context;
@@ -58,10 +59,10 @@ public class AccountTransfersApiResource {
 
     @Autowired
     public AccountTransfersApiResource(final PlatformSecurityContext context,
-            final DefaultToApiJsonSerializer<AccountTransferData> toApiJsonSerializer,
-            final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService,
-            final ApiRequestParameterHelper apiRequestParameterHelper,
-            final AccountTransfersReadPlatformService accountTransfersReadPlatformService) {
+                                       final DefaultToApiJsonSerializer<AccountTransferData> toApiJsonSerializer,
+                                       final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService,
+                                       final ApiRequestParameterHelper apiRequestParameterHelper,
+                                       final AccountTransfersReadPlatformService accountTransfersReadPlatformService) {
         this.context = context;
         this.toApiJsonSerializer = toApiJsonSerializer;
         this.commandsSourceWritePlatformService = commandsSourceWritePlatformService;
@@ -73,11 +74,13 @@ public class AccountTransfersApiResource {
     @Path("template")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String template(@QueryParam("fromOfficeId") final Long fromOfficeId, @QueryParam("fromClientId") final Long fromClientId,
-            @QueryParam("fromAccountId") final Long fromAccountId, @QueryParam("fromAccountType") final Integer fromAccountType,
-            @QueryParam("toOfficeId") final Long toOfficeId, @QueryParam("toClientId") final Long toClientId,
-            @QueryParam("toAccountId") final Long toAccountId, @QueryParam("toAccountType") final Integer toAccountType,
-            @Context final UriInfo uriInfo) {
+    @ApiOperation(value = "Refund a template")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountTransferData.class}))
+    public String template(@QueryParam("fromOfficeId") @ApiParam(value="fromOfficeId") final Long fromOfficeId, @QueryParam("fromClientId") @ApiParam(value="fromClientId") final Long fromClientId,
+                           @QueryParam("fromAccountId") @ApiParam(value="fromAccountId") final Long fromAccountId, @QueryParam("fromAccountType") @ApiParam(value="fromAccountType") final Integer fromAccountType,
+                           @QueryParam("toOfficeId") @ApiParam(value="toOfficeId") final Long toOfficeId, @QueryParam("toClientId") @ApiParam(value="toClientId") final Long toClientId,
+                           @QueryParam("toAccountId") @ApiParam(value="toAccountId") final Long toAccountId, @QueryParam("toAccountType") @ApiParam(value="toAccountType") final Integer toAccountType,
+                           @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(AccountTransfersApiConstants.ACCOUNT_TRANSFER_RESOURCE_NAME);
 
@@ -91,7 +94,9 @@ public class AccountTransfersApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String create(final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "Create an account")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountTransferData.class)})
+    public String create(@ApiParam(hidden = true)final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().createAccountTransfer().withJson(apiRequestBodyAsJson).build();
 
@@ -103,10 +108,12 @@ public class AccountTransfersApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") final String sqlSearch,
-            @QueryParam("externalId") final String externalId, @QueryParam("offset") final Integer offset,
-            @QueryParam("limit") final Integer limit, @QueryParam("orderBy") final String orderBy,
-            @QueryParam("sortOrder") final String sortOrder,@QueryParam("accountDetailId") final Long accountDetailId) {
+    @ApiOperation(value = "List all accounts")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountTransferData.class, responseContainer = "list")})
+    public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") @ApiParam(value="sqlSearch") final String sqlSearch,
+                              @QueryParam("externalId") @ApiParam(value="externalId") final String externalId, @QueryParam("offset") @ApiParam(value="offset") final Integer offset,
+                              @QueryParam("limit") @ApiParam(value="limit") final Integer limit, @QueryParam("orderBy") @ApiParam(value="orderBy")final String orderBy,
+                              @QueryParam("sortOrder") @ApiParam(value="sortOrder") final String sortOrder,@QueryParam("accountDetailId") @ApiParam(value="accountDetailId") final Long accountDetailId) {
 
         this.context.authenticatedUser().validateHasReadPermission(AccountTransfersApiConstants.ACCOUNT_TRANSFER_RESOURCE_NAME);
 
@@ -123,7 +130,9 @@ public class AccountTransfersApiResource {
     @Path("{transferId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String retrieveOne(@PathParam("transferId") final Long transferId, @Context final UriInfo uriInfo) {
+    @ApiOperation(value = "Refund one account")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountTransferData.class)})
+    public String retrieveOne(@PathParam("transferId") @ApiParam(value="transferId")final Long transferId, @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(AccountTransfersApiConstants.ACCOUNT_TRANSFER_RESOURCE_NAME);
 
@@ -132,16 +141,18 @@ public class AccountTransfersApiResource {
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
         return this.toApiJsonSerializer.serialize(settings, transfer, AccountTransfersApiConstants.RESPONSE_DATA_PARAMETERS);
     }
-    
+
     @GET
     @Path("templateRefundByTransfer")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String templateRefundByTransfer(@QueryParam("fromOfficeId") final Long fromOfficeId, @QueryParam("fromClientId") final Long fromClientId,
-            @QueryParam("fromAccountId") final Long fromAccountId, @QueryParam("fromAccountType") final Integer fromAccountType,
-            @QueryParam("toOfficeId") final Long toOfficeId, @QueryParam("toClientId") final Long toClientId,
-            @QueryParam("toAccountId") final Long toAccountId, @QueryParam("toAccountType") final Integer toAccountType,
-            @Context final UriInfo uriInfo) {
+    @ApiOperation(value = "Refund template by transfer")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountTransferData.class)})
+    public String templateRefundByTransfer(@QueryParam("fromOfficeId") @ApiParam(value="fromOfficeId") final Long fromOfficeId, @QueryParam("fromClientId") @ApiParam(value="fromClientId") final Long fromClientId,
+                                           @QueryParam("fromAccountId") @ApiParam(value="fromAccountId") final Long fromAccountId, @QueryParam("fromAccountType") @ApiParam(value="fromAccountType") final Integer fromAccountType,
+                                           @QueryParam("toOfficeId") @ApiParam(value="toOfficeId") final Long toOfficeId, @QueryParam("toClientId") @ApiParam(value="toClientId") final Long toClientId,
+                                           @QueryParam("toAccountId") @ApiParam(value="toAccountId") final Long toAccountId, @QueryParam("toAccountType") @ApiParam(value="toAccountType") final Integer toAccountType,
+                                           @Context final UriInfo uriInfo) {
 
         this.context.authenticatedUser().validateHasReadPermission(AccountTransfersApiConstants.ACCOUNT_TRANSFER_RESOURCE_NAME);
 
@@ -151,12 +162,14 @@ public class AccountTransfersApiResource {
         final ApiRequestJsonSerializationSettings settings = this.apiRequestParameterHelper.process(uriInfo.getQueryParameters());
         return this.toApiJsonSerializer.serialize(settings, transferData, AccountTransfersApiConstants.RESPONSE_DATA_PARAMETERS);
     }
-    
+
     @POST
     @Path("refundByTransfer")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String templateRefundByTransferPost(final String apiRequestBodyAsJson) {
+    @ApiOperation(value = "Refund template by transfer (POST version)")
+    @ApiResponses({@ApiResponse(code = 200, message = "", response = AccountTransferData.class)})
+    public String templateRefundByTransferPost(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         final CommandWrapper commandRequest = new CommandWrapperBuilder().refundByTransfer().withJson(apiRequestBodyAsJson).build();
 
