@@ -18,36 +18,26 @@
  */
 package org.apache.fineract.portfolio.address.api;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
-
-import org.apache.fineract.commands.domain.CommandWrapper;
-import org.apache.fineract.commands.service.CommandWrapperBuilder;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
 import org.apache.fineract.infrastructure.core.api.ApiRequestParameterHelper;
-import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.serialization.ApiRequestJsonSerializationSettings;
 import org.apache.fineract.infrastructure.core.serialization.DefaultToApiJsonSerializer;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.portfolio.address.data.AddressData;
 import org.apache.fineract.portfolio.address.data.FieldConfigurationData;
-import org.apache.fineract.portfolio.address.service.AddressReadPlatformServiceImpl;
 import org.apache.fineract.portfolio.address.service.FieldConfigurationReadPlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Path("/fieldconfiguration/{entity}")
 @Component
@@ -65,20 +55,20 @@ public class EntityFieldConfigurationApiResources {
 	private final ApiRequestParameterHelper apiRequestParameterHelper;
 	private final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService;
 
-	@Autowired
-	public EntityFieldConfigurationApiResources(final PlatformSecurityContext context,
-			final DefaultToApiJsonSerializer<AddressData> toApiJsonSerializer,
-			final FieldConfigurationReadPlatformService readPlatformServicefld,
-			final DefaultToApiJsonSerializer<FieldConfigurationData> toApiJsonSerializerfld,
-			final ApiRequestParameterHelper apiRequestParameterHelper,
-			final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService) {
-		this.context = context;
-		this.toApiJsonSerializer = toApiJsonSerializer;
-		this.readPlatformServicefld = readPlatformServicefld;
-		this.toApiJsonSerializerfld = toApiJsonSerializerfld;
-		this.apiRequestParameterHelper = apiRequestParameterHelper;
-		this.commandsSourceWritePlatformService = commandsSourceWritePlatformService;
-	}
+@Autowired
+public EntityFieldConfigurationApiResources(final PlatformSecurityContext context,
+final DefaultToApiJsonSerializer<AddressData> toApiJsonSerializer,
+final FieldConfigurationReadPlatformService readPlatformServicefld,
+final DefaultToApiJsonSerializer<FieldConfigurationData> toApiJsonSerializerfld,
+final ApiRequestParameterHelper apiRequestParameterHelper,
+final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService) {
+this.context = context;
+this.toApiJsonSerializer = toApiJsonSerializer;
+this.readPlatformServicefld = readPlatformServicefld;
+this.toApiJsonSerializerfld = toApiJsonSerializerfld;
+this.apiRequestParameterHelper = apiRequestParameterHelper;
+this.commandsSourceWritePlatformService = commandsSourceWritePlatformService;
+}
 
 	@GET
 	@Consumes({ MediaType.APPLICATION_JSON })
