@@ -163,7 +163,7 @@ public class FixedDepositAccountsApiResource {
     @Path("{accountId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Retrieve a fixed deposit application/account", httpMethod = "GET", notes = "Retrieves a fixed deposit application/account\n\n" + "Example Requests :\n\n" + "\n\n" + "fixeddepositaccounts/1")
+    @ApiOperation(value = "Retrieve a fixed deposit application/account", httpMethod = "GET", notes = "Retrieves a fixed deposit application/account\n\n" + "Example Requests :\n\n" + "\n\n" + "fixeddepositaccounts/1" + "\n\n" + "fixeddepositaccounts/1?associations=all" )
     @ApiResponses({@ApiResponse(code = 200, message = "OK", response = FixedDepositAccountsApiResourceSwagger.GetFixedDepositAccountsAccountIdResponse.class)})
     public String retrieveOne(@PathParam("accountId") @ApiParam(value = "accountId") final Long accountId,
             @DefaultValue("false") @QueryParam("staffInSelectedOfficeOnly") @ApiParam(value = "staffInSelectedOfficeOnly") final boolean staffInSelectedOfficeOnly,
