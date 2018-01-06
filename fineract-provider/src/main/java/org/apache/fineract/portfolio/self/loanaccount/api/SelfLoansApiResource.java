@@ -212,8 +212,11 @@ public class SelfLoansApiResource {
     @Path("{loanId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    public String stateTransitions(@PathParam("loanId") final Long loanId, @QueryParam("command") final String commandParam,
-            final String apiRequestBodyAsJson) {
+	@ApiOperation(value = "Applicant Withdraws from Loan Application", httpMethod = "POST", notes = "Applicant Withdraws from Loan Application\n\n" + "Mandatory Fields: withdrawnOnDate")
+	@ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = SelfLoansApiResourceSwagger.PostSelfLoansLoanIdRequest.class)})
+	@ApiResponses({@ApiResponse(code = 200,message = "OK", response = SelfLoansApiResourceSwagger.PostSelfLoansLoanIdResponse.class)})
+    public String stateTransitions(@PathParam("loanId") @ApiParam(value = "loanId") final Long loanId, @QueryParam("command") @ApiParam(value = "command") final String commandParam,
+            @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
     	if (!is(commandParam, "withdrawnByApplicant")) {
     		throw new UnrecognizedQueryParamException("command", commandParam);
     	}

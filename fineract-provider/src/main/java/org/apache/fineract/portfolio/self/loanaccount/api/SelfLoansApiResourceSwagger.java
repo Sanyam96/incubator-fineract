@@ -768,4 +768,78 @@ final class SelfLoansApiResourceSwagger {
         public Integer resourceId;
         public PutSelfLoansChanges changes;
     }
+
+    @ApiModel(value = "PostSelfLoansLoanIdRequest")
+    public final static class PostSelfLoansLoanIdRequest {
+        private PostSelfLoansLoanIdRequest() {
+        }
+
+        @ApiModelProperty(example = "en")
+        public String locale;
+        @ApiModelProperty(example = "dd MMMM yyyy")
+        public String dateFormat;
+        @ApiModelProperty(example = "20 September 2011")
+        public String withdrawnOnDate;
+        @ApiModelProperty(example = "Reason loan applicant withdrew from application.")
+        public String note;
+    }
+
+    @ApiModel(value = "PostSelfLoansLoanIdResponse")
+    public final static class PostSelfLoansLoanIdResponse {
+        private PostSelfLoansLoanIdResponse() {
+        }
+
+        final class PostSelfLoansLoanIdChanges {
+            private PostSelfLoansLoanIdChanges() {
+            }
+
+            final class PostSelfLoansLoanIdStatus {
+                private PostSelfLoansLoanIdStatus() {
+                }
+
+                @ApiModelProperty(example = "400")
+                public Integer id;
+                @ApiModelProperty(example = "loanStatusType.withdrawn.by.client")
+                public String code;
+                @ApiModelProperty(example = "Withdrawn by applicant")
+                public String value;
+                @ApiModelProperty(example = "false")
+                public Boolean pendingApproval;
+                @ApiModelProperty(example = "false")
+                public Boolean waitingForDisbursal;
+                @ApiModelProperty(example = "false")
+                public Boolean active;
+                @ApiModelProperty(example = "false")
+                public Boolean closedObligationsMet;
+                @ApiModelProperty(example = "false")
+                public Boolean closedWrittenOff;
+                @ApiModelProperty(example = "false")
+                public Boolean closedRescheduled;
+                @ApiModelProperty(example = "false")
+                public Boolean closed;
+                @ApiModelProperty(example = "false")
+                public Boolean overpaid;
+            }
+
+            public PostSelfLoansLoanIdStatus status;
+            @ApiModelProperty(example = "en")
+            public String locale;
+            @ApiModelProperty(example = "dd MMMM yyyy")
+            public String dateFormat;
+            @ApiModelProperty(example = "20 September 2011")
+            public String withdrawnOnDate;
+            @ApiModelProperty(example = "20 September 2011")
+            public String closedOnDate;
+        }
+
+        @ApiModelProperty(example = "1")
+        public Integer officeId;
+        @ApiModelProperty(example = "1")
+        public Integer clientId;
+        @ApiModelProperty(example = "2")
+        public Integer loanId;
+        @ApiModelProperty(example = "2")
+        public Integer resourceId;
+        public PostSelfLoansLoanIdChanges changes;
+    }
 }
