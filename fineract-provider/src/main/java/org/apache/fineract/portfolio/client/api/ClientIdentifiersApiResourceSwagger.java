@@ -96,7 +96,7 @@ final class ClientIdentifiersApiResourceSwagger {
 
         @ApiModelProperty(example = "4")
         public Integer documentTypeId;
-        @ApiModelProperty(example = "KA-94677")
+        @ApiModelProperty(example = "KA-94667")
         public String documentKey;
         @ApiModelProperty(example = "Document has been updated")
         public String description;

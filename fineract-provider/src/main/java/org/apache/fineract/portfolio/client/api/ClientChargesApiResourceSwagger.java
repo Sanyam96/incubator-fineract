@@ -21,6 +21,7 @@ package org.apache.fineract.portfolio.client.api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -96,15 +97,15 @@ final class ClientChargesApiResourceSwagger {
             public GetClientChargeCalculationType chargeCalculationType;
             public GetClientChargeCurrency currency;
             @ApiModelProperty(example = "100.000000")
-            public Float amount;
+            public BigDecimal amount;
             @ApiModelProperty(example = "0")
-            public Float amountPaid;
+            public BigDecimal amountPaid;
             @ApiModelProperty(example = "100.000000")
-            public Float amountWaived;
+            public BigDecimal amountWaived;
             @ApiModelProperty(example = "0")
-            public Float amountWrittenOff;
+            public BigDecimal amountWrittenOff;
             @ApiModelProperty(example = "0.000000")
-            public Float amountOutstanding;
+            public BigDecimal amountOutstanding;
             @ApiModelProperty(example = "true")
             public Boolean penalty;
             @ApiModelProperty(example = "true")

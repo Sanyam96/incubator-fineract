@@ -81,13 +81,13 @@ final class ClientAddressApiResourcesSwagger {
         public String addressLine1;
         @ApiModelProperty(example = "iuyt")
         public String addressLine2;
-        @ApiModelProperty(example = "")
+        @ApiModelProperty(example = " ")
         public String addressLine3;
-        @ApiModelProperty(example = "")
+        @ApiModelProperty(example = " ")
         public String townVillage;
         @ApiModelProperty(example = "mumbai")
         public String city;
-        @ApiModelProperty(example = "")
+        @ApiModelProperty(example = " ")
         public String countyDistrict;
         @ApiModelProperty(example = "801")
         public Integer stateProvinceId;
@@ -99,9 +99,9 @@ final class ClientAddressApiResourcesSwagger {
         public Integer countryId;
         @ApiModelProperty(example = "400095")
         public Long postalCode;
-        @ApiModelProperty(example = "")
+        @ApiModelProperty(example = " ")
         public String createdBy;
-        @ApiModelProperty(example = "")
+        @ApiModelProperty(example = " ")
         public String updatedBy;
     }
 

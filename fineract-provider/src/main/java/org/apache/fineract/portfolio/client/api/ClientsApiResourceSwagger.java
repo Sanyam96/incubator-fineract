@@ -95,7 +95,7 @@ final class ClientsApiResourceSwagger {
 
                 @ApiModelProperty(example = "client_id")
                 public String columnName;
-                @ApiModelProperty(value = "bigint")
+                @ApiModelProperty(example = "bigint")
                 public String columnType;
                 @ApiModelProperty(example = "0")
                 public Integer columnLength;
@@ -150,7 +150,7 @@ final class ClientsApiResourceSwagger {
             @ApiModelProperty(example = "2")
             public Integer id;
             @ApiModelProperty(example = "000000002")
-            public Long accountNo;
+            public String accountNo;
             public GetClientStatus status;
             @ApiModelProperty(example = "false")
             public Boolean active;

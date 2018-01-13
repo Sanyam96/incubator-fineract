@@ -175,7 +175,7 @@ public class ClientChargesApiResource {
     @Path("{chargeId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Pay a Client Charge | Waive a Client Charge", notes = "Pay a Client Charge:\n\n" + "Mandatory Fields\n" + "transactionDate and amount " + "" + "\"Pay either a part of or the entire due amount for a charge.(command=paycharge)\n" + "\n" + "Waive a Client Charge\n" + "\n" + "\n" + "This API provides the facility of waiving off the remaining amount on a client charge (command=waive)\n\n" + "Showing request/response for 'Pay a Client Charge'" )
+    @ApiOperation(value = "Pay a Client Charge | Waive a Client Charge", notes = "Pay a Client Charge:\n\n" + "Mandatory Fields:" + "transactionDate and amount " + "" + "\"Pay either a part of or the entire due amount for a charge.(command=paycharge)\n" + "\n" + "Waive a Client Charge:\n" + "\n" + "\n" + "This API provides the facility of waiving off the remaining amount on a client charge (command=waive)\n\n" + "Showing request/response for 'Pay a Client Charge'" )
     @ApiImplicitParams({@ApiImplicitParam(value = "body", required = true, paramType = "body", dataType = "body", format = "body", dataTypeClass = ClientChargesApiResourceSwagger.PostClientsClientIdChargesChargeIdRequest.class)})
     @ApiResponses({@ApiResponse(code = 200, message = "OK", response = ClientChargesApiResourceSwagger.PostClientsClientIdChargesChargeIdResponse.class)})
     public String payOrWaiveClientCharge(@PathParam("clientId") @ApiParam(value = "clientId") final Long clientId, @PathParam("chargeId") @ApiParam(value = "chargeId") final Long chargeId,

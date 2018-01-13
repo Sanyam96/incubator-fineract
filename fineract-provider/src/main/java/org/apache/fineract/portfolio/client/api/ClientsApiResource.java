@@ -53,7 +53,7 @@ import java.util.Set;
 @Path("/clients")
 @Component
 @Scope("singleton")
-@Api(value = "Client Api", description = "Clients are people and businesses that have applied (or may apply) to an MFI for loans.\n" + "\n" + "Clients can be created in Pending or straight into Active state.")
+@Api(value = "Client", description = "Clients are people and businesses that have applied (or may apply) to an MFI for loans.\n" + "\n" + "Clients can be created in Pending or straight into Active state.")
 public class ClientsApiResource {
 
     private final PlatformSecurityContext context;
@@ -116,7 +116,7 @@ public class ClientsApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @ApiOperation(value = "List Clients", notes = "The list capability of clients can support pagination and sorting.\n\n" + "Example Requests:\n" + "\n" + "clients\n" + "\n" + "clients?fields=displayName,officeName,timeline\n" + "\n" + "clients?offset=10&limit=50\n" + "\n" + "clients?orderBy=displayName&sortOrder=DESC" )
-    @ApiResponses({@ApiResponse(code = 200, message = "OK", response = ClientsApiResourceSwagger.GetClientsResponse.class, responseContainer = "List")})
+    @ApiResponses({@ApiResponse(code = 200, message = "OK", response = ClientsApiResourceSwagger.GetClientsResponse.class)})
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("sqlSearch") @ApiParam(value = "sqlSearch") final String sqlSearch,
             @QueryParam("officeId") @ApiParam(value = "officeId") final Long officeId, @QueryParam("externalId") @ApiParam(value = "externalId") final String externalId,
             @QueryParam("displayName") @ApiParam(value = "displayName") final String displayName, @QueryParam("firstName") @ApiParam(value = "firstName") final String firstname,
@@ -178,9 +178,9 @@ public class ClientsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:" + "\n" + "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name).\n" + "\n" + "2.If address is enable(enable-address=true), then additional field called address has to be passed.\n\n" + "Mandatory Fields: firstname and lastname OR fullname, officeId, active=true and activationDate OR active=false, if(address enabled) address\n\n" + "Optional Fields: groupId, externalId, accountNo, staffId, mobileNo, savingsProductId, genderId, clientTypeId, clientClassificationId")
+    @ApiOperation(value = "Create a Client", httpMethod = "POST", notes = "Note:\n\n" + "1. You can enter either:firstname/middlename/lastname - for a person (middlename is optional) OR fullname - for a business or organisation (or person known by one name).\n" + "\n" + "2.If address is enable(enable-address=true), then additional field called address has to be passed.\n\n" + "Mandatory Fields: firstname and lastname OR fullname, officeId, active=true and activationDate OR active=false, if(address enabled) address\n\n" + "Optional Fields: groupId, externalId, accountNo, staffId, mobileNo, savingsProductId, genderId, clientTypeId, clientClassificationId")
     @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "ClientData", required = true, type = "body", dataTypeClass = ClientsApiResourceSwagger.PostClientsRequest.class)})
-    @ApiResponses({@ApiResponse(code = 200, message = "Successfully Client Created", response = ClientsApiResourceSwagger.PostClientsResponse.class) })
+    @ApiResponses({@ApiResponse(code = 200, message = "OK", response = ClientsApiResourceSwagger.PostClientsResponse.class) })
     public String create(@ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
 

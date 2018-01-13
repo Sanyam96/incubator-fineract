@@ -68,7 +68,7 @@ public class ClientTransactionsApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "List Client Transactions", notes = "The list capability of client transaction can support pagination." + "\n\nMandatory Arguments : " + "offset\n" + "    Integer Mandatory, defaults to 0 \n" + "    Indicates the result from which pagination starts\n" + "limit\n" + "    Integer Mandatory, defaults to 200 \n" + "    Restricts the size of results returned. To override the default and return all entries you must explicitly pass a non-positive integer value for limit e.g. limit=0, or limit=-1\n" + "\n" + "\n\n" + "Example Requests:\n" + "clients/189/transactions\n" + "clients/189/transactions?offset=10&limit=50" )
+    @ApiOperation(value = "List Client Transactions", notes = "The list capability of client transaction can support pagination." + "\n\n" + "Example Requests:\n" + "clients/189/transactions\n" + "clients/189/transactions?offset=10&limit=50" )
     @ApiResponses({@ApiResponse(code = 200, message = "OK", response = ClientTransactionsApiResourceSwagger.GetClientsClientIdTransactionsResponse.class)})
     public String retrieveAllClientTransactions(@PathParam("clientId") @ApiParam(value = "clientId") final Long clientId, @Context final UriInfo uriInfo,
             @QueryParam("offset") @ApiParam(value = "offest") final Integer offset, @QueryParam("limit") @ApiParam(value = "limit") final Integer limit) {

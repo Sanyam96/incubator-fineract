@@ -21,6 +21,7 @@ package org.apache.fineract.portfolio.client.api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -109,7 +110,7 @@ final class ClientTransactionsApiResourceSwagger {
         public LocalDate date;
         public GetClientsClientIdTransactionsResponse.GetClientsPageItems.GetClientTransactionsCurrency currency;
         @ApiModelProperty(example = "60.000000")
-        public Float amount;
+        public BigDecimal amount;
         @ApiModelProperty(example = "[2015, 8, 17]")
         public LocalDate submittedOnDate;
         @ApiModelProperty(example = "true")
