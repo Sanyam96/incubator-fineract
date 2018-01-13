@@ -24,8 +24,8 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Created by Chirag Gupta on 01/12/18.
  */
-final class ClientAddressApiResourceSwagger {
-    private ClientAddressApiResourceSwagger() {
+final class ClientAddressApiResourcesSwagger {
+    private ClientAddressApiResourcesSwagger() {
     }
 
     @ApiModel(value = "PostClientClientIdAddressesRequest")
