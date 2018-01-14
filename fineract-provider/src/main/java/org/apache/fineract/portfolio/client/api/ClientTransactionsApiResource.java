@@ -68,10 +68,10 @@ public class ClientTransactionsApiResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @ApiOperation(value = "List Client Transactions", notes = "The list capability of client transaction can support pagination." + "\n\n" + "Example Requests:\n" + "clients/189/transactions\n" + "clients/189/transactions?offset=10&limit=50" )
+    @ApiOperation(value = "List Client Transactions", notes = "The list capability of client transaction can support pagination." + "\n\n" + "Example Requests:\n\n" + "clients/189/transactions\n\n" + "clients/189/transactions?offset=10&limit=50" )
     @ApiResponses({@ApiResponse(code = 200, message = "OK", response = ClientTransactionsApiResourceSwagger.GetClientsClientIdTransactionsResponse.class)})
     public String retrieveAllClientTransactions(@PathParam("clientId") @ApiParam(value = "clientId") final Long clientId, @Context final UriInfo uriInfo,
-            @QueryParam("offset") @ApiParam(value = "offest") final Integer offset, @QueryParam("limit") @ApiParam(value = "limit") final Integer limit) {
+            @QueryParam("offset") @ApiParam(value = "offset") final Integer offset, @QueryParam("limit") @ApiParam(value = "limit") final Integer limit) {
         this.context.authenticatedUser().validateHasReadPermission(ClientApiConstants.CLIENT_CHARGES_RESOURCE_NAME);
 
         SearchParameters searchParameters = SearchParameters.forPagination(offset, limit);
@@ -109,7 +109,7 @@ public class ClientTransactionsApiResource {
     @ApiOperation(value = "Undo a Client Transaction", notes = "Undoes a Client Transaction")
     @ApiResponses({@ApiResponse(code = 200, message = "OK", response = ClientTransactionsApiResourceSwagger.PostClientsClientIdTransactionsTransactionIdResponse.class)})
     public String undoClientTransaction(@PathParam("clientId") @ApiParam(value = "clientId") final Long clientId, @PathParam("transactionId") @ApiParam(value = "transactionId") final Long transactionId,
-            @QueryParam("command") @ApiParam(example = "command") final String commandParam, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
+            @QueryParam("command") @ApiParam(value = "command") final String commandParam, @ApiParam(hidden = true) final String apiRequestBodyAsJson) {
 
         String json = "";
         if (is(commandParam, ClientApiConstants.CLIENT_TRANSACTION_COMMAND_UNDO)) {
