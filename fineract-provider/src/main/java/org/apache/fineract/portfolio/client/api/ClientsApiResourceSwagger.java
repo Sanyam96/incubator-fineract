@@ -166,7 +166,7 @@ final class ClientsApiResourceSwagger {
 
         @ApiModelProperty(example = "2")
         public Integer totalFilteredRecords;
-        public GetClientsPageItemsResponse pageItems;
+        public Set<GetClientsPageItemsResponse> pageItems;
     }
 
     @ApiModel(value = "GetClientsClientIdResponse")
